@@ -1,0 +1,38 @@
+# UMD DATA/MSML 641: Natural Language Processing
+# Core Dependencies for Course Materials
+
+# Scientific Computing
+numpy>=2.3.0
+pandas>=2.3.0
+scipy>=1.16.0
+matplotlib>=3.10.0
+seaborn>=0.13.0
+
+# Machine Learning
+scikit-learn>=1.7.0
+
+# NLP Libraries
+nltk>=3.9.0
+beautifulsoup4>=4.13.0
+requests>=2.32.0
+
+# Knowledge Graph & Semantic Web
+SPARQLWrapper>=2.0.0
+rdflib>=7.1.0
+Wikipedia-API>=0.8.0
+
+# Jupyter Environment
+jupyter>=1.1.0
+jupyterlab>=4.4.0
+notebook>=7.4.0
+ipywidgets>=8.1.0
+nbconvert>=7.16.0
+
+# Visualization & Networks
+networkx>=3.5
+plotly>=5.0.0
+
+# Utilities
+tqdm>=4.67.0
+PyYAML>=6.0.0
+python-dateutil>=2.9.0
