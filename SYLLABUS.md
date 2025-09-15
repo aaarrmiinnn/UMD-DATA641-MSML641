@@ -50,14 +50,15 @@ By the end of this course, you will be able to:
 
 ## 🏗️ Course Structure
 
-**Blended Learning Format**:
-- **Synchronous**: ~90 minutes live lectures via Zoom
-- **Asynchronous**: ~75 minutes videos, readings, exercises
+**Interactive Lecture Format**:
+- **Live Sessions**: 90-minute interactive lectures via Zoom
+- **Hands-on Learning**: Code examples, exercises, and real-time problem solving
+- **Reading Support**: Textbook readings to support lecture content
 
-Most classes contain:
-- 90 minutes synchronous lectures
-- 75 minutes asynchronous content completion
-- As content complexity increases, more synchronous time may be needed
+Each class session includes:
+- Interactive lectures with live coding demonstrations
+- Guided exercises and problem-solving activities  
+- Discussion of concepts and real-world applications
 
 ## 📚 Course Resources
 
@@ -72,21 +73,21 @@ Most classes contain:
 
 ## 📅 Weekly Schedule
 
-| Week | Date | Topic | Reading | Assignments |
-|------|------|-------|---------|-------------|
-| 1 | Sep 1-2 | Introduction & NLP Pipeline | SLP 1, Pinker pp. 83-89 | Assignment 0 |
-| 2 | Sep 8-9 | Words and Multi-Words | SLP 2 (through 2.4), 6 | Assignment 1 |
+| Week | Date | Topic | Reading | Project |
+|------|------|-------|---------|---------|
+| 1 | Sep 1-2 | Introduction & NLP Pipeline | SLP 1, Pinker pp. 83-89 | |
+| 2 | Sep 8-9 | Words and Multi-Words | SLP 2 (through 2.4), 6 | |
 | 3 | Sep 15-16 | Word & Sentence Meaning | Appendix G | |
 | 4 | Sep 22-23 | Sequential Structure | SLP 3, 8 (through 8.4), 9, App. A,B | |
-| 5 | Sep 29-30 | Syntactic Structure | SLP 17, 18, Appendix C | Assignment 2 |
-| 6 | Oct 6-7 | Sentence Meaning & Evaluation | SLP 20, App. F, Resnik & Lin (2010) | Assignment 3 |
+| 5 | Sep 29-30 | Syntactic Structure | SLP 17, 18, Appendix C | |
+| 6 | Oct 6-7 | Sentence Meaning & Evaluation | SLP 20, App. F, Resnik & Lin (2010) | |
 | 7 | Oct 13-14 | **Fall Break - No Classes** | | |
 | 8 | Oct 20-21 | Machine Learning in NLP | | |
 | 9 | Oct 27-28 | Vector Semantics & Embeddings | SLP 6 | **Midterm** |
 | 10 | Nov 3-4 | Deep Learning Models for NLP | SLP 7, 8 | Project Work |
 | 11 | Nov 10-11 | Transformers | SLP 9 | Project Work |
 | 12 | Nov 17-18 | Language Models & Fine-tuning | SLP 10, 11 | Project Work |
-| 13 | Nov 24-25 | RAG & Graphs in NLP | | Assignment 4, Project Work |
+| 13 | Nov 24-25 | RAG & Graphs in NLP | | Project Work |
 | 14 | Dec 1-2 | Applications: MT, QA, Chatbots | SLP 13, 14, 15 | Project Work |
 | 15 | Dec 8-9 | Ethical AI and NLP | | Project Work |
 | 16 | Dec 15-16 | **Project Presentations** | | **Final Project Due** |
@@ -97,9 +98,7 @@ Most classes contain:
 
 | Component | Weight | Description |
 |-----------|--------|-------------|
-| **Homework** | 35% | 4-5 assignments, coarse 5-point scale |
-| **Videos & Knowledge Checks** | 2.5% | Completion-based quizzes |
-| **Participation & Engagement** | 2.5% | Class and online participation |
+| **Participation & Engagement** | 40% | Class participation, in-class exercises, contributions |
 | **Midterm Exam** | 15% | Take-home, no programming |
 | **Final Project** | 45% | Team project (3-4 people) |
 | **Total** | 100% | |
@@ -114,22 +113,12 @@ Most classes contain:
 | B | 83.00-86.99 | F | 0.00-59.99 |
 | B- | 80.00-82.99 | | |
 
-## 📝 Assignment Details
+## 📝 Course Component Details
 
-### Homework
-- **Scale**: 5-point (great/good/pass/low pass/fail)
-- **Collaboration**: Encouraged with proper attribution
-- **Format**: Usually `assignment.py` + `writeup.pdf`
-- **Submission**: Via ELMS with auto-grading
-
-### Video Knowledge Checks
-- **Purpose**: Gauge understanding before synchronous sessions  
-- **Grading**: Completion-based (1-3 questions per video)
-- **Due**: Before corresponding class meeting
-
-### Participation
-- **Components**: Class engagement + online discussion
-- **Expectations**: Regular questions, answers, meaningful contributions
+### Participation & Engagement
+- **Components**: Class participation, in-class exercises, contributions to discussions
+- **Expectations**: Regular questions, answers, meaningful contributions during lectures
+- **Assessment**: Based on engagement during interactive sessions and hands-on exercises
 - **Scale**: 5-point subjective assessment
 
 ### Midterm Exam  

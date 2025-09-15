@@ -6,9 +6,9 @@ This repository contains course materials for DATA/MSML 641: Natural Language Pr
 
 ## 📋 Course Overview
 
-This is a **blended learning course** with both synchronous and asynchronous components:
-- **Synchronous**: 90-minute live lectures via Zoom (Mondays 7-9:45pm or Tuesdays 6-8:45pm)
-- **Asynchronous**: Videos, readings, and interactive exercises (~75 minutes per week)
+This course focuses on **interactive lecture-based learning**:
+- **Live lectures**: 90-minute sessions via Zoom (Mondays 7-9:45pm or Tuesdays 6-8:45pm)
+- **Hands-on components**: Interactive Jupyter notebooks and coding exercises
 
 ### Course Objectives
 By the end of this course, you will be able to:
@@ -24,17 +24,11 @@ By the end of this course, you will be able to:
 ├── SYLLABUS.md              # Complete course syllabus
 ├── requirements.txt          # Python dependencies
 ├── environment.yml          # Conda environment file
-├── lectures/                # Synchronous lecture notebooks
+├── lectures/                # Interactive lecture notebooks
 │   ├── week01_introduction.ipynb
 │   ├── week02_words_multiwords.ipynb
-│   └── ...
-├── async/                   # Asynchronous content
-│   ├── videos/              # Video companion notebooks  
-│   ├── readings/            # Reading guides and exercises
-│   └── knowledge_checks/    # Quiz notebooks
-├── assignments/             # Homework assignments
-│   ├── assignment_0/
-│   ├── assignment_1/
+│   ├── week03_meaning.ipynb
+│   ├── week03_hands_on_examples.ipynb
 │   └── ...
 ├── project/                 # Final project materials
 │   ├── guidelines.md
@@ -42,6 +36,7 @@ By the end of this course, you will be able to:
 ├── resources/               # Additional resources
 │   ├── datasets/
 │   ├── models/
+│   ├── setup_test.ipynb     # Environment verification
 │   └── utils/
 ├── docs/                    # Additional documentation
 └── img/                     # Images and figures
@@ -95,31 +90,28 @@ Open and run `resources/setup_test.ipynb` to verify your environment is configur
 
 ## 📅 Weekly Schedule
 
-| Week | Date | Topic | Synchronous Lecture | Async Content |
-|------|------|-------|--------------------|--------------| 
-| 1 | Sep 1-2 | Introduction & NLP Pipeline | `lectures/week01_introduction.ipynb` | `async/week01/` |
-| 2 | Sep 8-9 | Words and Multi-Words | `lectures/week02_words_multiwords.ipynb` | `async/week02/` |
-| 3 | Sep 15-16 | Word & Sentence Meaning | `lectures/week03_meaning.ipynb` | `async/week03/` |
-| 4 | Sep 22-23 | Sequential Structure | `lectures/week04_sequential.ipynb` | `async/week04/` |
-| 5 | Sep 29-30 | Syntactic Structure | `lectures/week05_syntax.ipynb` | `async/week05/` |
-| 6 | Oct 6-7 | Sentence Meaning & Evaluation | `lectures/week06_semantics_eval.ipynb` | `async/week06/` |
-| 8 | Oct 20-21 | Machine Learning in NLP | `lectures/week08_ml_nlp.ipynb` | `async/week08/` |
-| 9 | Oct 27-28 | Vector Semantics & Embeddings | `lectures/week09_embeddings.ipynb` | `async/week09/` |
-| 10 | Nov 3-4 | Deep Learning for NLP | `lectures/week10_deep_learning.ipynb` | `async/week10/` |
-| 11 | Nov 10-11 | Transformers | `lectures/week11_transformers.ipynb` | `async/week11/` |
-| 12 | Nov 17-18 | Language Models & Fine-tuning | `lectures/week12_language_models.ipynb` | `async/week12/` |
-| 13 | Nov 24-25 | RAG & Graphs in NLP | `lectures/week13_rag_graphs.ipynb` | `async/week13/` |
-| 14 | Dec 1-2 | NLP Applications | `lectures/week14_applications.ipynb` | `async/week14/` |
-| 15 | Dec 8-9 | Ethical AI & NLP | `lectures/week15_ethics.ipynb` | `async/week15/` |
+| Week | Date | Topic | Lecture Materials |
+|------|------|-------|------------------| 
+| 1 | Sep 1-2 | Introduction & NLP Pipeline | `lectures/week01_introduction.ipynb` |
+| 2 | Sep 8-9 | Words and Multi-Words | `lectures/week02_words_multiwords.ipynb` |
+| 3 | Sep 15-16 | Word & Sentence Meaning | `lectures/week03_meaning.ipynb`, `lectures/week03_hands_on_examples.ipynb` |
+| 4 | Sep 22-23 | Sequential Structure | `lectures/week04_sequential.ipynb` |
+| 5 | Sep 29-30 | Syntactic Structure | `lectures/week05_syntax.ipynb` |
+| 6 | Oct 6-7 | Sentence Meaning & Evaluation | `lectures/week06_semantics_eval.ipynb` |
+| 8 | Oct 20-21 | Machine Learning in NLP | `lectures/week08_ml_nlp.ipynb` |
+| 9 | Oct 27-28 | Vector Semantics & Embeddings | `lectures/week09_embeddings.ipynb` |
+| 10 | Nov 3-4 | Deep Learning for NLP | `lectures/week10_deep_learning.ipynb` |
+| 11 | Nov 10-11 | Transformers | `lectures/week11_transformers.ipynb` |
+| 12 | Nov 17-18 | Language Models & Fine-tuning | `lectures/week12_language_models.ipynb` |
+| 13 | Nov 24-25 | RAG & Graphs in NLP | `lectures/week13_rag_graphs.ipynb` |
+| 14 | Dec 1-2 | NLP Applications | `lectures/week14_applications.ipynb` |
+| 15 | Dec 8-9 | Ethical AI & NLP | `lectures/week15_ethics.ipynb` |
 
-## 📝 Assignments
+## 🎯 Course Components
 
-- **Assignment 0**: Environment Setup & Basic NLP (Week 1)
-- **Assignment 1**: Text Processing & Analysis (Week 2)
-- **Assignment 2**: Syntactic Analysis (Week 5) 
-- **Assignment 3**: Semantic Analysis & Evaluation (Week 6)
-- **Assignment 4**: Advanced Applications (Week 13)
+- **Interactive Lectures**: Hands-on Jupyter notebooks with live coding and exercises
 - **Final Project**: Team project with real-world NLP problem (Weeks 9-16)
+- **Setup Verification**: Use `resources/setup_test.ipynb` to verify your environment
 
 ## 🛠️ Tools & Libraries Used
 
@@ -131,11 +123,11 @@ Open and run `resources/setup_test.ipynb` to verify your environment is configur
 
 ## 💡 Tips for Success
 
-1. **Stay Current**: Complete async content before synchronous lectures
-2. **Participate**: Engage in discussions and ask questions
-3. **Practice**: Work through code examples and modify them
+1. **Come Prepared**: Review readings before lectures for better engagement
+2. **Participate**: Engage in discussions and ask questions during interactive sessions
+3. **Practice**: Work through code examples and modify them to deepen understanding
 4. **Collaborate**: Form study groups and work together on understanding concepts
-5. **Resource Management**: Use office hours and TA sessions
+5. **Resource Management**: Use office hours and TA sessions for additional support
 
 ## 🆘 Getting Help
 
