@@ -182,3 +182,7 @@ temp/
 # Assignment submissions (student work)
 submissions/
 student_work/
+
+# AI Assistant Configuration (never commit)
+.claude/
+CLAUDE.md
