@@ -94,22 +94,21 @@ We will plan to meet in person each week, but I will indicate in advance of any 
 | Week | Class Date | Topic | Lecture Materials |
 |------|------------|-------|-------------------|
 | 1 | January 28, 2026 | Class cancelled due to inclement weather | |
-| 2 | February 4, 2026 | Words and Multi-Words | |
-| 3 | February 11, 2026 | Word & Sentence Meaning | `lectures/week01_meaning.ipynb` |
-| 4 | February 18, 2026 | Sequential Structure | `lectures/week02_sequence_models.ipynb` |
-| 5 | February 25, 2026 | Syntactic Structure | `lectures/week03_syntactic_structure.ipynb` |
-| 6 | March 5, 2026 | Sentence Meaning | `lectures/week04_sentence_meaning.ipynb` |
+| 2 | February 4, 2026 | Word Meaning | `lectures/week01_meaning.ipynb` |
+| 3 | February 11, 2026 | Sequence Models | `lectures/week02_sequence_models.ipynb` |
+| 4 | February 18, 2026 | Syntactic Structure | `lectures/week03_syntactic_structure.ipynb` |
+| 5 | February 25, 2026 | Sentence Meaning | `lectures/week04_sentence_meaning.ipynb` |
+| 6 | March 5, 2026 | Evaluation in NLP | `lectures/week05_evaluation.ipynb` |
 | 7 | March 11, 2026 | Midterm | |
 | 8 | March 18, 2026 | Spring Break | No Classes |
-| 9 | March 25, 2026 | NLP Evaluation | `lectures/week05_evaluation.ipynb` |
-| 10 | April 1, 2026 | Vector Semantics and Embeddings | `lectures/week06_vector_semantics.ipynb` |
-| 11 | April 8, 2026 | Deep Learning Models for NLP | `lectures/week07_neural_networks_in_nlp.ipynb` |
-| 12 | April 15, 2026 | Transformers | |
-| 13 | April 22, 2026 | Language Models, Fine-tuning and Masked LM | |
-| 14 | April 29, 2026 | Retrieval Augmented Generation (RAG) | `lectures/week08_rag.ipynb` |
-| 15 | May 1, 2026 | Graphs in NLP | |
-| 16 | May 8, 2026 | Finals Week - Project Presentation | |
-| 17 | May 15, 2026 | Final Exam | |
+| 9 | March 25, 2026 | Vector Semantics and Embeddings | `lectures/week06_vector_semantics.ipynb` |
+| 10 | April 1, 2026 | Neural Networks in NLP | `lectures/week07_neural_networks_in_nlp.ipynb` |
+| 11 | April 8, 2026 | Transformers | `lectures/week08_transformers.ipynb` |
+| 12 | April 15, 2026 | Language Models, Fine-tuning and Post-Training | `lectures/week09_mlm.ipynb` |
+| 13 | April 22, 2026 | Retrieval Augmented Generation (RAG) | `lectures/week10_rag.ipynb` |
+| 14 | April 29, 2026 | Graphs in NLP | `lectures/week11_graphs.ipynb` |
+| 15 | May 6, 2026 | Finals Week - Project Presentation | |
+| 16 | May 13, 2026 | Final Exam | |
 
 ## Course Components
 
