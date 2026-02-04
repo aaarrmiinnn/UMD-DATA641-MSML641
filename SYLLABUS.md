@@ -7,20 +7,26 @@
 
 ## Course Schedule
 
-**Section 1 (PWS1)**: Mondays 7:00pm - 9:45pm
-**Section 2 (PWS2)**: Tuesdays 6:00pm - 8:45pm
-**Classroom**: Online (Zoom)
+**Time**: Wednesdays 6:00pm - 8:45pm
+
+**Classroom**: Edward St. John Learning and Teaching Center (ESJ 226), Room 1215
+
+Each section has a different meeting time with asynchronous content comprising some of the required class time. You are required to attend the synchronous session during your section's assigned time.
 
 ## Contact Information
 
 **Instructor**: Armin Mehrabian
+**Email**: arminm@umd.edu
 **Office Hours**: As needed
 
-**Teaching Assistants**:
-- **PWS1**: Raman Selvakumar (ramans@umd.edu)
-  - Office Hours: Monday 12-1 PM ET
-- **PWS2**: Palak Wadhwa (pwadhwa@umd.edu)
-  - Office Hours: Monday 3-4 PM ET, Thursday 11 AM-12 PM ET
+**Communication Preferences**:
+- Email the instructor at arminm@umd.edu
+- Important announcements sent via ELMS messaging
+- Enable email and announcement notifications in ELMS
+
+**Teaching Assistant**: Palak Wadhwa
+- **Email**: pwadhwa@umd.edu
+- **Office Hours**: Monday 3-4 PM ET, Thursday 11 AM-12 PM ET
 
 ## Course Description
 

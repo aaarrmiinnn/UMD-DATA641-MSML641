@@ -7,7 +7,7 @@ This repository contains course materials for DATA/MSML 641: Natural Language Pr
 ## Course Overview
 
 This course focuses on **interactive lecture-based learning**:
-- **Live lectures**: 90-minute sessions via Zoom (Mondays 7-9:45pm or Tuesdays 6-8:45pm)
+- **Live lectures**: Wednesdays 6:00pm - 8:45pm at Edward St. John Learning and Teaching Center (ESJ 226), Room 1215
 - **Hands-on components**: Interactive Jupyter notebooks and coding exercises
 
 ### Course Objectives
@@ -134,10 +134,8 @@ We will plan to meet in person each week, but I will indicate in advance of any 
 
 ## Getting Help
 
-- **Instructor**: Armin Mehrabian
-- **TAs**:
-  - PWS1: Raman Selvakumar (ramans@umd.edu) - Monday 12-1 PM ET
-  - PWS2: Palak Wadhwa (pwadhwa@umd.edu) - Monday 3-4 PM ET, Thursday 11 AM-12 PM ET
+- **Instructor**: Armin Mehrabian (arminm@umd.edu)
+- **TA**: Palak Wadhwa (pwadhwa@umd.edu) - Monday 3-4 PM ET, Thursday 11 AM-12 PM ET
 - **Technical Issues**: Check `docs/troubleshooting.md`
 - **Course Policies**: See `SYLLABUS.md`
 
