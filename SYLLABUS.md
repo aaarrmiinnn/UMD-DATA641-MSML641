@@ -1,54 +1,54 @@
 # DATA/MSML 641 Syllabus
 
-**Course**: DATA/MSML 641: Natural Language Processing  
-**Term**: Fall 2025  
-**Credits**: 3  
+**Course**: DATA/MSML 641: Natural Language Processing
+**Term**: Spring 2026
+**Credits**: 3
 **Instructor**: Armin Mehrabian
 
-## 📅 Course Schedule
+## Course Schedule
 
-**Section 1 (PWS1)**: Mondays 7:00pm - 9:45pm  
-**Section 2 (PWS2)**: Tuesdays 6:00pm - 8:45pm  
+**Section 1 (PWS1)**: Mondays 7:00pm - 9:45pm
+**Section 2 (PWS2)**: Tuesdays 6:00pm - 8:45pm
 **Classroom**: Online (Zoom)
 
-## 👨‍🏫 Contact Information
+## Contact Information
 
-**Instructor**: Armin Mehrabian  
-**Office Hours**: As needed  
+**Instructor**: Armin Mehrabian
+**Office Hours**: As needed
 
 **Teaching Assistants**:
 - **PWS1**: Raman Selvakumar (ramans@umd.edu)
   - Office Hours: Monday 12-1 PM ET
-- **PWS2**: Palak Wadhwa (pwadhwa@umd.edu) 
+- **PWS2**: Palak Wadhwa (pwadhwa@umd.edu)
   - Office Hours: Monday 3-4 PM ET, Thursday 11 AM-12 PM ET
 
-## 🎯 Course Description
+## Course Description
 
 This course introduces fundamental concepts and techniques for getting computers to deal intelligently with human language. Focused primarily on text (as opposed to speech), it offers grounding in:
 
 - Core NLP methods for text processing (lexical analysis, sequential tagging, syntactic parsing, semantic representations, text classification, unsupervised discovery of latent structure)
-- Key ideas in applying deep learning to language tasks  
+- Key ideas in applying deep learning to language tasks
 - Consideration of the role of language technology in modern society
 
-## 📋 Prerequisites
+## Prerequisites
 
 - **Required**: DATA603 or MSML603 (Introduction to Machine Learning)
-- **Skills Expected**: 
+- **Skills Expected**:
   - Maximum likelihood estimation, Bayes' rule
   - k-nearest-neighbors, support vector machines, neural networks
   - Deep learning networks, dimensionality reduction, clustering
   - Comfortable programming in Python
 
-## 🎓 Learning Outcomes
+## Learning Outcomes
 
 By the end of this course, you will be able to:
 
 1. **Understand** fundamental linguistic concepts relevant to automated processing of natural language text
-2. **Identify** core NLP methods for text processing, including lexical analysis, sequential tagging, syntactic parsing, semantic representations, text classification, and unsupervised discovery of latent structure  
+2. **Identify** core NLP methods for text processing, including lexical analysis, sequential tagging, syntactic parsing, semantic representations, text classification, and unsupervised discovery of latent structure
 3. **Analyze** and understand state-of-the-art algorithms and machine learning techniques, including deep learning, for reasoning about language data
 4. **Implement** state-of-the-art machine learning algorithms for reasoning about language data
 
-## 🏗️ Course Structure
+## Course Structure
 
 **Interactive Lecture Format**:
 - **Live Sessions**: 90-minute interactive lectures via Zoom
@@ -57,44 +57,47 @@ By the end of this course, you will be able to:
 
 Each class session includes:
 - Interactive lectures with live coding demonstrations
-- Guided exercises and problem-solving activities  
+- Guided exercises and problem-solving activities
 - Discussion of concepts and real-world applications
 
-## 📚 Course Resources
+## Course Resources
 
 **Main Text**: Jurafsky and Martin, *Speech and Language Processing* (3rd edition)
 
 **Recommended Background Resources**:
 - Unix: Ken Church's "Unix for Poets"
-- Python: NLTK Book, spaCy documentation  
+- Python: NLTK Book, spaCy documentation
 - Linear Algebra: 3Blue1Brown YouTube series
 - Probability/Statistics: Stanford refresher materials
-- Machine Learning: "A Course in Machine Learning" (Hal Daumé III)
+- Machine Learning: "A Course in Machine Learning" (Hal Daume III)
 
-## 📅 Weekly Schedule
+## Course Outline
 
-| Week | Date | Topic | Reading | Project |
-|------|------|-------|---------|---------|
-| 1 | Sep 1-2 | Introduction & NLP Pipeline | SLP 1, Pinker pp. 83-89 | |
-| 2 | Sep 8-9 | Words and Multi-Words | SLP 2 (through 2.4), 6 | |
-| 3 | Sep 15-16 | Word & Sentence Meaning | Appendix G | |
-| 4 | Sep 22-23 | Sequential Structure | SLP 3, 8 (through 8.4), 9, App. A,B | |
-| 5 | Sep 29-30 | Syntactic Structure | SLP 17, 18, Appendix C | |
-| 6 | Oct 6-7 | Sentence Meaning & Evaluation | SLP 20, App. F, Resnik & Lin (2010) | |
-| 7 | Oct 13-14 | **Fall Break - No Classes** | | |
-| 8 | Oct 20-21 | Machine Learning in NLP | | |
-| 9 | Oct 27-28 | Vector Semantics & Embeddings | SLP 6 | **Midterm** |
-| 10 | Nov 3-4 | Deep Learning Models for NLP | SLP 7, 8 | Project Work |
-| 11 | Nov 10-11 | Transformers | SLP 9 | Project Work |
-| 12 | Nov 17-18 | Language Models & Fine-tuning | SLP 10, 11 | Project Work |
-| 13 | Nov 24-25 | RAG & Graphs in NLP | | Project Work |
-| 14 | Dec 1-2 | Applications: MT, QA, Chatbots | SLP 13, 14, 15 | Project Work |
-| 15 | Dec 8-9 | Ethical AI and NLP | | Project Work |
-| 16 | Dec 15-16 | **Project Presentations** | | **Final Project Due** |
+We will plan to meet in person each week, but I will indicate in advance of any class periods that need to move online.
+
+| Week | Class Date | Topic | Reading | Assignment(s) | Other/Notes |
+|------|------------|-------|---------|---------------|-------------|
+| 1 | January 28, 2026 | Class cancelled due to inclement weather | SLP 1, Pinker pp. 83-89 | Assignment_0 | |
+| 2 | February 4, 2026 | Words and Multi-Words | SLP 2 through section 2.4, 6 | Assignment_1 | |
+| 3 | February 11, 2026 | Word & Sentence Meaning | Appendix G | | |
+| 4 | February 18, 2026 | Sequential Structure | SLP 3, 8 through 8.4, 9, Appendix A, B | | |
+| 5 | February 25, 2026 | Syntactic Structure | SLP Ch 17, 18, Appendix C | Assignment_2 | |
+| 6 | March 5, 2026 | Sentence Meaning | SLP Ch 20, Appendix Ch F | | |
+| 7 | March 11, 2026 | Midterm | | Midterm | |
+| 8 | March 18, 2026 | Spring Break | | | No Classes |
+| 9 | March 25, 2026 | NLP Evaluation | Resnik and Lin (2010), Evaluation of NLP systems | | |
+| 10 | April 1, 2026 | Vector Semantics and Embeddings | SLP 6 | Midterm | |
+| 11 | April 8, 2026 | Deep Learning Models for NLP | SLP 7 & 8 | Work on project | |
+| 12 | April 15, 2026 | Transformers | SLP 9 | Work on project | |
+| 13 | April 22, 2026 | Language Models, Fine-tuning and Masked LM | SLP 10, 11 | Work on project | |
+| 14 | April 29, 2026 | Retrieval Augmented Generation (RAG) | SLP 11 | Work on project | |
+| 15 | May 1, 2026 | Graphs in NLP | SLP Ch 13, 14, 15 | Work on project | |
+| 16 | May 8, 2026 | Finals Week - Project Presentation | | Project Presentations are due, Final Project | |
+| 17 | May 15, 2026 | Final Exam | | | |
 
 *Schedule subject to change - monitor ELMS for updates*
 
-## 📊 Grading Structure
+## Grading Structure
 
 | Component | Weight | Description |
 |-----------|--------|-------------|
@@ -113,7 +116,7 @@ Each class session includes:
 | B | 83.00-86.99 | F | 0.00-59.99 |
 | B- | 80.00-82.99 | | |
 
-## 📝 Course Component Details
+## Course Component Details
 
 ### Participation & Engagement
 - **Components**: Class participation, in-class exercises, contributions to discussions
@@ -121,7 +124,7 @@ Each class session includes:
 - **Assessment**: Based on engagement during interactive sessions and hands-on exercises
 - **Scale**: 5-point subjective assessment
 
-### Midterm Exam  
+### Midterm Exam
 - **Format**: Take-home, no programming
 - **Duration**: Multiple days for flexibility
 - **Content**: Critical thinking about covered material
@@ -132,49 +135,49 @@ Each class session includes:
 - **Components**: Implementation + thoughtful analysis + quality writeup
 - **Timeline**: Second half of semester
 
-## 🤖 AI Policy
+## AI Policy
 
 **LLM Usage Permitted** for ideation and drafting, with requirements:
 - **Cite** all LLM tools used
-- **Specify** which sections are AI-generated  
+- **Specify** which sections are AI-generated
 - **Describe** how AI was used
 - **Be prepared** to explain any submitted work
 
-## 🎯 Collaboration Policy
+## Collaboration Policy
 
 | Activity | Notes | Peers | Web | Joint Work |
 |----------|-------|-------|-----|-----------|
-| **Homework** | ✓ | ✓ | ✗ | ✗ |
-| **Knowledge Checks** | ✓ | ✓ | ✓ | ✗ |  
-| **Midterm** | ✓ | ✗ | ✗ | ✗ |
-| **Final Project** | ✓ | ✓ | ✓ | ✓ |
+| **Homework** | Yes | Yes | No | No |
+| **Knowledge Checks** | Yes | Yes | Yes | No |
+| **Midterm** | Yes | No | No | No |
+| **Final Project** | Yes | Yes | Yes | Yes |
 
-## 💡 Success Tips
+## Success Tips
 
 1. **Participate actively** in discussions and ask questions
-2. **Manage time** effectively - block adequate study time  
+2. **Manage time** effectively - block adequate study time
 3. **Login regularly** to ELMS for announcements
 4. **Don't fall behind** - each week builds on previous content
 5. **Use notifications** - enable ELMS email alerts
 6. **Ask for help** when needed
 
-## 🛡️ Academic Integrity
+## Academic Integrity
 
 All work must adhere to UMD's Code of Academic Integrity. Unauthorized sources (CourseHero, etc.) are prohibited. When in doubt about collaboration boundaries, ask in advance.
 
-## ♿ Accessibility & Support
+## Accessibility & Support
 
-**Disability Services**: Contact ADS (301-314-7682, adsfrontdesk@umd.edu)  
-**Student Resources**: Writing Center, Counseling Center, Academic Support Services  
+**Disability Services**: Contact ADS (301-314-7682, adsfrontdesk@umd.edu)
+**Student Resources**: Writing Center, Counseling Center, Academic Support Services
 **Basic Needs**: Food/housing assistance available through Student Affairs
 
-## 📞 Communication
+## Communication
 
-**Preferred Method**: Email  
-**Response Time**: Within 24 hours (typically M/W/F 7-9am EST)  
-**ELMS**: Important announcements - enable notifications  
+**Preferred Method**: Email
+**Response Time**: Within 24 hours (typically M/W/F 7-9am EST)
+**ELMS**: Important announcements - enable notifications
 
-**What TO email about**: Personal, academic, intellectual concerns  
+**What TO email about**: Personal, academic, intellectual concerns
 **What NOT to email about**: Information easily found in syllabus/ELMS
 
 ---
