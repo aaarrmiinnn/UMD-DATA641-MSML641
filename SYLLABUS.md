@@ -106,9 +106,12 @@ We will plan to meet in person each week, but I will indicate in advance of any 
 
 | Component | Weight | Description |
 |-----------|--------|-------------|
-| **Participation & Engagement** | 40% | Class participation, in-class exercises, contributions |
-| **Midterm Exam** | 15% | Take-home, no programming |
-| **Final Project** | 45% | Team project (3-4 people) |
+| **Class Participation and Engagement** | 5% | Class participation, in-class exercises, contributions |
+| **Homework Assignments** | 20% | Regular homework assignments throughout the semester |
+| **Weekly Quizzes** | 30% | Weekly quizzes to assess understanding |
+| **Midterm Exam** | 10% | Take-home, no programming |
+| **Final Exam** | 10% | Comprehensive final examination |
+| **Final Project** | 25% | Team project (3-4 people) |
 | **Total** | 100% | |
 
 ### Grade Scale
@@ -123,22 +126,40 @@ We will plan to meet in person each week, but I will indicate in advance of any 
 
 ## Course Component Details
 
-### Participation & Engagement
+### Class Participation and Engagement (5%)
 - **Components**: Class participation, in-class exercises, contributions to discussions
 - **Expectations**: Regular questions, answers, meaningful contributions during lectures
 - **Assessment**: Based on engagement during interactive sessions and hands-on exercises
-- **Scale**: 5-point subjective assessment
 
-### Midterm Exam
+### Homework Assignments (20%)
+- **Frequency**: Regular assignments throughout the semester
+- **Format**: Programming exercises and written responses
+- **Purpose**: Reinforce lecture concepts through hands-on practice
+- **Collaboration**: Notes and peer discussion allowed (see Collaboration Policy)
+
+### Weekly Quizzes (30%)
+- **Frequency**: Weekly assessments
+- **Format**: Short quizzes covering recent material
+- **Purpose**: Track understanding and identify areas needing review
+- **Resources**: Notes, peers, and web resources allowed
+
+### Midterm Exam (10%)
 - **Format**: Take-home, no programming
 - **Duration**: Multiple days for flexibility
 - **Content**: Critical thinking about covered material
+- **Resources**: Notes allowed, no peer collaboration
 
-### Final Project
+### Final Exam (10%)
+- **Format**: Comprehensive examination
+- **Content**: All material covered throughout the semester
+- **Purpose**: Assess overall understanding of course concepts
+
+### Final Project (25%)
 - **Structure**: Team project (3-4 people)
 - **Scope**: Realistic/real-world NLP problem
 - **Components**: Implementation + thoughtful analysis + quality writeup
 - **Timeline**: Second half of semester
+- **See**: project/guidelines.md for detailed requirements
 
 ## AI Policy
 
