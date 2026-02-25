@@ -179,7 +179,7 @@ We meet in person each week at ESJ 1215.
 | **Weekly Quizzes** | Individual | Yes | No web, no peer collaboration |
 | **Midterm Exam** | Individual | No | Closed book, no resources |
 | **Final Exam** | Individual | No | Closed book, no resources |
-| **Final Project** | Team (3-4 people) | Yes | All resources allowed |
+| **Final Project** | Team (3-4 people) | Yes | Web resources allowed |
 
 ## Success Tips
 
