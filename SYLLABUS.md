@@ -173,13 +173,13 @@ We meet in person each week at ESJ 1215.
 
 ## Collaboration Policy
 
-| Activity | Notes | Peers | Web | Joint Work |
-|----------|-------|-------|-----|-----------|
-| **Homework** | Yes | Yes | No | No |
-| **Weekly Quizzes** | Yes | Yes | Yes | No |
-| **Midterm** | No | No | No | No |
-| **Final Exam** | No | No | No | No |
-| **Final Project** | Yes | Yes | Yes | Yes |
+| Activity | Individual/Team | Notes Allowed | Resources Allowed |
+|----------|----------------|---------------|-------------------|
+| **Homework Assignments** | Individual | Yes | Web resources allowed, no peer collaboration |
+| **Weekly Quizzes** | Individual | Yes | No web, no peer collaboration |
+| **Midterm Exam** | Individual | No | Closed book, no resources |
+| **Final Exam** | Individual | No | Closed book, no resources |
+| **Final Project** | Team (3-4 people) | Yes | All resources allowed |
 
 ## Success Tips
 
