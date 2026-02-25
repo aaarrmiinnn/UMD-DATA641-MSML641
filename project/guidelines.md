@@ -62,8 +62,8 @@ The final project is the capstone of this course, designed to give you hands-on 
 ## 📅 Timeline & Deliverables
 
 ### Phase 1: Project Proposal (Week 9)
-**Due**: October 28, 2025  
-**Deliverable**: 2-3 page proposal  
+**Due**: March 25, 2026
+**Deliverable**: 2-3 page proposal
 
 **Content**:
 - Problem statement and motivation
@@ -75,8 +75,8 @@ The final project is the capstone of this course, designed to give you hands-on 
 - Timeline with milestones
 
 ### Phase 2: Data Collection & Baseline (Week 11)
-**Due**: November 11, 2025  
-**Deliverable**: Progress report + code repository  
+**Due**: April 8, 2026
+**Deliverable**: Progress report + code repository
 
 **Content**:
 - Data collection and preprocessing pipeline
@@ -87,8 +87,8 @@ The final project is the capstone of this course, designed to give you hands-on 
 - Challenges encountered and solutions
 
 ### Phase 3: Model Development (Week 13)
-**Due**: November 25, 2025  
-**Deliverable**: Technical progress report  
+**Due**: April 22, 2026
+**Deliverable**: Technical progress report
 
 **Content**:
 - Advanced model implementations
@@ -99,7 +99,7 @@ The final project is the capstone of this course, designed to give you hands-on 
 - Plans for final model and evaluation
 
 ### Phase 4: Final Deliverables (Week 16)
-**Due**: December 16, 2025
+**Due**: May 13, 2026
 
 #### 4a. Technical Report (15-20 pages)
 **Structure**:
@@ -179,7 +179,7 @@ The final project is the capstone of this course, designed to give you hands-on 
 
 ### Guidelines
 - **Size**: 3-4 people (no exceptions)
-- **Formation**: Self-selected by October 21
+- **Formation**: Self-selected by March 18, 2026
 - **Skills**: Balance technical skills and domain knowledge
 - **Commitment**: Ensure all members can dedicate adequate time
 

@@ -11,7 +11,7 @@
 
 **Classroom**: Edward St. John Learning and Teaching Center (ESJ 226), Room 1215
 
-Each section has a different meeting time with asynchronous content comprising some of the required class time. You are required to attend the synchronous session during your section's assigned time.
+All sessions are held in-person. Attendance at the weekly class session is required.
 
 ## Contact Information
 
@@ -57,7 +57,7 @@ By the end of this course, you will be able to:
 ## Course Structure
 
 **Interactive Lecture Format**:
-- **Live Sessions**: 90-minute interactive lectures via Zoom
+- **In-Person Sessions**: ~2h45min interactive lectures at ESJ 1215
 - **Hands-on Learning**: Code examples, exercises, and real-time problem solving
 - **Reading Support**: Textbook readings to support lecture content
 
@@ -79,26 +79,26 @@ Each class session includes:
 
 ## Course Outline
 
-We will plan to meet in person each week, but I will indicate in advance of any class periods that need to move online.
+We meet in person each week at ESJ 1215.
 
 | Week | Class Date | Topic | Reading | Lecture Materials | Assignment(s) |
 |------|------------|-------|---------|-------------------|---------------|
 | 1 | January 28, 2026 | Class cancelled due to inclement weather | SLP 1, Pinker pp. 83-89 | | Assignment_0 |
 | 2 | February 4, 2026 | Word Meaning | SLP 2, 6 | `lectures/week01_meaning.ipynb` | Assignment_1 |
 | 3 | February 11, 2026 | Sequence Models | SLP 3, 8, Appendix A, B | `lectures/week02_sequence_models.ipynb` | |
-| 4 | February 18, 2026 | Syntactic Structure | SLP Ch 17, 18, Appendix C | `lectures/week03_syntactic_structure.ipynb` | |
+| 4 | February 18, 2026 | Syntactic Structure *(Optional)* | SLP Ch 17, 18, Appendix C | `lectures/week03_syntactic_structure.ipynb` | |
 | 5 | February 25, 2026 | Sentence Meaning | SLP Ch 20, Appendix F | `lectures/week04_sentence_meaning.ipynb` | Assignment_2 |
-| 6 | March 5, 2026 | Evaluation in NLP | Resnik and Lin (2010) | `lectures/week05_evaluation.ipynb` | |
+| 6 | March 4, 2026 | Evaluation in NLP | Resnik and Lin (2010) | `lectures/week05_evaluation.ipynb` | |
 | 7 | March 11, 2026 | Midterm | | | Midterm |
 | 8 | March 18, 2026 | Spring Break | | | No Classes |
-| 9 | March 25, 2026 | Vector Semantics and Embeddings | SLP 6 | `lectures/week06_vector_semantics.ipynb` | |
-| 10 | April 1, 2026 | Neural Networks in NLP | SLP 7 & 8 | `lectures/week07_neural_networks_in_nlp.ipynb` | Work on project |
-| 11 | April 8, 2026 | Transformers | SLP 9 | `lectures/week08_transformers.ipynb` | Work on project |
-| 12 | April 15, 2026 | Language Models, Fine-tuning and Post-Training | SLP 10, 11 | `lectures/week09_mlm.ipynb` | Work on project |
-| 13 | April 22, 2026 | Retrieval Augmented Generation (RAG) | SLP 11 | `lectures/week10_rag.ipynb` | Work on project |
-| 14 | April 29, 2026 | Graphs in NLP | SLP Ch 13, 14, 15 | `lectures/week11_graphs.ipynb` | Work on project |
-| 15 | May 6, 2026 | Finals Week - Project Presentation | | | Final Project Due |
-| 16 | May 13, 2026 | Final Exam | | | |
+| 9 | March 25, 2026 | Mid-Semester Project Presentations | | | Project Proposal Due |
+| 10 | April 1, 2026 | Vector Semantics and Embeddings | SLP 6 | `lectures/week06_vector_semantics.ipynb` | Work on project |
+| 11 | April 8, 2026 | Neural Networks in NLP | SLP 7 & 8 | `lectures/week07_neural_networks_in_nlp.ipynb` | Work on project |
+| 12 | April 15, 2026 | Transformers | SLP 9 | `lectures/week08_transformers.ipynb` | Work on project |
+| 13 | April 22, 2026 | Language Models, Fine-tuning and Post-Training | SLP 10, 11 | `lectures/week09_mlm.ipynb` | Work on project |
+| 14 | April 29, 2026 | Retrieval Augmented Generation (RAG) | SLP 11 | `lectures/week10_rag.ipynb` | Work on project |
+| 15 | May 6, 2026 | Graphs in NLP | SLP Ch 13, 14, 15 | `lectures/week11_graphs.ipynb` | Work on project |
+| 16 | May 13, 2026 | Final Exam + Final Project Presentations | | | Final Project Due |
 
 *Schedule subject to change - monitor ELMS for updates*
 
@@ -109,8 +109,8 @@ We will plan to meet in person each week, but I will indicate in advance of any 
 | **Class Participation and Engagement** | 5% | Class participation, in-class exercises, contributions |
 | **Homework Assignments** | 20% | Regular homework assignments throughout the semester |
 | **Weekly Quizzes** | 30% | Weekly quizzes to assess understanding |
-| **Midterm Exam** | 10% | Take-home, no programming |
-| **Final Exam** | 10% | Comprehensive final examination |
+| **Midterm Exam** | 10% | In-person, closed book, hardcopy |
+| **Final Exam** | 10% | In-person, closed book, hardcopy |
 | **Final Project** | 25% | Team project (3-4 people) |
 | **Total** | 100% | |
 
@@ -144,15 +144,16 @@ We will plan to meet in person each week, but I will indicate in advance of any 
 - **Resources**: Notes, peers, and web resources allowed
 
 ### Midterm Exam (10%)
-- **Format**: Take-home, no programming
-- **Duration**: Multiple days for flexibility
+- **Format**: In-person, closed book, hardcopy — same format as weekly quizzes
+- **Duration**: Held during regular class time
 - **Content**: Critical thinking about covered material
-- **Resources**: Notes allowed, no peer collaboration
+- **Resources**: No notes, no collaboration
 
 ### Final Exam (10%)
-- **Format**: Comprehensive examination
+- **Format**: In-person, closed book, hardcopy — same format as weekly quizzes
+- **Duration**: Held during finals week class time (May 13)
 - **Content**: All material covered throughout the semester
-- **Purpose**: Assess overall understanding of course concepts
+- **Resources**: No notes, no collaboration
 
 ### Final Project (25%)
 - **Structure**: Team project (3-4 people)
@@ -174,8 +175,9 @@ We will plan to meet in person each week, but I will indicate in advance of any 
 | Activity | Notes | Peers | Web | Joint Work |
 |----------|-------|-------|-----|-----------|
 | **Homework** | Yes | Yes | No | No |
-| **Knowledge Checks** | Yes | Yes | Yes | No |
-| **Midterm** | Yes | No | No | No |
+| **Weekly Quizzes** | Yes | Yes | Yes | No |
+| **Midterm** | No | No | No | No |
+| **Final Exam** | No | No | No | No |
 | **Final Project** | Yes | Yes | Yes | Yes |
 
 ## Success Tips
