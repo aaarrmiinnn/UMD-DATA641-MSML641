@@ -11,7 +11,7 @@
 
 **Classroom**: Edward St. John Learning and Teaching Center (ESJ 226), Room 1215
 
-Each section has a different meeting time with asynchronous content comprising some of the required class time. You are required to attend the synchronous session during your section's assigned time.
+All sessions are held in-person. Attendance at the weekly class session is required.
 
 ## Contact Information
 
@@ -57,7 +57,7 @@ By the end of this course, you will be able to:
 ## Course Structure
 
 **Interactive Lecture Format**:
-- **Live Sessions**: 90-minute interactive lectures via Zoom
+- **In-Person Sessions**: ~2h45min interactive lectures at ESJ 1215
 - **Hands-on Learning**: Code examples, exercises, and real-time problem solving
 - **Reading Support**: Textbook readings to support lecture content
 
@@ -79,7 +79,7 @@ Each class session includes:
 
 ## Course Outline
 
-We will plan to meet in person each week, but I will indicate in advance of any class periods that need to move online.
+We meet in person each week at ESJ 1215.
 
 | Week | Class Date | Topic | Reading | Lecture Materials | Assignment(s) |
 |------|------------|-------|---------|-------------------|---------------|
@@ -109,8 +109,8 @@ We will plan to meet in person each week, but I will indicate in advance of any 
 | **Class Participation and Engagement** | 5% | Class participation, in-class exercises, contributions |
 | **Homework Assignments** | 20% | Regular homework assignments throughout the semester |
 | **Weekly Quizzes** | 30% | Weekly quizzes to assess understanding |
-| **Midterm Exam** | 10% | Take-home, no programming |
-| **Final Exam** | 10% | Comprehensive final examination |
+| **Midterm Exam** | 10% | In-person, closed book, hardcopy |
+| **Final Exam** | 10% | In-person, closed book, hardcopy |
 | **Final Project** | 25% | Team project (3-4 people) |
 | **Total** | 100% | |
 
@@ -144,15 +144,16 @@ We will plan to meet in person each week, but I will indicate in advance of any 
 - **Resources**: Notes, peers, and web resources allowed
 
 ### Midterm Exam (10%)
-- **Format**: Take-home, no programming
-- **Duration**: Multiple days for flexibility
+- **Format**: In-person, closed book, hardcopy — same format as weekly quizzes
+- **Duration**: Held during regular class time
 - **Content**: Critical thinking about covered material
-- **Resources**: Notes allowed, no peer collaboration
+- **Resources**: No notes, no collaboration
 
 ### Final Exam (10%)
-- **Format**: Comprehensive examination
+- **Format**: In-person, closed book, hardcopy — same format as weekly quizzes
+- **Duration**: Held during finals week class time (May 13)
 - **Content**: All material covered throughout the semester
-- **Purpose**: Assess overall understanding of course concepts
+- **Resources**: No notes, no collaboration
 
 ### Final Project (25%)
 - **Structure**: Team project (3-4 people)
@@ -174,8 +175,9 @@ We will plan to meet in person each week, but I will indicate in advance of any 
 | Activity | Notes | Peers | Web | Joint Work |
 |----------|-------|-------|-----|-----------|
 | **Homework** | Yes | Yes | No | No |
-| **Knowledge Checks** | Yes | Yes | Yes | No |
-| **Midterm** | Yes | No | No | No |
+| **Weekly Quizzes** | Yes | Yes | Yes | No |
+| **Midterm** | No | No | No | No |
+| **Final Exam** | No | No | No | No |
 | **Final Project** | Yes | Yes | Yes | Yes |
 
 ## Success Tips
