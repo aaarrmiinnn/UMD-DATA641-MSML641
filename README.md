@@ -89,7 +89,7 @@ Open and run `resources/setup_test.ipynb` to verify your environment is configur
 
 ## Course Outline
 
-We will plan to meet in person each week, but I will indicate in advance of any class periods that need to move online.
+We meet in person each week at ESJ 1215.
 
 | Week | Class Date | Topic | Lecture Materials |
 |------|------------|-------|-------------------|

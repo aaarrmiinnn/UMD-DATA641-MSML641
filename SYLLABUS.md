@@ -136,22 +136,22 @@ We meet in person each week at ESJ 1215.
 - **Schedule**: Assignment 1 (Feb 18), Assignment 2 (Mar 25), Assignment 3 (Apr 22)
 - **Format**: Programming exercises and written responses
 - **Purpose**: Reinforce lecture concepts through hands-on practice
-- **Collaboration**: Notes and peer discussion allowed (see Collaboration Policy)
+- **Collaboration**: Individual work only — no peer collaboration (see Collaboration Policy)
 
 ### Weekly Quizzes (30%)
 - **Frequency**: Weekly assessments
 - **Format**: Short quizzes covering recent material
 - **Purpose**: Track understanding and identify areas needing review
-- **Resources**: Notes, peers, and web resources allowed
+- **Resources**: Notes allowed; no web, no peer collaboration
 
 ### Midterm Exam (10%)
-- **Format**: In-person, closed book, hardcopy — same format as weekly quizzes
+- **Format**: In-person, closed book, hardcopy
 - **Duration**: Held during regular class time
 - **Content**: Critical thinking about covered material
 - **Resources**: No notes, no collaboration
 
 ### Final Exam (10%)
-- **Format**: In-person, closed book, hardcopy — same format as weekly quizzes
+- **Format**: In-person, closed book, hardcopy
 - **Duration**: Held during finals week class time (May 13)
 - **Content**: All material covered throughout the semester
 - **Resources**: No notes, no collaboration
