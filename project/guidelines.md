@@ -2,7 +2,7 @@
 
 **DATA/MSML 641: Natural Language Processing**
 **Worth**: 25% of final grade
-**Team Size**: 3-4 people
+**Team Size**: 2 people (groups of 1 or 3 by special permission only)
 **Duration**: Weeks 9-16 (8 weeks)
 
 ---
@@ -178,7 +178,7 @@ The final project is the capstone of this course, designed to give you hands-on 
 ## 👥 Team Formation
 
 ### Guidelines
-- **Size**: 3-4 people (no exceptions)
+- **Size**: 2 people (groups of 1 or 3 allowed under special circumstances with instructor approval)
 - **Formation**: Self-selected by March 18, 2026
 - **Skills**: Balance technical skills and domain knowledge
 - **Commitment**: Ensure all members can dedicate adequate time

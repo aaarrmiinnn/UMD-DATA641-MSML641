@@ -111,7 +111,7 @@ We meet in person each week at ESJ 1215.
 | **Weekly Quizzes** | 30% | Weekly quizzes to assess understanding |
 | **Midterm Exam** | 10% | In-person, closed book, hardcopy |
 | **Final Exam** | 10% | In-person, closed book, hardcopy |
-| **Final Project** | 25% | Team project (3-4 people) |
+| **Final Project** | 25% | Team project (2 people; groups of 1 or 3 by special permission) |
 | **Total** | 100% | |
 
 ### Grade Scale
@@ -157,7 +157,7 @@ We meet in person each week at ESJ 1215.
 - **Resources**: No notes, no collaboration
 
 ### Final Project (25%)
-- **Structure**: Team project (3-4 people)
+- **Structure**: Team project (2 people; groups of 1 or 3 by special permission)
 - **Scope**: Realistic/real-world NLP problem
 - **Components**: Implementation + thoughtful analysis + quality writeup
 - **Timeline**: Second half of semester
@@ -179,7 +179,7 @@ We meet in person each week at ESJ 1215.
 | **Weekly Quizzes** | Individual | Yes | No web, no peer collaboration |
 | **Midterm Exam** | Individual | No | Closed book, no resources |
 | **Final Exam** | Individual | No | Closed book, no resources |
-| **Final Project** | Team (3-4 people) | Yes | Web resources allowed |
+| **Final Project** | Team (2 people) | Yes | Web resources allowed |
 
 ## Success Tips
 
