@@ -141,7 +141,13 @@ We meet in person each week at ESJ 1215.
 
 ## License & Usage
 
-Course materials are for educational use by enrolled students. Please respect copyright and academic integrity policies.
+[![CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+
+These course materials are released under the [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/) license.
+
+You are free to **use, share, and adapt** these materials for any purpose — including commercially — as long as you give appropriate credit:
+
+> *Armin Mehrabian, DATA/MSML 641: Natural Language Processing, University of Maryland, Spring 2026. Available at: https://github.com/aaarrmiinnn/UMD-DATA641-MSML641*
 
 ---
 
