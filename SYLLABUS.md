@@ -83,19 +83,19 @@ We meet in person each week at ESJ 1215.
 
 | Week | Class Date | Topic | Reading | Lecture Materials | Assignment(s) |
 |------|------------|-------|---------|-------------------|---------------|
-| 1 | January 28, 2026 | Class cancelled due to inclement weather | SLP 1, Pinker pp. 83-89 | | Assignment_0 |
-| 2 | February 4, 2026 | Word Meaning | SLP 2, 6 | `lectures/week01_meaning.ipynb` | Assignment_1 |
+| 1 | January 28, 2026 | Class cancelled due to inclement weather | SLP 1, Pinker pp. 83-89 | | |
+| 2 | February 4, 2026 | Word Meaning | SLP 2, 6 | `lectures/week01_meaning.ipynb` | |
 | 3 | February 11, 2026 | Sequence Models | SLP 3, 8, Appendix A, B | `lectures/week02_sequence_models.ipynb` | |
-| 4 | February 18, 2026 | Syntactic Structure *(Optional)* | SLP Ch 17, 18, Appendix C | `lectures/week03_syntactic_structure.ipynb` | |
-| 5 | February 25, 2026 | Sentence Meaning | SLP Ch 20, Appendix F | `lectures/week04_sentence_meaning.ipynb` | Assignment_2 |
+| 4 | February 18, 2026 | Syntactic Structure *(Optional)* | SLP Ch 17, 18, Appendix C | `lectures/week03_syntactic_structure.ipynb` | Assignment_1 Posted |
+| 5 | February 25, 2026 | Sentence Meaning | SLP Ch 20, Appendix F | `lectures/week04_sentence_meaning.ipynb` | |
 | 6 | March 4, 2026 | Evaluation in NLP | Resnik and Lin (2010) | `lectures/week05_evaluation.ipynb` | |
 | 7 | March 11, 2026 | Midterm | | | Midterm |
 | 8 | March 18, 2026 | Spring Break | | | No Classes |
-| 9 | March 25, 2026 | Mid-Semester Project Presentations | | | Project Proposal Due |
+| 9 | March 25, 2026 | Mid-Semester Project Presentations | | | Assignment_2 Posted, Project Proposal Due |
 | 10 | April 1, 2026 | Vector Semantics and Embeddings | SLP 6 | `lectures/week06_vector_semantics.ipynb` | Work on project |
 | 11 | April 8, 2026 | Neural Networks in NLP | SLP 7 & 8 | `lectures/week07_neural_networks_in_nlp.ipynb` | Work on project |
 | 12 | April 15, 2026 | Transformers | SLP 9 | `lectures/week08_transformers.ipynb` | Work on project |
-| 13 | April 22, 2026 | Language Models, Fine-tuning and Post-Training | SLP 10, 11 | `lectures/week09_mlm.ipynb` | Work on project |
+| 13 | April 22, 2026 | Language Models, Fine-tuning and Post-Training | SLP 10, 11 | `lectures/week09_mlm.ipynb` | Assignment_3 Posted, Work on project |
 | 14 | April 29, 2026 | Retrieval Augmented Generation (RAG) | SLP 11 | `lectures/week10_rag.ipynb` | Work on project |
 | 15 | May 6, 2026 | Graphs in NLP | SLP Ch 13, 14, 15 | `lectures/week11_graphs.ipynb` | Work on project |
 | 16 | May 13, 2026 | Final Exam + Final Project Presentations | | | Final Project Due |
@@ -132,7 +132,8 @@ We meet in person each week at ESJ 1215.
 - **Assessment**: Based on engagement during interactive sessions and hands-on exercises
 
 ### Homework Assignments (20%)
-- **Frequency**: Regular assignments throughout the semester
+- **Count**: 3 assignments total
+- **Schedule**: Assignment 1 (Feb 18), Assignment 2 (Mar 25), Assignment 3 (Apr 22)
 - **Format**: Programming exercises and written responses
 - **Purpose**: Reinforce lecture concepts through hands-on practice
 - **Collaboration**: Notes and peer discussion allowed (see Collaboration Policy)
