@@ -3,7 +3,7 @@
 **DATA/MSML 641: Natural Language Processing**
 **Worth**: 25% of final grade
 **Team Size**: 2 people (groups of 1 or 3 by special permission only)
-**Duration**: Weeks 9-16 (8 weeks)
+**Duration**: Weeks 4-12 (9 weeks)
 
 ---
 
@@ -23,7 +23,7 @@ The final project is the capstone of this course, designed to give you hands-on 
 ### What Makes a Good Project
 - **Real-world relevance**: Addresses an actual problem or need
 - **Technical depth**: Requires multiple NLP techniques covered in class
-- **Appropriate scale**: Achievable in 8 weeks but non-trivial
+- **Appropriate scale**: Achievable in 9 weeks but non-trivial
 - **Clear evaluation**: Has measurable success criteria
 - **Data availability**: Access to sufficient, appropriate data
 
@@ -61,8 +61,8 @@ The final project is the capstone of this course, designed to give you hands-on 
 
 ## 📅 Timeline & Deliverables
 
-### Phase 1: Project Proposal (Week 9)
-**Due**: March 25, 2026
+### Phase 1: Project Proposal (Week 4)
+**Due**: June 24, 2026
 **Deliverable**: 2-3 page proposal
 
 **Content**:
@@ -74,9 +74,9 @@ The final project is the capstone of this course, designed to give you hands-on 
 - Team member roles and responsibilities
 - Timeline with milestones
 
-### Phase 2: Data Collection & Baseline (Week 11)
-**Due**: April 8, 2026
-**Deliverable**: Progress report + code repository
+### Phase 2: Mid-Semester Presentation & Progress Report (Week 6)
+**Due**: July 8, 2026
+**Deliverable**: In-class presentation + progress report + code repository
 
 **Content**:
 - Data collection and preprocessing pipeline
@@ -86,8 +86,8 @@ The final project is the capstone of this course, designed to give you hands-on 
 - Updated project timeline
 - Challenges encountered and solutions
 
-### Phase 3: Model Development (Week 13)
-**Due**: April 22, 2026
+### Phase 3: Model Development (Week 9)
+**Due**: July 29, 2026
 **Deliverable**: Technical progress report
 
 **Content**:
@@ -98,8 +98,8 @@ The final project is the capstone of this course, designed to give you hands-on 
 - Error analysis and failure cases
 - Plans for final model and evaluation
 
-### Phase 4: Final Deliverables (Week 16)
-**Due**: May 13, 2026
+### Phase 4: Final Deliverables (Week 12)
+**Due**: August 19, 2026
 
 #### 4a. Technical Report (15-20 pages)
 **Structure**:
@@ -148,7 +148,7 @@ The final project is the capstone of this course, designed to give you hands-on 
 - Conclusions and future work (2 min)
 - Q&A (5 min)
 
-**Format**: In-class presentation during finals week
+**Format**: Online presentation during Week 12
 
 ## 📊 Grading Rubric (100 points total)
 
@@ -179,7 +179,7 @@ The final project is the capstone of this course, designed to give you hands-on 
 
 ### Guidelines
 - **Size**: 2 people (groups of 1 or 3 allowed under special circumstances with instructor approval)
-- **Formation**: Self-selected by March 18, 2026
+- **Formation**: Self-selected by June 17, 2026 (Week 3)
 - **Skills**: Balance technical skills and domain knowledge
 - **Commitment**: Ensure all members can dedicate adequate time
 

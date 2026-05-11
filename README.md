@@ -1,13 +1,14 @@
 # UMD DATA/MSML 641: Natural Language Processing
 
-**Spring 2026 - University of Maryland**
+**Summer 2026 - University of Maryland**
 
 This repository contains course materials for DATA/MSML 641: Natural Language Processing, a graduate-level course focusing on fundamental concepts and techniques for getting computers to deal intelligently with human language.
 
 ## Course Overview
 
 This course focuses on **interactive lecture-based learning**:
-- **Live lectures**: Wednesdays 6:00pm - 8:45pm at Edward St. John Learning and Teaching Center (ESJ 226), Room 1215
+- **Online sessions**: Wednesdays 5:00pm - 8:30pm (Online)
+- **Asynchronous content**: Video lectures, readings, and review questions
 - **Hands-on components**: Interactive Jupyter notebooks and coding exercises
 
 ### Course Objectives
@@ -89,31 +90,28 @@ Open and run `resources/setup_test.ipynb` to verify your environment is configur
 
 ## Course Outline
 
-We meet in person each week at ESJ 1215.
+Online sessions each Wednesday, 5:00pm - 8:30pm.
 
 | Week | Class Date | Topic | Lecture Materials |
 |------|------------|-------|-------------------|
-| 1 | January 28, 2026 | Class cancelled due to inclement weather | |
-| 2 | February 4, 2026 | Word Meaning | `lectures/week01_meaning.ipynb` |
-| 3 | February 11, 2026 | Sequence Models | `lectures/week02_sequence_models.ipynb` |
-| 4 | February 18, 2026 | Syntactic Structure *(Optional)* | `lectures/week03_syntactic_structure.ipynb` |
-| 5 | February 25, 2026 | Sentence Meaning | `lectures/week04_sentence_meaning.ipynb` |
-| 6 | March 4, 2026 | Evaluation in NLP | `lectures/week05_evaluation.ipynb` |
-| 7 | March 11, 2026 | Midterm | |
-| 8 | March 18, 2026 | Spring Break | No Classes |
-| 9 | March 25, 2026 | Mid-Semester Project Presentations | |
-| 10 | April 1, 2026 | Vector Semantics and Embeddings | `lectures/week06_vector_semantics.ipynb` |
-| 11 | April 8, 2026 | Neural Networks in NLP | `lectures/week07_neural_networks_in_nlp.ipynb` |
-| 12 | April 15, 2026 | Transformers | `lectures/week08_transformers.ipynb` |
-| 13 | April 22, 2026 | Language Models, Fine-tuning and Post-Training | `lectures/week09_mlm.ipynb` |
-| 14 | April 29, 2026 | Retrieval Augmented Generation (RAG) | `lectures/week10_rag.ipynb` |
-| 15 | May 6, 2026 | Graphs in NLP | `lectures/week11_graphs.ipynb` |
-| 16 | May 13, 2026 | Final Exam + Final Project Presentations | |
+| 1 | June 3, 2026 | Word Meaning | `lectures/week01_meaning.ipynb` |
+| 2 | June 10, 2026 | Sequence Models | `lectures/week02_sequence_models.ipynb` |
+| 3 | June 17, 2026 | Evaluation in NLP | `lectures/week05_evaluation.ipynb` |
+| 4 | June 24, 2026 | Vector Semantics and Embeddings | `lectures/week06_vector_semantics.ipynb` |
+| 5 | July 1, 2026 | Neural Networks in NLP | `lectures/week07_neural_networks_in_nlp.ipynb` |
+| 6 | July 8, 2026 | Mid-Semester Project Presentations | Take-home midterm due |
+| 7 | July 15, 2026 | Transformers | `lectures/week08_transformers.ipynb` |
+| 8 | July 22, 2026 | Language Models, Fine-tuning and Post-Training | `lectures/week09_mlm.ipynb` |
+| 9 | July 29, 2026 | Retrieval Augmented Generation (RAG) | `lectures/week11_rag.ipynb` |
+| 10 | August 5, 2026 | Graphs in NLP | `lectures/week10_graphs.ipynb` |
+| 11 | August 12, 2026 | Frontier NLP: Agents, Multimodal and Beyond | `lectures/week12_frontier_nlp.ipynb` |
+| 12 | August 19, 2026 | Final Project Presentations | Take-home final due |
 
 ## Course Components
 
-- **Interactive Lectures**: Hands-on Jupyter notebooks with live coding and exercises
-- **Final Project**: Team project with real-world NLP problem (Weeks 9-16)
+- **Online Lectures**: Asynchronous video content with live online sessions
+- **Hands-on Components**: Interactive Jupyter notebooks and coding exercises
+- **Final Project**: Team project with real-world NLP problem (Weeks 6-12)
 - **Setup Verification**: Use `resources/setup_test.ipynb` to verify your environment
 
 ## Tools & Libraries Used
@@ -135,7 +133,7 @@ We meet in person each week at ESJ 1215.
 ## Getting Help
 
 - **Instructor**: Armin Mehrabian (arminm@umd.edu)
-- **TA**: Palak Wadhwa (pwadhwa@umd.edu) - Monday 3-4 PM ET, Thursday 11 AM-12 PM ET
+- **TA**: TBD
 - **Technical Issues**: Check `docs/troubleshooting.md`
 - **Course Policies**: See `SYLLABUS.md`
 
@@ -147,8 +145,8 @@ These course materials are released under the [Creative Commons Attribution 4.0 
 
 You are free to **use, share, and adapt** these materials for any purpose — including commercially — as long as you give appropriate credit:
 
-> *Armin Mehrabian, DATA/MSML 641: Natural Language Processing, University of Maryland, Spring 2026. Available at: https://github.com/aaarrmiinnn/UMD-DATA641-MSML641*
+> *Armin Mehrabian, DATA/MSML 641: Natural Language Processing, University of Maryland, Summer 2026. Available at: https://github.com/aaarrmiinnn/UMD-DATA641-MSML641*
 
 ---
 
-*Last updated: Spring 2026*
+*Last updated: Summer 2026*

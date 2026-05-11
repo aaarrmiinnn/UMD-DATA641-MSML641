@@ -1,17 +1,17 @@
 # DATA/MSML 641 Syllabus
 
 **Course**: DATA/MSML 641: Natural Language Processing
-**Term**: Spring 2026
+**Term**: Summer 2026
 **Credits**: 3
 **Instructor**: Armin Mehrabian
 
 ## Course Schedule
 
-**Time**: Wednesdays 6:00pm - 8:45pm
+**Time**: Wednesdays 5:00pm - 8:30pm
 
-**Classroom**: Edward St. John Learning and Teaching Center (ESJ 226), Room 1215
+**Format**: Online (asynchronous video content + live online sessions)
 
-All sessions are held in-person. Attendance at the weekly class session is required.
+**Dates**: June 1, 2026 - August 21, 2026 (12 weeks)
 
 ## Contact Information
 
@@ -24,9 +24,7 @@ All sessions are held in-person. Attendance at the weekly class session is requi
 - Important announcements sent via ELMS messaging
 - Enable email and announcement notifications in ELMS
 
-**Teaching Assistant**: Palak Wadhwa
-- **Email**: pwadhwa@umd.edu
-- **Office Hours**: Monday 3-4 PM ET, Thursday 11 AM-12 PM ET
+**Teaching Assistant**: TBD
 
 ## Course Description
 
@@ -56,15 +54,16 @@ By the end of this course, you will be able to:
 
 ## Course Structure
 
-**Interactive Lecture Format**:
-- **In-Person Sessions**: ~2h45min interactive lectures at ESJ 1215
+**Online Format**:
+- **Asynchronous Content**: Video lectures, readings, and review questions
+- **Live Online Sessions**: 3.5-hour weekly sessions (Wednesdays 5:00-8:30pm)
 - **Hands-on Learning**: Code examples, exercises, and real-time problem solving
 - **Reading Support**: Textbook readings to support lecture content
 
-Each class session includes:
-- Interactive lectures with live coding demonstrations
+Each week includes:
+- Asynchronous video content and review questions
+- Live online session with discussion, demos, and Q&A
 - Guided exercises and problem-solving activities
-- Discussion of concepts and real-world applications
 
 ## Course Resources
 
@@ -79,26 +78,22 @@ Each class session includes:
 
 ## Course Outline
 
-We meet in person each week at ESJ 1215.
+Online sessions each Wednesday, 5:00pm - 8:30pm.
 
 | Week | Class Date | Topic | Reading | Lecture Materials | Assignment(s) |
 |------|------------|-------|---------|-------------------|---------------|
-| 1 | January 28, 2026 | Class cancelled due to inclement weather | SLP 1, Pinker pp. 83-89 | | |
-| 2 | February 4, 2026 | Word Meaning | SLP 2, 6 | `lectures/week01_meaning.ipynb` | |
-| 3 | February 11, 2026 | Sequence Models | SLP 3, 8, Appendix A, B | `lectures/week02_sequence_models.ipynb` | |
-| 4 | February 18, 2026 | Syntactic Structure *(Optional)* | SLP Ch 17, 18, Appendix C | `lectures/week03_syntactic_structure.ipynb` | Assignment_1 Posted |
-| 5 | February 25, 2026 | Sentence Meaning | SLP Ch 20, Appendix F | `lectures/week04_sentence_meaning.ipynb` | |
-| 6 | March 4, 2026 | Evaluation in NLP | Resnik and Lin (2010) | `lectures/week05_evaluation.ipynb` | |
-| 7 | March 11, 2026 | Midterm | | | Midterm |
-| 8 | March 18, 2026 | Spring Break | | | No Classes |
-| 9 | March 25, 2026 | Mid-Semester Project Presentations | | | Assignment_2 Posted, Project Proposal Due |
-| 10 | April 1, 2026 | Vector Semantics and Embeddings | SLP 6 | `lectures/week06_vector_semantics.ipynb` | Work on project |
-| 11 | April 8, 2026 | Neural Networks in NLP | SLP 7 & 8 | `lectures/week07_neural_networks_in_nlp.ipynb` | Work on project |
-| 12 | April 15, 2026 | Transformers | SLP 9 | `lectures/week08_transformers.ipynb` | Work on project |
-| 13 | April 22, 2026 | Language Models, Fine-tuning and Post-Training | SLP 10, 11 | `lectures/week09_mlm.ipynb` | Assignment_3 Posted, Work on project |
-| 14 | April 29, 2026 | Retrieval Augmented Generation (RAG) | SLP 11 | `lectures/week10_rag.ipynb` | Work on project |
-| 15 | May 6, 2026 | Graphs in NLP | SLP Ch 13, 14, 15 | `lectures/week11_graphs.ipynb` | Work on project |
-| 16 | May 13, 2026 | Final Exam + Final Project Presentations | | | Final Project Due |
+| 1 | June 3, 2026 | Word Meaning | SLP 1, 2, 6, Pinker pp. 83-89 | `lectures/week01_meaning.ipynb` | |
+| 2 | June 10, 2026 | Sequence Models | SLP 3, 8, Appendix A, B | `lectures/week02_sequence_models.ipynb` | Assignment_1 Posted |
+| 3 | June 17, 2026 | Evaluation in NLP | Resnik and Lin (2010) | `lectures/week05_evaluation.ipynb` | |
+| 4 | June 24, 2026 | Vector Semantics and Embeddings | SLP 6 | `lectures/week06_vector_semantics.ipynb` | Project Proposal Due |
+| 5 | July 1, 2026 | Neural Networks in NLP | SLP 7 & 8 | `lectures/week07_neural_networks_in_nlp.ipynb` | Take-home midterm posted |
+| 6 | July 8, 2026 | Mid-Semester Project Presentations | | | Midterm due, Assignment_2 Posted |
+| 7 | July 15, 2026 | Transformers | SLP 9 | `lectures/week08_transformers.ipynb` | Work on project |
+| 8 | July 22, 2026 | Language Models, Fine-tuning and Post-Training | SLP 10, 11 | `lectures/week09_mlm.ipynb` | Work on project |
+| 9 | July 29, 2026 | Retrieval Augmented Generation (RAG) | SLP 11 | `lectures/week11_rag.ipynb` | Assignment_3 Posted, Work on project |
+| 10 | August 5, 2026 | Graphs in NLP | SLP Ch 13, 14, 15 | `lectures/week10_graphs.ipynb` | Work on project |
+| 11 | August 12, 2026 | Frontier NLP: Agents, Multimodal and Beyond | | `lectures/week12_frontier_nlp.ipynb` | Take-home final posted |
+| 12 | August 19, 2026 | Final Project Presentations | | | Final due, Final Project Due |
 
 *Schedule subject to change - monitor ELMS for updates*
 
@@ -127,13 +122,13 @@ We meet in person each week at ESJ 1215.
 ## Course Component Details
 
 ### Class Participation and Engagement (5%)
-- **Components**: Class participation, in-class exercises, contributions to discussions
-- **Expectations**: Regular questions, answers, meaningful contributions during lectures
-- **Assessment**: Based on engagement during interactive sessions and hands-on exercises
+- **Components**: Discussion board participation, live session attendance, contributions to online discussions
+- **Expectations**: Regular questions, answers, meaningful contributions during live sessions and on discussion boards
+- **Assessment**: Based on engagement during live online sessions and asynchronous participation
 
 ### Homework Assignments (20%)
 - **Count**: 3 assignments total
-- **Schedule**: Assignment 1 (Feb 18), Assignment 2 (Mar 25), Assignment 3 (Apr 22)
+- **Schedule**: Assignment 1 (June 10), Assignment 2 (July 8), Assignment 3 (July 29)
 - **Format**: Programming exercises and written responses
 - **Purpose**: Reinforce lecture concepts through hands-on practice
 - **Collaboration**: Individual work only — no peer collaboration (see Collaboration Policy)
@@ -145,22 +140,24 @@ We meet in person each week at ESJ 1215.
 - **Resources**: Notes allowed; no web, no peer collaboration
 
 ### Midterm Exam (10%)
-- **Format**: In-person, closed book, hardcopy
-- **Duration**: Held during regular class time
-- **Content**: Critical thinking about covered material
-- **Resources**: No notes, no collaboration
+- **Format**: Take-home, open-note
+- **Posted**: Week 5 (July 1)
+- **Due**: Week 6 (July 8)
+- **Content**: Critical thinking about covered material (Weeks 1-5)
+- **Resources**: Notes allowed, no peer collaboration
 
 ### Final Exam (10%)
-- **Format**: In-person, closed book, hardcopy
-- **Duration**: Held during finals week class time (May 13)
+- **Format**: Take-home, open-note
+- **Posted**: Week 11 (August 12)
+- **Due**: Week 12 (August 19)
 - **Content**: All material covered throughout the semester
-- **Resources**: No notes, no collaboration
+- **Resources**: Notes allowed, no peer collaboration
 
 ### Final Project (25%)
 - **Structure**: Team project (2 people; groups of 1 or 3 by special permission)
 - **Scope**: Realistic/real-world NLP problem
 - **Components**: Implementation + thoughtful analysis + quality writeup
-- **Timeline**: Second half of semester
+- **Timeline**: Weeks 4-12 (proposal due Week 4, presentations Week 6 and Week 12)
 - **See**: project/guidelines.md for detailed requirements
 
 ## AI Policy
@@ -177,8 +174,8 @@ We meet in person each week at ESJ 1215.
 |----------|----------------|---------------|-------------------|
 | **Homework Assignments** | Individual | Yes | Web resources allowed, no peer collaboration |
 | **Weekly Quizzes** | Individual | Yes | No web, no peer collaboration |
-| **Midterm Exam** | Individual | No | Closed book, no resources |
-| **Final Exam** | Individual | No | Closed book, no resources |
+| **Midterm Exam** | Individual | Yes | Take-home, open-note, no peer collaboration |
+| **Final Exam** | Individual | Yes | Take-home, open-note, no peer collaboration |
 | **Final Project** | Team (2 people) | Yes | Web resources allowed |
 
 ## Success Tips
