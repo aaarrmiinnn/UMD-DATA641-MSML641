@@ -80,20 +80,114 @@ Each week includes:
 
 Online sessions each Wednesday, 5:00pm - 8:30pm.
 
-| Week | Class Date | Topic | Reading | Lecture Materials | Assignment(s) |
-|------|------------|-------|---------|-------------------|---------------|
-| 1 | June 3, 2026 | Word Meaning | SLP 1, 2, 6, Pinker pp. 83-89 | `lectures/week01_meaning.ipynb` | |
-| 2 | June 10, 2026 | Sequence Models | SLP 3, 8, Appendix A, B | `lectures/week02_sequence_models.ipynb` | Assignment_1 Posted |
-| 3 | June 17, 2026 | Evaluation in NLP | Resnik and Lin (2010) | `lectures/week05_evaluation.ipynb` | |
-| 4 | June 24, 2026 | Vector Semantics and Embeddings | SLP 6 | `lectures/week06_vector_semantics.ipynb` | Project Proposal Due |
-| 5 | July 1, 2026 | Neural Networks in NLP | SLP 7 & 8 | `lectures/week07_neural_networks_in_nlp.ipynb` | Take-home midterm posted |
-| 6 | July 8, 2026 | Mid-Semester Project Presentations | | | Midterm due, Assignment_2 Posted |
-| 7 | July 15, 2026 | Transformers | SLP 9 | `lectures/week08_transformers.ipynb` | Work on project |
-| 8 | July 22, 2026 | Language Models, Fine-tuning and Post-Training | SLP 10, 11 | `lectures/week09_mlm.ipynb` | Work on project |
-| 9 | July 29, 2026 | Retrieval Augmented Generation (RAG) | SLP 11 | `lectures/week11_rag.ipynb` | Assignment_3 Posted, Work on project |
-| 10 | August 5, 2026 | Graphs in NLP | SLP Ch 13, 14, 15 | `lectures/week10_graphs.ipynb` | Work on project |
-| 11 | August 12, 2026 | Frontier NLP: Agents, Multimodal and Beyond | | `lectures/week12_frontier_nlp.ipynb` | Take-home final posted |
-| 12 | August 19, 2026 | Final Project Presentations | | | Final due, Final Project Due |
+Each week includes **asynchronous content** (videos, readings, quizzes — complete before the live session) and a **synchronous live session** (lecture, discussion, demos).
+
+### Week 1 — Word Meaning (June 3)
+- **Asynchronous Videos**: Lecture 2 Videos 1-3 (Words, Multi-Words, Hypothesis Testing), Lecture 3 Videos 1-2 (Word Meaning, Historical Approaches)
+- **Readings**: SLP Ch 1, 2 (through 2.4), 6; Pinker pp. 83-89; SLP Appendix G
+- **Supplementary**:
+  - Jay Alammar, [The Illustrated Word2Vec](https://jalammar.github.io/illustrated-word2vec/)
+  - Ruder, [On Word Embeddings — Part 1](https://www.ruder.io/word-embeddings-1/)
+- **Synchronous**: `lectures/week01_meaning.ipynb`
+
+### Week 2 — Sequence Models (June 10)
+- **Asynchronous Videos**: Lecture 4 Videos (Sequential Structure)
+- **Readings**: SLP Ch 3, 8 (through 8.4), 9, Appendix A, B
+- **Supplementary**:
+  - McCallum, [An Introduction to Conditional Random Fields](https://people.cs.umass.edu/~mccallum/papers/crf-tutorial.pdf)
+  - Collins, [Tagging Problems and Hidden Markov Models](https://www.cs.columbia.edu/~mcollins/hmms-spring2013.pdf)
+- **Synchronous**: `lectures/week02_sequence_models.ipynb`
+- **Assignment**: Assignment_1 Posted
+
+### Week 3 — Evaluation in NLP (June 17)
+- **Asynchronous Videos**: Lecture 6 Video 2 (Evaluation in NLP)
+- **Readings**: Resnik and Lin (2010), *Evaluation of NLP Systems*
+- **Supplementary**:
+  - Ruder, [Challenges and Opportunities in NLP Benchmarking](https://www.ruder.io/nlp-benchmarking/)
+  - Ruder, [The Evolving Landscape of LLM Evaluation](https://newsletter.ruder.io/p/the-evolving-landscape-of-llm-evaluation)
+- **Synchronous**: `lectures/week05_evaluation.ipynb`
+
+### Week 4 — Vector Semantics and Embeddings (June 24)
+- **Asynchronous Videos**: Lecture 8 Video (Introduction to Lexical Semantics)
+- **Readings**: SLP Ch 6
+- **Supplementary**:
+  - Ruder, [Word Embeddings in 2017: Trends and Future Directions](https://www.ruder.io/word-embeddings-2017/)
+  - Jay Alammar, [The Illustrated BERT, ELMo, and Co.](https://jalammar.github.io/illustrated-bert/)
+- **Synchronous**: `lectures/week06_vector_semantics.ipynb`
+- **Assignment**: Project Proposal Due
+
+### Week 5 — Neural Networks in NLP (July 1)
+- **Asynchronous Videos**: Lecture 10 Videos (Deep Learning Models for NLP)
+- **Readings**: SLP Ch 7 & 8
+- **Supplementary**:
+  - 3Blue1Brown, [Neural Networks](https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi) (Ch 1-4)
+  - Olah, [Understanding LSTM Networks](https://colah.github.io/posts/2015-08-Understanding-LSTMs/)
+  - Stanford CS224N, [Language Models, RNNs, GRUs, and LSTMs](https://web.stanford.edu/class/cs224n/readings/cs224n-2019-notes05-LM_RNN.pdf)
+- **Synchronous**: `lectures/week07_neural_networks_in_nlp.ipynb`
+- **Assignment**: Take-home midterm posted
+
+### Week 6 — Mid-Semester Project Presentations (July 8)
+- **Synchronous**: Student project presentations
+- **Assignment**: Midterm due, Assignment_2 Posted
+
+### Week 7 — Transformers (July 15)
+- **Asynchronous Videos**: Lecture 11 Videos (Transformers)
+- **Readings**: SLP Ch 9
+- **Supplementary**:
+  - 3Blue1Brown, [Attention in Transformers, Visually Explained](https://www.youtube.com/watch?v=eMlx5fFNoYc)
+  - 3Blue1Brown, [How might LLMs store facts](https://www.youtube.com/watch?v=9-Jl0dxWQs8)
+  - Jay Alammar, [The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/)
+  - Olah & Carter, [Attention and Augmented Recurrent Neural Networks](https://distill.pub/2016/augmented-rnns/) (interactive)
+- **Synchronous**: `lectures/week08_transformers.ipynb`
+- **Assignment**: Work on project
+
+### Week 8 — Language Models, Fine-tuning and Post-Training (July 22)
+- **Asynchronous Videos**: Lecture 12 Videos (Language Models)
+- **Readings**: SLP Ch 10, 11, 12 ([Model Alignment, Prompting, and In-Context Learning](https://web.stanford.edu/~jurafsky/slp3/12.pdf))
+- **Supplementary**:
+  - Jay Alammar, [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/)
+  - Lilian Weng, [Prompt Engineering](https://lilianweng.github.io/posts/2023-03-15-prompt-engineering/) (covers RLHF, instruction tuning, chain-of-thought)
+- **Synchronous**: `lectures/week09_mlm.ipynb`
+- **Assignment**: Work on project
+
+### Week 9 — Retrieval Augmented Generation (July 29)
+- **Asynchronous Videos**: Lecture 13 Videos (RAG)
+- **Readings**: SLP Ch 11
+- **Supplementary**:
+  - Lewis et al., [Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://arxiv.org/abs/2005.11401)
+  - NVIDIA, [What Is Retrieval-Augmented Generation?](https://blogs.nvidia.com/blog/what-is-retrieval-augmented-generation/)
+  - Pinecone, [Retrieval-Augmented Generation Guide](https://www.pinecone.io/learn/retrieval-augmented-generation/)
+- **Synchronous**: `lectures/week11_rag.ipynb`
+- **Assignment**: Assignment_3 Posted, Work on project
+
+### Week 10 — Graphs in NLP (August 5)
+- **Asynchronous Videos**: Lecture 12 Video 2 (Graphs in NLP), Lecture 13 Videos 1-2 (NLP Applications, NLP in Social Science)
+- **Readings**: SLP Ch 13, 14, 15
+- **Supplementary**:
+  - Sanchez-Lengeling et al., [A Gentle Introduction to Graph Neural Networks](https://distill.pub/2021/gnn-intro/) (interactive)
+  - Stanford CS224W, [Machine Learning with Graphs](https://cs224w.stanford.edu/) (lecture videos)
+- **Synchronous**: `lectures/week10_graphs.ipynb`
+- **Assignment**: Work on project
+
+### Week 11 — Frontier NLP: Agents, Multimodal and Beyond (August 12)
+- **Asynchronous Videos**: Lecture 14 Videos 1-2 (Social Biases in AI, Ethical Considerations in NLP)
+- **Readings**:
+  - Anthropic, [Building Effective Agents](https://www.anthropic.com/research/building-effective-agents)
+  - Yao et al., [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629)
+  - Wei et al., [Chain-of-Thought Prompting Elicits Reasoning in Large Language Models](https://arxiv.org/abs/2201.11903)
+- **Supplementary**:
+  - Lilian Weng, [LLM Powered Autonomous Agents](https://lilianweng.github.io/posts/2023-06-23-agent/)
+  - Radford et al., [CLIP: Learning Transferable Visual Models From Natural Language Supervision](https://arxiv.org/abs/2103.00020)
+  - HuggingFace, [Vision Language Models Explained](https://huggingface.co/blog/vlms)
+  - Anthropic, [Introducing the Model Context Protocol](https://www.anthropic.com/news/model-context-protocol)
+  - Andrew Ng, [What's Next for AI Agentic Workflows](https://www.youtube.com/watch?v=sal78ACtGTc) (video)
+  - DeepSeek AI, [DeepSeek-R1: Incentivizing Reasoning via RL](https://arxiv.org/abs/2501.12948)
+- **Synchronous**: `lectures/week12_frontier_nlp.ipynb`
+- **Assignment**: Take-home final posted
+
+### Week 12 — Final Project Presentations (August 19)
+- **Synchronous**: Student project presentations
+- **Assignment**: Final due, Final Project Due
 
 *Schedule subject to change - monitor ELMS for updates*
 
@@ -104,8 +198,8 @@ Online sessions each Wednesday, 5:00pm - 8:30pm.
 | **Class Participation and Engagement** | 5% | Class participation, in-class exercises, contributions |
 | **Homework Assignments** | 20% | Regular homework assignments throughout the semester |
 | **Weekly Quizzes** | 30% | Weekly quizzes to assess understanding |
-| **Midterm Exam** | 10% | In-person, closed book, hardcopy |
-| **Final Exam** | 10% | In-person, closed book, hardcopy |
+| **Midterm Exam** | 10% | Take-home, open-note |
+| **Final Exam** | 10% | Take-home, open-note |
 | **Final Project** | 25% | Team project (2 people; groups of 1 or 3 by special permission) |
 | **Total** | 100% | |
 

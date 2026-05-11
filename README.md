@@ -90,7 +90,7 @@ Open and run `resources/setup_test.ipynb` to verify your environment is configur
 
 ## Course Outline
 
-Online sessions each Wednesday, 5:00pm - 8:30pm.
+Online sessions each Wednesday, 5:00pm - 8:30pm. See `SYLLABUS.md` for full async content (videos, readings, supplementary materials) for each week.
 
 | Week | Class Date | Topic | Lecture Materials |
 |------|------------|-------|-------------------|
