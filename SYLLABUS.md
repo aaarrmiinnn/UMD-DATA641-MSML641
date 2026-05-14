@@ -55,15 +55,13 @@ By the end of this course, you will be able to:
 ## Course Structure
 
 **Online Format**:
-- **Asynchronous Content**: Video lectures, readings, and review questions
-- **Live Online Sessions**: 3.5-hour weekly sessions (Wednesdays 5:00-8:30pm)
+- **Asynchronous Content** (~1.5 hours/week): Video lectures, readings, review questions, and supplementary materials — completed before the live session
+- **Synchronous Live Sessions** (~2 hours/week): Wednesdays via Zoom, interactive lecture with in-class exercises, polls, demos, and Q&A
 - **Hands-on Learning**: Code examples, exercises, and real-time problem solving
-- **Reading Support**: Textbook readings to support lecture content
 
 Each week includes:
-- Asynchronous video content and review questions
-- Live online session with discussion, demos, and Q&A
-- Guided exercises and problem-solving activities
+- Asynchronous video content, readings, and review questions
+- Live online session (~2 hours) with discussion, demos, exercises, and Q&A
 
 ## Course Resources
 
@@ -216,9 +214,9 @@ Each week includes **asynchronous content** (videos, readings, quizzes — compl
 ## Course Component Details
 
 ### Class Participation and Engagement (5%)
-- **Components**: Discussion board participation, live session attendance, contributions to online discussions
-- **Expectations**: Regular questions, answers, meaningful contributions during live sessions and on discussion boards
-- **Assessment**: Based on engagement during live online sessions and asynchronous participation
+- **Components**: In-class exercises, Zoom polls, in-class discussions, discussion board contributions
+- **Expectations**: Regular questions, answers, and meaningful contributions during live sessions and on discussion boards
+- **Assessment**: Based on active participation in synchronous activities (exercises, polls, discussions) and asynchronous engagement (discussion board posts)
 
 ### Homework Assignments (20%)
 - **Count**: 3 assignments total
