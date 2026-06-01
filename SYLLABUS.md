@@ -1,6 +1,6 @@
-# DATA/MSML 641 Syllabus
+# DATA/MSAI/MSML 641 Syllabus
 
-**Course**: DATA/MSML 641: Natural Language Processing
+**Course**: DATA/MSAI/MSML 641: Natural Language Processing (cross-listed: DATA641 / MSAI641 / MSML641)
 **Term**: Summer 2026
 **Credits**: 3
 **Instructor**: Armin Mehrabian
@@ -81,15 +81,15 @@ Online sessions each Wednesday, 5:00pm - 8:30pm.
 Each week includes **asynchronous content** (videos, readings, quizzes — complete before the live session) and a **synchronous live session** (lecture, discussion, demos).
 
 ### Week 1 — Word Meaning (June 3)
-- **Asynchronous Videos**: Lecture 2 Videos 1-3 (Words, Multi-Words, Hypothesis Testing), Lecture 3 Videos 1-2 (Word Meaning, Historical Approaches)
-- **Readings**: SLP Ch 1, 2 (through 2.4), 6; Pinker pp. 83-89; SLP Appendix G
+- **Asynchronous Videos**: V1 *Words, Words, Words! An Introduction*; V2 *Multi-Word Units and Collocations*; V3 *Introduction to Hypothesis Testing*; V4 *Introduction to Word Meaning and Lexicography*; V5 *Historical Approaches to Understanding Word Meaning*
+- **Readings**: SLP Ch 1, 2 (through 2.4); Pinker pp. 83-89
 - **Supplementary**:
   - Jay Alammar, [The Illustrated Word2Vec](https://jalammar.github.io/illustrated-word2vec/)
   - Ruder, [On Word Embeddings — Part 1](https://www.ruder.io/word-embeddings-1/)
 - **Synchronous**: `lectures/week01_meaning.ipynb`
 
 ### Week 2 — Sequence Models (June 10)
-- **Asynchronous Videos**: Lecture 4 Videos (Sequential Structure)
+- **Asynchronous Videos**: V1 *Introduction to Sequence Models*; V2 *Evaluation of Language Models*
 - **Readings**: SLP Ch 3, 8 (through 8.4), 9, Appendix A, B
 - **Supplementary**:
   - McCallum, [An Introduction to Conditional Random Fields](https://people.cs.umass.edu/~mccallum/papers/crf-tutorial.pdf)
@@ -98,7 +98,7 @@ Each week includes **asynchronous content** (videos, readings, quizzes — compl
 - **Assignment**: Assignment_1 Posted
 
 ### Week 3 — Evaluation in NLP (June 17)
-- **Asynchronous Videos**: Lecture 6 Video 2 (Evaluation in NLP)
+- **Asynchronous Videos**: V1 *Evaluation in NLP*
 - **Readings**: Resnik and Lin (2010), *Evaluation of NLP Systems*
 - **Supplementary**:
   - Ruder, [Challenges and Opportunities in NLP Benchmarking](https://www.ruder.io/nlp-benchmarking/)
@@ -106,7 +106,7 @@ Each week includes **asynchronous content** (videos, readings, quizzes — compl
 - **Synchronous**: `lectures/week05_evaluation.ipynb`
 
 ### Week 4 — Vector Semantics and Embeddings (June 24)
-- **Asynchronous Videos**: Lecture 8 Video (Introduction to Lexical Semantics)
+- **Asynchronous Videos**: V1 *Introduction to Lexical Semantics*
 - **Readings**: SLP Ch 6
 - **Supplementary**:
   - Ruder, [Word Embeddings in 2017: Trends and Future Directions](https://www.ruder.io/word-embeddings-2017/)
@@ -115,7 +115,7 @@ Each week includes **asynchronous content** (videos, readings, quizzes — compl
 - **Assignment**: Project Proposal Due
 
 ### Week 5 — Neural Networks in NLP (July 1)
-- **Asynchronous Videos**: Lecture 10 Videos (Deep Learning Models for NLP)
+- **Asynchronous Videos**: V1 *Introduction to Neural Networks in NLP*
 - **Readings**: SLP Ch 7 & 8
 - **Supplementary**:
   - 3Blue1Brown, [Neural Networks](https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi) (Ch 1-4)
@@ -129,7 +129,7 @@ Each week includes **asynchronous content** (videos, readings, quizzes — compl
 - **Assignment**: Midterm due, Assignment_2 Posted
 
 ### Week 7 — Transformers (July 15)
-- **Asynchronous Videos**: Lecture 11 Videos (Transformers)
+- **Asynchronous Videos**: V1 *Introduction to Transformers*
 - **Readings**: SLP Ch 9
 - **Supplementary**:
   - 3Blue1Brown, [Attention in Transformers, Visually Explained](https://www.youtube.com/watch?v=eMlx5fFNoYc)
@@ -140,7 +140,7 @@ Each week includes **asynchronous content** (videos, readings, quizzes — compl
 - **Assignment**: Work on project
 
 ### Week 8 — Language Models, Fine-tuning and Post-Training (July 22)
-- **Asynchronous Videos**: Lecture 12 Videos (Language Models)
+- **Asynchronous Videos**: V1 *Large Language Models with Transformer Architecture*; V2 *Bidirectional Transformer Encoder and Masked Language Models*
 - **Readings**: SLP Ch 10, 11, 12 ([Model Alignment, Prompting, and In-Context Learning](https://web.stanford.edu/~jurafsky/slp3/12.pdf))
 - **Supplementary**:
   - Jay Alammar, [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/)
@@ -149,7 +149,7 @@ Each week includes **asynchronous content** (videos, readings, quizzes — compl
 - **Assignment**: Work on project
 
 ### Week 9 — Retrieval Augmented Generation (July 29)
-- **Asynchronous Videos**: Lecture 13 Videos (RAG)
+- **Asynchronous Videos**: V1 *Retrieval Augmented Generation (RAG)*
 - **Readings**: SLP Ch 11
 - **Supplementary**:
   - Lewis et al., [Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://arxiv.org/abs/2005.11401)
@@ -159,7 +159,7 @@ Each week includes **asynchronous content** (videos, readings, quizzes — compl
 - **Assignment**: Assignment_3 Posted, Work on project
 
 ### Week 10 — Graphs in NLP (August 5)
-- **Asynchronous Videos**: Lecture 12 Video 2 (Graphs in NLP), Lecture 13 Videos 1-2 (NLP Applications, NLP in Social Science)
+- **Asynchronous Videos**: V1 *Graph in NLP*; V2 *NLP Applications*; V3 *NLP and the Use Case in Social Science*
 - **Readings**: SLP Ch 13, 14, 15
 - **Supplementary**:
   - Sanchez-Lengeling et al., [A Gentle Introduction to Graph Neural Networks](https://distill.pub/2021/gnn-intro/) (interactive)
@@ -168,7 +168,7 @@ Each week includes **asynchronous content** (videos, readings, quizzes — compl
 - **Assignment**: Work on project
 
 ### Week 11 — Frontier NLP: Agents, Multimodal and Beyond (August 12)
-- **Asynchronous Videos**: Lecture 14 Videos 1-2 (Social Biases in AI, Ethical Considerations in NLP)
+- **Asynchronous Videos**: V1 *Social Biases in AI*; V2 *Ethical Considerations in NLP and AI*
 - **Readings**:
   - Anthropic, [Building Effective Agents](https://www.anthropic.com/research/building-effective-agents)
   - Yao et al., [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629)
@@ -180,7 +180,7 @@ Each week includes **asynchronous content** (videos, readings, quizzes — compl
   - Anthropic, [Introducing the Model Context Protocol](https://www.anthropic.com/news/model-context-protocol)
   - Andrew Ng, [What's Next for AI Agentic Workflows](https://www.youtube.com/watch?v=sal78ACtGTc) (video)
   - DeepSeek AI, [DeepSeek-R1: Incentivizing Reasoning via RL](https://arxiv.org/abs/2501.12948)
-- **Synchronous**: `lectures/week12_frontier_nlp.ipynb`
+- **Synchronous**: _TBD (notebook in development)_
 - **Assignment**: Take-home final posted
 
 ### Week 12 — Final Project Presentations (August 19)
@@ -297,6 +297,10 @@ All work must adhere to UMD's Code of Academic Integrity. Unauthorized sources (
 
 **What TO email about**: Personal, academic, intellectual concerns
 **What NOT to email about**: Information easily found in syllabus/ELMS
+
+## Acknowledgments
+
+The asynchronous video lectures for this course were created by **Dr. Shabnam Tafreshi**, an expert in natural language processing and machine learning. Dr. Tafreshi passed away in October 2025. We honor her memory by continuing to share and learn from her work through these course videos.
 
 ---
 
