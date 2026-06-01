@@ -110,7 +110,7 @@ Online sessions each Wednesday, 5:00pm - 8:30pm. See `SYLLABUS.md` for full asyn
 
 - **Online Lectures**: Asynchronous video content with live online sessions
 - **Hands-on Components**: Interactive Jupyter notebooks and coding exercises
-- **Final Project**: Team project with real-world NLP problem (full semester)
+- **Final Project**: Build a startup. Teams of 3 ship a working NLP product over the full semester with weekly progress reports. See `project/guidelines.md`
 - **Setup Verification**: Use `resources/setup_test.ipynb` to verify your environment
 
 ## Tools & Libraries Used
