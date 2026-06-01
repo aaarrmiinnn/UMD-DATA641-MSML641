@@ -196,7 +196,7 @@ Each week includes **asynchronous content** (videos, readings, quizzes — compl
 | **Class Participation and Engagement** | 5% | Class participation, in-class exercises, contributions |
 | **Homework Assignments** | 30% | Regular homework assignments throughout the semester |
 | **Weekly Quizzes** | 20% | Weekly quizzes to assess understanding |
-| **Final Project** | 45% | Team project (3 people; groups of 2 or 4 by special permission) |
+| **Final Project** | 45% | Build a startup: a team of 3 ships an NLP product (groups of 2 or 4 by special permission) |
 | **Total** | 100% | |
 
 ### Grade Scale
@@ -221,7 +221,7 @@ Each week includes **asynchronous content** (videos, readings, quizzes — compl
 - **Schedule**: Assignment 1 (June 10), Assignment 2 (July 8), Assignment 3 (July 29)
 - **Format**: Programming exercises and written responses
 - **Purpose**: Reinforce lecture concepts through hands-on practice
-- **Collaboration**: Individual work only — no peer collaboration (see Collaboration Policy)
+- **Collaboration**: Individual work only, no peer collaboration (see Collaboration Policy)
 
 ### Weekly Quizzes (20%)
 - **Frequency**: Weekly assessments
@@ -230,11 +230,11 @@ Each week includes **asynchronous content** (videos, readings, quizzes — compl
 - **Resources**: Notes allowed; no web, no peer collaboration
 
 ### Final Project (45%)
-- **Structure**: Team project (3 people; groups of 2 or 4 by special permission)
-- **Scope**: Realistic/real-world NLP problem
-- **Components**: Implementation + thoughtful analysis + quality writeup
-- **Timeline**: Full semester with weekly reports; presentations in Week 6 (mid-semester) and Week 12 (final)
-- **See**: project/guidelines.md for detailed requirements
+- **Structure**: Build a startup. Teams of 3 form a named company and ship a working NLP product (groups of 2 or 4 by special permission)
+- **How it works**: A weekly build, measure, learn loop with a short standup and a written report each week
+- **Grading**: Weekly reports 30%, mid-semester checkpoint in Week 6 5%, final product and demo day in Week 12 10%
+- **Timeline**: Full semester. Mid-semester demo in Week 6, demo day in Week 12
+- **See**: [project/guidelines.md](project/guidelines.md) for the full description, timeline, and rubrics
 
 ## AI Policy
 
