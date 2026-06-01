@@ -2,8 +2,6 @@
 team: <your-company-name>
 week: <NN>
 date: <YYYY-MM-DD>
-repo: <your-repo-url>
-deploy_url: <live-product-url-or-leave-empty>
 members:
   - name: <name>
     github: <handle>
@@ -21,7 +19,7 @@ north_star:
 ---
 
 ## Shipped this week
-- <what is now merged or deployed>  (evidence: #12, PR #34)
+- <what is now merged or deployed>  (evidence: #12, PR #34; link the live product if it is deployed)
 
 ## User / validation learning
 - <what you learned + how you got it: an interview, usage data, a task test>
