@@ -1,9 +1,9 @@
 # Final Project Guidelines
 
 **DATA/MSML 641: Natural Language Processing**
-**Worth**: 25% of final grade
-**Team Size**: 2 people (groups of 1 or 3 by special permission only)
-**Duration**: Weeks 4-12 (9 weeks)
+**Worth**: 45% of final grade
+**Team Size**: 3 people (groups of 2 or 4 by special permission only)
+**Duration**: Full semester with weekly reports
 
 ---
 
@@ -178,7 +178,7 @@ The final project is the capstone of this course, designed to give you hands-on 
 ## 👥 Team Formation
 
 ### Guidelines
-- **Size**: 2 people (groups of 1 or 3 allowed under special circumstances with instructor approval)
+- **Size**: 3 people (groups of 2 or 4 allowed under special circumstances with instructor approval)
 - **Formation**: Self-selected by June 17, 2026 (Week 3)
 - **Skills**: Balance technical skills and domain knowledge
 - **Commitment**: Ensure all members can dedicate adequate time

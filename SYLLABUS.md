@@ -122,11 +122,11 @@ Each week includes **asynchronous content** (videos, readings, quizzes — compl
   - Olah, [Understanding LSTM Networks](https://colah.github.io/posts/2015-08-Understanding-LSTMs/)
   - Stanford CS224N, [Language Models, RNNs, GRUs, and LSTMs](https://web.stanford.edu/class/cs224n/readings/cs224n-2019-notes05-LM_RNN.pdf)
 - **Synchronous**: `lectures/week07_neural_networks_in_nlp.ipynb`
-- **Assignment**: Take-home midterm posted
+- **Assignment**: Work on project
 
 ### Week 6 — Mid-Semester Project Presentations (July 8)
 - **Synchronous**: Student project presentations
-- **Assignment**: Midterm due, Assignment_2 Posted
+- **Assignment**: Mid-semester project presentation, Assignment_2 Posted
 
 ### Week 7 — Transformers (July 15)
 - **Asynchronous Videos**: V1 *Introduction to Transformers*
@@ -181,11 +181,11 @@ Each week includes **asynchronous content** (videos, readings, quizzes — compl
   - Andrew Ng, [What's Next for AI Agentic Workflows](https://www.youtube.com/watch?v=sal78ACtGTc) (video)
   - DeepSeek AI, [DeepSeek-R1: Incentivizing Reasoning via RL](https://arxiv.org/abs/2501.12948)
 - **Synchronous**: _TBD (notebook in development)_
-- **Assignment**: Take-home final posted
+- **Assignment**: Work on project
 
 ### Week 12 — Final Project Presentations (August 19)
 - **Synchronous**: Student project presentations
-- **Assignment**: Final due, Final Project Due
+- **Assignment**: Final Project Due
 
 *Schedule subject to change - monitor ELMS for updates*
 
@@ -194,11 +194,9 @@ Each week includes **asynchronous content** (videos, readings, quizzes — compl
 | Component | Weight | Description |
 |-----------|--------|-------------|
 | **Class Participation and Engagement** | 5% | Class participation, in-class exercises, contributions |
-| **Homework Assignments** | 20% | Regular homework assignments throughout the semester |
-| **Weekly Quizzes** | 30% | Weekly quizzes to assess understanding |
-| **Midterm Exam** | 10% | Take-home, open-note |
-| **Final Exam** | 10% | Take-home, open-note |
-| **Final Project** | 25% | Team project (2 people; groups of 1 or 3 by special permission) |
+| **Homework Assignments** | 30% | Regular homework assignments throughout the semester |
+| **Weekly Quizzes** | 20% | Weekly quizzes to assess understanding |
+| **Final Project** | 45% | Team project (3 people; groups of 2 or 4 by special permission) |
 | **Total** | 100% | |
 
 ### Grade Scale
@@ -218,38 +216,24 @@ Each week includes **asynchronous content** (videos, readings, quizzes — compl
 - **Expectations**: Regular questions, answers, and meaningful contributions during live sessions and on discussion boards
 - **Assessment**: Based on active participation in synchronous activities (exercises, polls, discussions) and asynchronous engagement (discussion board posts)
 
-### Homework Assignments (20%)
+### Homework Assignments (30%)
 - **Count**: 3 assignments total
 - **Schedule**: Assignment 1 (June 10), Assignment 2 (July 8), Assignment 3 (July 29)
 - **Format**: Programming exercises and written responses
 - **Purpose**: Reinforce lecture concepts through hands-on practice
 - **Collaboration**: Individual work only — no peer collaboration (see Collaboration Policy)
 
-### Weekly Quizzes (30%)
+### Weekly Quizzes (20%)
 - **Frequency**: Weekly assessments
 - **Format**: Short quizzes covering recent material
 - **Purpose**: Track understanding and identify areas needing review
 - **Resources**: Notes allowed; no web, no peer collaboration
 
-### Midterm Exam (10%)
-- **Format**: Take-home, open-note
-- **Posted**: Week 5 (July 1)
-- **Due**: Week 6 (July 8)
-- **Content**: Critical thinking about covered material (Weeks 1-5)
-- **Resources**: Notes allowed, no peer collaboration
-
-### Final Exam (10%)
-- **Format**: Take-home, open-note
-- **Posted**: Week 11 (August 12)
-- **Due**: Week 12 (August 19)
-- **Content**: All material covered throughout the semester
-- **Resources**: Notes allowed, no peer collaboration
-
-### Final Project (25%)
-- **Structure**: Team project (2 people; groups of 1 or 3 by special permission)
+### Final Project (45%)
+- **Structure**: Team project (3 people; groups of 2 or 4 by special permission)
 - **Scope**: Realistic/real-world NLP problem
 - **Components**: Implementation + thoughtful analysis + quality writeup
-- **Timeline**: Weeks 4-12 (proposal due Week 4, presentations Week 6 and Week 12)
+- **Timeline**: Full semester with weekly reports; presentations in Week 6 (mid-semester) and Week 12 (final)
 - **See**: project/guidelines.md for detailed requirements
 
 ## AI Policy
@@ -266,9 +250,7 @@ Each week includes **asynchronous content** (videos, readings, quizzes — compl
 |----------|----------------|---------------|-------------------|
 | **Homework Assignments** | Individual | Yes | Web resources allowed, no peer collaboration |
 | **Weekly Quizzes** | Individual | Yes | No web, no peer collaboration |
-| **Midterm Exam** | Individual | Yes | Take-home, open-note, no peer collaboration |
-| **Final Exam** | Individual | Yes | Take-home, open-note, no peer collaboration |
-| **Final Project** | Team (2 people) | Yes | Web resources allowed |
+| **Final Project** | Team (3 people) | Yes | Web resources allowed |
 
 ## Success Tips
 
