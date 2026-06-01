@@ -98,19 +98,19 @@ Online sessions each Wednesday, 5:00pm - 8:30pm. See `SYLLABUS.md` for full asyn
 | 3 | June 17, 2026 | Evaluation in NLP | `lectures/week05_evaluation.ipynb` |
 | 4 | June 24, 2026 | Vector Semantics and Embeddings | `lectures/week06_vector_semantics.ipynb` |
 | 5 | July 1, 2026 | Neural Networks in NLP | `lectures/week07_neural_networks_in_nlp.ipynb` |
-| 6 | July 8, 2026 | Mid-Semester Project Presentations | Take-home midterm due |
+| 6 | July 8, 2026 | Mid-Semester Project Presentations | Mid-semester project presentation |
 | 7 | July 15, 2026 | Transformers | `lectures/week08_transformers.ipynb` |
 | 8 | July 22, 2026 | Language Models, Fine-tuning and Post-Training | `lectures/week09_mlm.ipynb` |
 | 9 | July 29, 2026 | Retrieval Augmented Generation (RAG) | `lectures/week11_rag.ipynb` |
 | 10 | August 5, 2026 | Graphs in NLP | `lectures/week10_graphs.ipynb` |
 | 11 | August 12, 2026 | Frontier NLP: Agents, Multimodal and Beyond | _TBD (notebook in development)_ |
-| 12 | August 19, 2026 | Final Project Presentations | Take-home final due |
+| 12 | August 19, 2026 | Final Project Presentations | Final project due |
 
 ## Course Components
 
 - **Online Lectures**: Asynchronous video content with live online sessions
 - **Hands-on Components**: Interactive Jupyter notebooks and coding exercises
-- **Final Project**: Team project with real-world NLP problem (Weeks 6-12)
+- **Final Project**: Team project with real-world NLP problem (full semester)
 - **Setup Verification**: Use `resources/setup_test.ipynb` to verify your environment
 
 ## Tools & Libraries Used
