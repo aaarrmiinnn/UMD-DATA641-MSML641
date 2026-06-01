@@ -46,7 +46,6 @@ When converting slides to notebooks:
 - [ ] Week 2: Words and Multi-Words  
 - [ ] Week 3: Word & Sentence Meaning
 - [ ] Week 4: Sequential Structure
-- [ ] Week 5: Syntactic Structure
 - [ ] Week 6: Sentence Meaning & Evaluation
 - [ ] Week 8: Machine Learning in NLP
 - [ ] Week 9: Vector Semantics & Embeddings

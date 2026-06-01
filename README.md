@@ -1,8 +1,8 @@
-# UMD DATA/MSML 641: Natural Language Processing
+# UMD DATA/MSAI/MSML 641: Natural Language Processing
 
 **Summer 2026 - University of Maryland**
 
-This repository contains course materials for DATA/MSML 641: Natural Language Processing, a graduate-level course focusing on fundamental concepts and techniques for getting computers to deal intelligently with human language.
+This repository contains course materials for DATA/MSAI/MSML 641: Natural Language Processing (cross-listed as DATA641 / MSAI641 / MSML641), a graduate-level course focusing on fundamental concepts and techniques for getting computers to deal intelligently with human language.
 
 ## Course Overview
 
@@ -28,7 +28,6 @@ By the end of this course, you will be able to:
 ├── lectures/                # Interactive lecture notebooks
 │   ├── week01_meaning.ipynb
 │   ├── week02_sequence_models.ipynb
-│   ├── week03_syntactic_structure.ipynb
 │   └── ...
 ├── project/                 # Final project materials
 │   ├── guidelines.md
@@ -104,7 +103,7 @@ Online sessions each Wednesday, 5:00pm - 8:30pm. See `SYLLABUS.md` for full asyn
 | 8 | July 22, 2026 | Language Models, Fine-tuning and Post-Training | `lectures/week09_mlm.ipynb` |
 | 9 | July 29, 2026 | Retrieval Augmented Generation (RAG) | `lectures/week11_rag.ipynb` |
 | 10 | August 5, 2026 | Graphs in NLP | `lectures/week10_graphs.ipynb` |
-| 11 | August 12, 2026 | Frontier NLP: Agents, Multimodal and Beyond | `lectures/week12_frontier_nlp.ipynb` |
+| 11 | August 12, 2026 | Frontier NLP: Agents, Multimodal and Beyond | _TBD (notebook in development)_ |
 | 12 | August 19, 2026 | Final Project Presentations | Take-home final due |
 
 ## Course Components
@@ -137,6 +136,10 @@ Online sessions each Wednesday, 5:00pm - 8:30pm. See `SYLLABUS.md` for full asyn
 - **Technical Issues**: Check `docs/troubleshooting.md`
 - **Course Policies**: See `SYLLABUS.md`
 
+## Acknowledgments
+
+The asynchronous video lectures for this course were created by **Dr. Shabnam Tafreshi**, an expert in natural language processing and machine learning. Dr. Tafreshi passed away in October 2025. We honor her memory by continuing to share and learn from her work through these course videos.
+
 ## License & Usage
 
 [![CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
@@ -145,7 +148,7 @@ These course materials are released under the [Creative Commons Attribution 4.0 
 
 You are free to **use, share, and adapt** these materials for any purpose — including commercially — as long as you give appropriate credit:
 
-> *Armin Mehrabian, DATA/MSML 641: Natural Language Processing, University of Maryland, Summer 2026. Available at: https://github.com/aaarrmiinnn/UMD-DATA641-MSML641*
+> *Armin Mehrabian, DATA/MSAI/MSML 641: Natural Language Processing, University of Maryland, Summer 2026. Available at: https://github.com/aaarrmiinnn/UMD-DATA641-MSML641*
 
 ---
 
