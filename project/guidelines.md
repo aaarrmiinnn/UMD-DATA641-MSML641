@@ -49,7 +49,7 @@ Owning a hat means making sure that part of the company is healthy, not doing al
 
 Your repository is the record of your work.
 
-- One shared repo per team. Submit the URL in Week 1.
+- One shared repo per team. Submit the URL in Week 1. It can be public or private; if private, add the instructor (`aaarrmiinnn`) as a collaborator.
 - Every task is an issue with a label, assignee, and milestone. Keep a board (Todo, In Progress, In Review, Done).
 - One branch per issue. A teammate reviews and approves each pull request before it merges. No direct pushes to main.
 - Link commits and pull requests to the issues they close.
