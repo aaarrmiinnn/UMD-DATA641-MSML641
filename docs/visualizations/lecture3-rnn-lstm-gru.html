@@ -3,1226 +3,1991 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lecture 3 Supplementary — RNN, LSTM & GRU Visualizer | DATA/MSML 641</title>
+<title>Lecture 3 Supplementary — RNN, LSTM & GRU | DATA/MSML 641</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --umd-red: #e21833;
-    --umd-gold: #ffd200;
-    --bg: #0f1117;
-    --surface: #1a1d27;
-    --surface2: #232636;
-    --border: #2e3148;
-    --text: #e8eaf0;
-    --muted: #7a7f9a;
-    --input-color: #5b8dee;
-    --hidden-color: #43d9a0;
-    --gate-forget: #ff6b6b;
-    --gate-input: #ffd166;
-    --gate-output: #a78bfa;
-    --gate-cell: #06d6a0;
-    --gate-reset: #ff9f43;
-    --gate-update: #54a0ff;
-    --active-glow: 0 0 18px rgba(253,210,0,0.45);
-    --font: 'Segoe UI', system-ui, sans-serif;
-  }
+:root {
+  --bg:        #f4f6fc;
+  --card:      #ffffff;
+  --text:      #1a1d2e;
+  --muted:     #64748b;
+  --border:    #e2e8f0;
+  --umd-red:   #e21833;
+  --umd-gold:  #c9960c;
+  --col-input: #2563eb;
+  --col-hidden:#059669;
+  --col-forget:#dc2626;
+  --col-igate: #d97706;
+  --col-ogate: #7c3aed;
+  --col-cell:  #0891b2;
+  --col-reset: #ea580c;
+  --col-update:#1d4ed8;
+  --shadow:    0 2px 16px rgba(26,29,46,0.08);
+  --shadow-lg: 0 8px 40px rgba(26,29,46,0.13);
+}
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--font);
-    min-height: 100vh;
-  }
+body {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
 
-  /* ─── Header ─── */
-  header {
-    background: linear-gradient(135deg, #12141f 0%, #1a1d27 100%);
-    border-bottom: 2px solid var(--umd-red);
-    padding: 20px 32px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }
-  .umd-badge {
-    background: var(--umd-red);
-    color: #fff;
-    font-weight: 700;
-    font-size: 13px;
-    padding: 4px 10px;
-    border-radius: 4px;
-    letter-spacing: 0.5px;
-    white-space: nowrap;
-  }
-  .lecture-badge {
-    background: var(--umd-gold);
-    color: #111;
-    font-weight: 700;
-    font-size: 13px;
-    padding: 4px 10px;
-    border-radius: 4px;
-    letter-spacing: 0.5px;
-    white-space: nowrap;
-  }
-  header h1 {
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--text);
-  }
-  header p {
-    font-size: 13px;
-    color: var(--muted);
-    margin-top: 2px;
-  }
-  .header-text { flex: 1; }
+/* ===== HEADER ===== */
+.top-bar {
+  height: 4px;
+  background: var(--umd-red);
+  width: 100%;
+}
 
-  /* ─── Layout ─── */
-  main {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 32px 24px;
-  }
+header {
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  padding: 28px 48px 32px;
+  box-shadow: var(--shadow);
+}
 
-  .intro {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 18px 22px;
-    margin-bottom: 28px;
-    font-size: 14px;
-    line-height: 1.7;
-    color: var(--muted);
-  }
-  .intro strong { color: var(--text); }
+.header-top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
 
-  /* ─── Tabs ─── */
-  .tabs {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 24px;
-  }
-  .tab-btn {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    color: var(--muted);
-    padding: 10px 22px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .tab-btn:hover { border-color: var(--umd-gold); color: var(--text); }
-  .tab-btn.active {
-    background: var(--umd-red);
-    border-color: var(--umd-red);
-    color: #fff;
-    box-shadow: 0 0 14px rgba(226,24,51,0.4);
-  }
+.umd-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
-  .tab-panel { display: none; }
-  .tab-panel.active { display: block; }
+.umd-logo .logo-mark {
+  width: 40px;
+  height: 40px;
+  background: var(--umd-red);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+}
 
-  /* ─── Panel card ─── */
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 24px;
-    margin-bottom: 20px;
-  }
-  .card h2 {
-    font-size: 16px;
-    font-weight: 700;
-    margin-bottom: 6px;
-    color: var(--text);
-  }
-  .card .subtitle {
-    font-size: 13px;
-    color: var(--muted);
-    margin-bottom: 18px;
-  }
+.umd-logo .course-id {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
 
-  /* ─── Sequence tokens ─── */
-  .sequence-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 24px;
-    flex-wrap: wrap;
-  }
-  .seq-label {
-    font-size: 12px;
-    color: var(--muted);
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    margin-right: 4px;
-  }
-  .token {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 6px 12px;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--muted);
-    transition: all 0.35s;
-    position: relative;
-  }
-  .token.active {
-    background: var(--input-color);
-    border-color: var(--input-color);
-    color: #fff;
-    box-shadow: 0 0 14px rgba(91,141,238,0.55);
-    transform: translateY(-3px);
-  }
-  .token.done {
-    background: var(--surface2);
-    border-color: var(--hidden-color);
-    color: var(--hidden-color);
-    opacity: 0.75;
-  }
-  .step-arrow {
-    color: var(--muted);
-    font-size: 14px;
-  }
+.lecture-badge {
+  margin-left: auto;
+  background: var(--umd-gold);
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 20px;
+}
 
-  /* ─── Architecture diagram ─── */
-  .arch-diagram {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0;
-    margin-bottom: 24px;
-    overflow-x: auto;
-    padding: 10px 0;
-  }
+header h1 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 36px;
+  color: var(--text);
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
 
-  /* RNN cell */
-  .rnn-cell {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    opacity: 0.35;
-    transition: opacity 0.4s, transform 0.4s;
-    min-width: 90px;
-  }
-  .rnn-cell.active {
-    opacity: 1;
-    transform: scale(1.08);
-  }
-  .rnn-cell.past { opacity: 0.65; }
+header h1 span { color: var(--umd-red); }
 
-  .cell-box {
-    width: 72px;
-    height: 72px;
-    border-radius: 10px;
-    border: 2px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    font-weight: 700;
-    gap: 4px;
-    transition: all 0.4s;
-    position: relative;
-  }
-  .cell-box.rnn-box {
-    background: linear-gradient(135deg, #1e2240, #252a42);
-    border-color: #3a3f60;
-  }
-  .rnn-cell.active .cell-box.rnn-box {
-    border-color: var(--hidden-color);
-    box-shadow: 0 0 18px rgba(67,217,160,0.35);
-  }
-  .cell-label { font-size: 10px; color: var(--muted); }
+header .subtitle {
+  font-weight: 300;
+  font-size: 17px;
+  color: var(--muted);
+  line-height: 1.5;
+}
 
-  .hidden-node {
-    width: 36px; height: 36px;
-    border-radius: 50%;
-    border: 2px solid var(--border);
-    background: var(--surface2);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 10px; font-weight: 700;
-    transition: all 0.4s;
-  }
-  .rnn-cell.active .hidden-node, .rnn-cell.past .hidden-node {
-    border-color: var(--hidden-color);
-    background: rgba(67,217,160,0.15);
-    color: var(--hidden-color);
-    box-shadow: 0 0 10px rgba(67,217,160,0.3);
-  }
+/* ===== TABS ===== */
+.tab-bar {
+  background: var(--card);
+  border-bottom: 2px solid var(--border);
+  display: flex;
+  gap: 0;
+  padding: 0 48px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(26,29,46,0.06);
+}
 
-  .input-node {
-    width: 28px; height: 28px;
-    border-radius: 6px;
-    border: 2px solid var(--border);
-    background: var(--surface2);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 9px; font-weight: 700;
-    transition: all 0.4s;
-  }
-  .rnn-cell.active .input-node {
-    border-color: var(--input-color);
-    background: rgba(91,141,238,0.2);
-    color: var(--input-color);
-    box-shadow: 0 0 10px rgba(91,141,238,0.3);
-  }
+.tab-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--muted);
+  padding: 16px 28px;
+  position: relative;
+  transition: color 0.2s;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  letter-spacing: 0.2px;
+}
 
-  .conn-arrow {
-    font-size: 18px;
-    color: var(--border);
-    transition: color 0.4s;
-    padding: 0 4px;
-    display: flex;
-    align-items: center;
-    height: 72px;
-    margin-top: -18px;
-  }
-  .conn-arrow.active { color: var(--hidden-color); }
+.tab-btn:hover { color: var(--text); }
 
-  /* LSTM cell */
-  .lstm-cell {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    opacity: 0.35;
-    transition: opacity 0.4s, transform 0.4s;
-    min-width: 110px;
-  }
-  .lstm-cell.active { opacity: 1; transform: scale(1.05); }
-  .lstm-cell.past { opacity: 0.65; }
+.tab-btn.active {
+  color: var(--umd-red);
+  border-bottom-color: var(--umd-red);
+  font-weight: 600;
+}
 
-  .lstm-box {
-    width: 100px;
-    border-radius: 10px;
-    border: 2px solid var(--border);
-    background: linear-gradient(135deg, #1e2240, #252a42);
-    padding: 8px;
-    transition: all 0.4s;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-  .lstm-cell.active .lstm-box {
-    border-color: var(--gate-cell);
-    box-shadow: 0 0 18px rgba(6,214,160,0.3);
-  }
+.tab-btn .model-tag {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 10px;
+  vertical-align: middle;
+}
 
-  .gate-row {
-    display: flex;
-    gap: 3px;
-    justify-content: center;
-  }
-  .gate {
-    width: 20px; height: 20px;
-    border-radius: 4px;
-    font-size: 8px;
-    font-weight: 700;
-    display: flex; align-items: center; justify-content: center;
-    transition: all 0.4s;
-    opacity: 0.4;
-  }
-  .gate.forget { background: rgba(255,107,107,0.2); border: 1px solid var(--gate-forget); color: var(--gate-forget); }
-  .gate.input-g { background: rgba(255,209,102,0.2); border: 1px solid var(--gate-input); color: var(--gate-input); }
-  .gate.output { background: rgba(167,139,250,0.2); border: 1px solid var(--gate-output); color: var(--gate-output); }
-  .gate.cell-g { background: rgba(6,214,160,0.2); border: 1px solid var(--gate-cell); color: var(--gate-cell); }
+.tab-btn[data-tab="rnn"] .model-tag { background: rgba(5,150,105,0.12); color: var(--col-hidden); }
+.tab-btn[data-tab="lstm"] .model-tag { background: rgba(8,145,178,0.12); color: var(--col-cell); }
+.tab-btn[data-tab="gru"] .model-tag { background: rgba(29,78,216,0.12); color: var(--col-update); }
 
-  .lstm-cell.active .gate { opacity: 1; box-shadow: 0 0 8px rgba(255,255,255,0.15); }
+/* ===== MAIN LAYOUT ===== */
+main {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 36px 48px 60px;
+}
 
-  /* GRU cell */
-  .gru-cell {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    opacity: 0.35;
-    transition: opacity 0.4s, transform 0.4s;
-    min-width: 100px;
-  }
-  .gru-cell.active { opacity: 1; transform: scale(1.06); }
-  .gru-cell.past { opacity: 0.65; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
 
-  .gru-box {
-    width: 88px;
-    border-radius: 10px;
-    border: 2px solid var(--border);
-    background: linear-gradient(135deg, #1e2240, #252a42);
-    padding: 8px;
-    transition: all 0.4s;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    align-items: center;
-  }
-  .gru-cell.active .gru-box {
-    border-color: var(--gate-update);
-    box-shadow: 0 0 18px rgba(84,160,255,0.3);
-  }
-  .gru-gate {
-    width: 24px; height: 24px;
-    border-radius: 50%;
-    font-size: 8px;
-    font-weight: 700;
-    display: flex; align-items: center; justify-content: center;
-    transition: all 0.4s;
-    opacity: 0.4;
-  }
-  .gru-gate.reset { background: rgba(255,159,67,0.2); border: 1px solid var(--gate-reset); color: var(--gate-reset); }
-  .gru-gate.update { background: rgba(84,160,255,0.2); border: 1px solid var(--gate-update); color: var(--gate-update); }
-  .gru-cell.active .gru-gate { opacity: 1; box-shadow: 0 0 8px rgba(255,255,255,0.15); }
+/* ===== PANEL HEADING ===== */
+.panel-heading {
+  margin-bottom: 28px;
+}
 
-  /* ─── State display ─── */
-  .state-panel {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 20px;
-  }
-  .state-panel.three { grid-template-columns: 1fr 1fr 1fr; }
+.panel-heading h2 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 28px;
+  margin-bottom: 6px;
+}
 
-  .state-box {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 12px 14px;
-  }
-  .state-box label {
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--muted);
-    letter-spacing: 0.5px;
-    display: block;
-    margin-bottom: 6px;
-  }
-  .state-value {
-    font-family: 'Consolas', 'Courier New', monospace;
-    font-size: 12px;
-    color: var(--hidden-color);
-    word-break: break-all;
-    line-height: 1.6;
-    min-height: 36px;
-    transition: color 0.3s;
-  }
-  .state-value.gate-f { color: var(--gate-forget); }
-  .state-value.gate-i { color: var(--gate-input); }
-  .state-value.gate-o { color: var(--gate-output); }
-  .state-value.gate-c { color: var(--gate-cell); }
-  .state-value.gate-r { color: var(--gate-reset); }
-  .state-value.gate-u { color: var(--gate-update); }
-  .state-value.input { color: var(--input-color); }
+.panel-heading .desc {
+  color: var(--muted);
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.6;
+  max-width: 680px;
+}
 
-  /* ─── Equation display ─── */
-  .equation-panel {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 14px 18px;
-    margin-bottom: 20px;
-  }
-  .equation-panel label {
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--muted);
-    letter-spacing: 0.5px;
-    display: block;
-    margin-bottom: 8px;
-  }
-  .equation {
-    font-family: 'Consolas', 'Courier New', monospace;
-    font-size: 13px;
-    color: var(--text);
-    line-height: 2;
-  }
-  .eq-highlight { color: var(--umd-gold); font-weight: 700; }
+/* ===== TWO-COLUMN VIEWS ===== */
+.views-container {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
 
-  /* ─── Narration ─── */
-  .narration {
-    background: linear-gradient(135deg, rgba(226,24,51,0.1), rgba(253,210,0,0.05));
-    border: 1px solid rgba(226,24,51,0.25);
-    border-radius: 8px;
-    padding: 14px 18px;
-    font-size: 14px;
-    color: var(--text);
-    line-height: 1.65;
-    min-height: 56px;
-    margin-bottom: 20px;
-    transition: all 0.3s;
-  }
+.view-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
 
-  /* ─── Controls ─── */
-  .controls {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-  .btn {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    color: var(--text);
-    padding: 9px 18px;
-    border-radius: 8px;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .btn:hover { border-color: var(--umd-gold); color: var(--umd-gold); }
-  .btn:disabled { opacity: 0.35; cursor: not-allowed; }
-  .btn.primary {
-    background: var(--umd-red);
-    border-color: var(--umd-red);
-    color: #fff;
-  }
-  .btn.primary:hover { background: #c0122a; border-color: #c0122a; color: #fff; }
-  .btn.primary.playing {
-    background: #2e3148;
-    border-color: var(--umd-gold);
-    color: var(--umd-gold);
-  }
+.view-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  background: #fafbfe;
+}
 
-  .step-counter {
-    font-size: 13px;
-    color: var(--muted);
-    margin-left: auto;
-  }
-  .step-counter span { color: var(--text); font-weight: 700; }
+.view-label {
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
 
-  /* ─── Progress bar ─── */
-  .progress-bar {
-    height: 3px;
-    background: var(--border);
-    border-radius: 2px;
-    margin-bottom: 22px;
-    overflow: hidden;
-  }
-  .progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--umd-red), var(--umd-gold));
-    border-radius: 2px;
-    transition: width 0.4s;
-  }
+.view-card-body {
+  padding: 24px;
+  min-height: 340px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  /* ─── Legend ─── */
-  .legend {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-  }
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 12px;
-    color: var(--muted);
-  }
-  .legend-dot {
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
+/* ===== ROLLED SVG VIEWS ===== */
+.rolled-svg-wrap {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  /* ─── Speed control ─── */
-  .speed-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 12px;
-    color: var(--muted);
-  }
-  .speed-row input[type=range] {
-    accent-color: var(--umd-gold);
-    width: 90px;
-  }
+.rolled-svg-wrap svg {
+  max-width: 320px;
+  width: 100%;
+}
 
-  /* ─── Footer ─── */
-  footer {
-    text-align: center;
-    padding: 28px;
-    font-size: 12px;
-    color: var(--muted);
-    border-top: 1px solid var(--border);
-    margin-top: 16px;
-  }
-  footer a { color: var(--umd-gold); text-decoration: none; }
+/* ===== UNROLLED VIEW ===== */
+.unrolled-wrap {
+  width: 100%;
+  overflow-x: auto;
+  padding: 8px 0;
+}
 
-  @media (max-width: 600px) {
-    .state-panel, .state-panel.three { grid-template-columns: 1fr; }
-    .arch-diagram { justify-content: flex-start; }
-  }
+.unrolled-cells {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  min-width: max-content;
+  padding: 20px 16px;
+}
+
+.cell-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 32px;
+  flex-shrink: 0;
+}
+
+.cell-connector .arrow-line {
+  width: 100%;
+  height: 2px;
+  background: var(--col-hidden);
+  position: relative;
+  top: 0;
+  transition: background 0.3s;
+}
+
+.cell-connector .arrow-head {
+  width: 0; height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 8px solid var(--col-hidden);
+  margin-left: -1px;
+  transition: border-left-color 0.3s;
+}
+
+.arrow-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  white-space: nowrap;
+  margin-top: 4px;
+}
+
+/* RNN unrolled cell */
+.rnn-ucell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.rnn-ucell-box {
+  width: 90px;
+  height: 100px;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  background: var(--card);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+  position: relative;
+}
+
+.rnn-ucell-box .cell-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.rnn-ucell-box .cell-fn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  background: var(--bg);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.rnn-ucell.past .rnn-ucell-box {
+  border-color: rgba(5,150,105,0.35);
+  background: rgba(5,150,105,0.04);
+}
+
+.rnn-ucell.active .rnn-ucell-box {
+  border-color: var(--col-hidden);
+  box-shadow: 0 0 0 4px rgba(5,150,105,0.15), 0 8px 24px rgba(5,150,105,0.18);
+  transform: scale(1.08);
+  background: rgba(5,150,105,0.06);
+}
+
+.rnn-ucell.future .rnn-ucell-box {
+  border-color: var(--border);
+  opacity: 0.35;
+}
+
+.rnn-ucell .token-label {
+  margin-top: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--col-input);
+  background: rgba(37,99,235,0.08);
+  padding: 3px 10px;
+  border-radius: 6px;
+}
+
+.rnn-ucell .xt-arrow {
+  width: 2px;
+  height: 18px;
+  background: var(--col-input);
+  margin-top: 0;
+}
+
+/* LSTM unrolled cell */
+.lstm-ucell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.lstm-ucell-box {
+  width: 100px;
+  height: 120px;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  background: var(--card);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+}
+
+.lstm-cell-bar {
+  height: 16px;
+  background: rgba(8,145,178,0.15);
+  border-bottom: 2px solid var(--col-cell);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: var(--col-cell);
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  transition: background 0.3s;
+}
+
+.lstm-gates-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 3px;
+  padding: 6px;
+}
+
+.lstm-gate-dot {
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  transition: background 0.3s, color 0.3s;
+}
+
+.lstm-gate-dot.fg { background: rgba(220,38,38,0.08); color: var(--col-forget); }
+.lstm-gate-dot.ig { background: rgba(217,119,6,0.08); color: var(--col-igate); }
+.lstm-gate-dot.og { background: rgba(124,58,237,0.08); color: var(--col-ogate); }
+.lstm-gate-dot.cg { background: rgba(8,145,178,0.08); color: var(--col-cell); }
+
+.lstm-hidden-bar {
+  height: 16px;
+  background: rgba(5,150,105,0.1);
+  border-top: 2px solid var(--col-hidden);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: var(--col-hidden);
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+.lstm-ucell.past .lstm-ucell-box { border-color: rgba(8,145,178,0.35); }
+.lstm-ucell.active .lstm-ucell-box {
+  border-color: var(--col-cell);
+  box-shadow: 0 0 0 4px rgba(8,145,178,0.15), 0 8px 24px rgba(8,145,178,0.2);
+  transform: scale(1.08);
+}
+.lstm-ucell.active .lstm-cell-bar { background: rgba(8,145,178,0.3); }
+.lstm-ucell.active .lstm-hidden-bar { background: rgba(5,150,105,0.25); }
+.lstm-ucell.active .lstm-gate-dot.fg { background: rgba(220,38,38,0.2); }
+.lstm-ucell.active .lstm-gate-dot.ig { background: rgba(217,119,6,0.2); }
+.lstm-ucell.active .lstm-gate-dot.og { background: rgba(124,58,237,0.2); }
+.lstm-ucell.active .lstm-gate-dot.cg { background: rgba(8,145,178,0.2); }
+.lstm-ucell.future .lstm-ucell-box { opacity: 0.35; }
+
+.lstm-ucell .token-label {
+  margin-top: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--col-input);
+  background: rgba(37,99,235,0.08);
+  padding: 3px 10px;
+  border-radius: 6px;
+}
+
+.lstm-ucell .xt-arrow { width: 2px; height: 18px; background: var(--col-input); }
+
+/* GRU unrolled cell */
+.gru-ucell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gru-ucell-box {
+  width: 90px;
+  height: 110px;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  background: var(--card);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+}
+
+.gru-gates-area {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 3px;
+  padding: 6px;
+}
+
+.gru-gate-dot {
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+.gru-gate-dot.rg { background: rgba(234,88,12,0.1); color: var(--col-reset); }
+.gru-gate-dot.zg { background: rgba(29,78,216,0.1); color: var(--col-update); }
+.gru-gate-dot.hc { background: rgba(5,150,105,0.08); color: var(--col-hidden); font-size: 9px; }
+.gru-gate-dot.ht { background: rgba(5,150,105,0.08); color: var(--col-hidden); font-size: 9px; }
+
+.gru-hidden-bar {
+  height: 18px;
+  background: rgba(5,150,105,0.1);
+  border-top: 2px solid var(--col-hidden);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: var(--col-hidden);
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+.gru-ucell.past .gru-ucell-box { border-color: rgba(29,78,216,0.35); }
+.gru-ucell.active .gru-ucell-box {
+  border-color: var(--col-update);
+  box-shadow: 0 0 0 4px rgba(29,78,216,0.15), 0 8px 24px rgba(29,78,216,0.2);
+  transform: scale(1.08);
+}
+.gru-ucell.active .gru-gate-dot.rg { background: rgba(234,88,12,0.25); }
+.gru-ucell.active .gru-gate-dot.zg { background: rgba(29,78,216,0.25); }
+.gru-ucell.active .gru-gate-dot.hc { background: rgba(5,150,105,0.2); }
+.gru-ucell.active .gru-gate-dot.ht { background: rgba(5,150,105,0.2); }
+.gru-ucell.active .gru-hidden-bar { background: rgba(5,150,105,0.25); }
+.gru-ucell.future .gru-ucell-box { opacity: 0.35; }
+
+.gru-ucell .token-label {
+  margin-top: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--col-input);
+  background: rgba(37,99,235,0.08);
+  padding: 3px 10px;
+  border-radius: 6px;
+}
+
+.gru-ucell .xt-arrow { width: 2px; height: 18px; background: var(--col-input); }
+
+/* ===== CONTROLS ===== */
+.controls-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 24px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.ctrl-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 9px 20px;
+  border-radius: 9px;
+  border: 1.5px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.18s;
+  white-space: nowrap;
+}
+
+.ctrl-btn:hover { background: var(--bg); border-color: var(--muted); }
+
+.ctrl-btn.primary {
+  background: var(--umd-red);
+  border-color: var(--umd-red);
+  color: #fff;
+}
+
+.ctrl-btn.primary:hover { background: #c41229; border-color: #c41229; }
+
+.ctrl-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.step-counter {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--muted);
+  min-width: 80px;
+  text-align: center;
+}
+
+.speed-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.speed-row label {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.speed-row input[type=range] {
+  width: 100px;
+  accent-color: var(--umd-red);
+  cursor: pointer;
+}
+
+/* ===== INFO ROW: narration + values ===== */
+.info-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.info-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px 24px;
+  box-shadow: var(--shadow);
+}
+
+.info-card h4 {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.narration-text {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.65;
+  color: var(--text);
+  min-height: 60px;
+  transition: opacity 0.3s;
+}
+
+.narration-text.fade { opacity: 0; }
+
+.values-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.val-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.val-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  min-width: 28px;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.val-name.vx  { background: rgba(37,99,235,0.1);  color: var(--col-input); }
+.val-name.vh  { background: rgba(5,150,105,0.1);  color: var(--col-hidden); }
+.val-name.vf  { background: rgba(220,38,38,0.1);  color: var(--col-forget); }
+.val-name.vi  { background: rgba(217,119,6,0.1);  color: var(--col-igate); }
+.val-name.vo  { background: rgba(124,58,237,0.1); color: var(--col-ogate); }
+.val-name.vc  { background: rgba(8,145,178,0.1);  color: var(--col-cell); }
+.val-name.vr  { background: rgba(234,88,12,0.1);  color: var(--col-reset); }
+.val-name.vz  { background: rgba(29,78,216,0.1);  color: var(--col-update); }
+.val-name.vhc { background: rgba(5,150,105,0.1);  color: var(--col-hidden); font-size: 10px; }
+
+.val-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--text);
+  word-break: break-all;
+  transition: opacity 0.3s;
+}
+
+.val-value.fade { opacity: 0; }
+
+.val-disclaimer {
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* ===== EQUATIONS ===== */
+.equations-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px 28px;
+  box-shadow: var(--shadow);
+  margin-bottom: 24px;
+}
+
+.equations-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--text);
+}
+
+.eq-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+
+.eq-item {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 16px;
+  border-left: 3px solid var(--border);
+}
+
+.eq-item.eq-forget { border-left-color: var(--col-forget); }
+.eq-item.eq-input  { border-left-color: var(--col-igate); }
+.eq-item.eq-output { border-left-color: var(--col-ogate); }
+.eq-item.eq-cell   { border-left-color: var(--col-cell); }
+.eq-item.eq-hidden { border-left-color: var(--col-hidden); }
+.eq-item.eq-reset  { border-left-color: var(--col-reset); }
+.eq-item.eq-update { border-left-color: var(--col-update); }
+
+.eq-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 5px;
+}
+
+.eq-formula {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+/* ===== FOOTER ===== */
+footer {
+  background: var(--card);
+  border-top: 1px solid var(--border);
+  padding: 20px 48px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes cellPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(5,150,105,0.4), 0 8px 24px rgba(5,150,105,0.18); }
+  50%  { box-shadow: 0 0 0 8px rgba(5,150,105,0.0), 0 8px 24px rgba(5,150,105,0.25); }
+  100% { box-shadow: 0 0 0 0 rgba(5,150,105,0.4), 0 8px 24px rgba(5,150,105,0.18); }
+}
+
+@keyframes lstmCellPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(8,145,178,0.4), 0 8px 24px rgba(8,145,178,0.2); }
+  50%  { box-shadow: 0 0 0 8px rgba(8,145,178,0.0), 0 8px 24px rgba(8,145,178,0.28); }
+  100% { box-shadow: 0 0 0 0 rgba(8,145,178,0.4), 0 8px 24px rgba(8,145,178,0.2); }
+}
+
+@keyframes gruCellPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(29,78,216,0.4), 0 8px 24px rgba(29,78,216,0.2); }
+  50%  { box-shadow: 0 0 0 8px rgba(29,78,216,0.0), 0 8px 24px rgba(29,78,216,0.28); }
+  100% { box-shadow: 0 0 0 0 rgba(29,78,216,0.4), 0 8px 24px rgba(29,78,216,0.2); }
+}
+
+.rnn-ucell.active .rnn-ucell-box { animation: cellPulse 1.8s ease-in-out infinite; }
+.lstm-ucell.active .lstm-ucell-box { animation: lstmCellPulse 1.8s ease-in-out infinite; }
+.gru-ucell.active .gru-ucell-box { animation: gruCellPulse 1.8s ease-in-out infinite; }
+
+@keyframes flowDash {
+  from { stroke-dashoffset: 24; }
+  to   { stroke-dashoffset: 0; }
+}
+
+.flow-anim {
+  stroke-dasharray: 8 4;
+  animation: flowDash 0.6s linear infinite;
+}
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.val-value { animation: fadeSlideUp 0.35s ease both; }
+
+/* RNN SVG elements */
+#rnn-cell-box { transition: filter 0.3s; }
+.rnn-active #rnn-cell-box {
+  filter: drop-shadow(0 0 8px rgba(5,150,105,0.5));
+}
+
+/* LSTM SVG gate circles */
+.gate-circle { transition: filter 0.3s, fill 0.3s; }
+.gate-circle.glow { filter: drop-shadow(0 0 6px currentColor); }
+
+/* GRU SVG */
+.gru-gate-circle { transition: filter 0.3s; }
+.gru-gate-circle.glow { filter: drop-shadow(0 0 6px currentColor); }
+
+/* Step progress dots */
+.step-dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.step-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: background 0.3s, transform 0.3s;
+  border: 2px solid transparent;
+}
+
+.step-dot.past { background: rgba(5,150,105,0.35); }
+.step-dot.active { background: var(--umd-red); transform: scale(1.3); }
+.step-dot.active-lstm { background: var(--col-cell); transform: scale(1.3); }
+.step-dot.active-gru { background: var(--col-update); transform: scale(1.3); }
+
+/* ===== SVG ROLLING DIAGRAMS ===== */
+
+/* Current token badge in rolled view */
+.current-token-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(37,99,235,0.1);
+  border: 1px solid rgba(37,99,235,0.2);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--col-input);
+  font-weight: 500;
+}
+
+.rolled-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 12px;
+}
+
+.token-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.token-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 4px 14px;
+  border-radius: 20px;
+  background: rgba(37,99,235,0.1);
+  color: var(--col-input);
+  border: 1px solid rgba(37,99,235,0.2);
+  transition: all 0.3s;
+}
+
+.token-badge-label {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* Comparison callout */
+.comparison-callout {
+  background: rgba(201,150,12,0.06);
+  border: 1px solid rgba(201,150,12,0.25);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+}
+
+.comparison-callout p {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.comparison-callout strong { color: var(--umd-gold); }
 </style>
 </head>
 <body>
 
+<div class="top-bar"></div>
+
 <header>
-  <div>
-    <div class="umd-badge">DATA/MSML 641</div>
+  <div class="header-top">
+    <div class="umd-logo">
+      <div class="logo-mark">UMD</div>
+      <div class="course-id">DATA / MSML 641 &nbsp;&middot;&nbsp; Summer 2026</div>
+    </div>
+    <div class="lecture-badge">Lecture 3 Supplementary</div>
   </div>
-  <div class="header-text">
-    <h1>Recurrent Neural Networks — Interactive Visualizer</h1>
-    <p>Supplementary material &nbsp;·&nbsp; <span style="color:var(--umd-gold);font-weight:700;">Lecture 3</span> &nbsp;·&nbsp; Summer 2026</p>
-  </div>
-  <div>
-    <div class="lecture-badge">Lecture 3</div>
-  </div>
+  <h1>Recurrent <span>Neural Networks</span></h1>
+  <p class="subtitle">Understanding RNN, LSTM, and GRU through animated examples &mdash; step through each model to see how hidden states, gates, and memory evolve across a sequence.</p>
 </header>
 
+<nav class="tab-bar" role="tablist">
+  <button class="tab-btn active" data-tab="rnn" onclick="switchTab('rnn', this)" role="tab" aria-selected="true">
+    Vanilla RNN <span class="model-tag">baseline</span>
+  </button>
+  <button class="tab-btn" data-tab="lstm" onclick="switchTab('lstm', this)" role="tab" aria-selected="false">
+    LSTM <span class="model-tag">gates</span>
+  </button>
+  <button class="tab-btn" data-tab="gru" onclick="switchTab('gru', this)" role="tab" aria-selected="false">
+    GRU <span class="model-tag">simplified</span>
+  </button>
+</nav>
+
 <main>
-  <div class="intro">
-    <strong>How to use:</strong> Select a model tab below. Press <strong>Play</strong> to auto-animate the forward pass through the sentence <em>"the movie was great"</em>, or use <strong>← →</strong> to step manually. Watch how each token updates the hidden state (and gates for LSTM/GRU). The current equation and a plain-English explanation are shown at each step.
+
+<!-- ============================== RNN PANEL ============================== -->
+<div id="panel-rnn" class="tab-panel active">
+  <div class="panel-heading">
+    <h2>Vanilla RNN &mdash; <em>The sky is blue</em></h2>
+    <p class="desc">A single hidden state <em>h</em><sub>t</sub> = tanh(W·[h<sub>t-1</sub>, x<sub>t</sub>] + b) accumulates context word by word. Step through the sequence to watch the hidden state update.</p>
   </div>
 
-  <div class="tabs">
-    <button class="tab-btn active" onclick="switchTab('rnn', this)">Vanilla RNN</button>
-    <button class="tab-btn" onclick="switchTab('lstm', this)">LSTM</button>
-    <button class="tab-btn" onclick="switchTab('gru', this)">GRU</button>
+  <div class="controls-row">
+    <button class="ctrl-btn" id="rnn-prev" onclick="rnnPrev()">&#8592; Prev</button>
+    <button class="ctrl-btn primary" id="rnn-play" onclick="rnnPlayPause()">&#9654; Play</button>
+    <button class="ctrl-btn" id="rnn-next" onclick="rnnNext()">Next &#8594;</button>
+    <button class="ctrl-btn" onclick="rnnReset()">&#8635; Reset</button>
+    <div class="step-dots" id="rnn-dots"></div>
+    <span class="step-counter" id="rnn-counter">Step 0 / 4</span>
+    <div class="speed-row">
+      <label>Speed</label>
+      <input type="range" id="rnn-speed" min="1" max="5" value="3" oninput="updateSpeed('rnn')">
+    </div>
   </div>
 
-  <!-- ══════════════════════ RNN PANEL ══════════════════════ -->
-  <div id="tab-rnn" class="tab-panel active">
-    <div class="card">
-      <h2>Vanilla RNN — Forward Pass</h2>
-      <p class="subtitle">Hidden state h<sub>t</sub> = tanh(W<sub>h</sub>·h<sub>t−1</sub> + W<sub>x</sub>·x<sub>t</sub> + b)</p>
-
-      <div class="legend">
-        <div class="legend-item"><div class="legend-dot" style="background:var(--input-color)"></div>Current input x<sub>t</sub></div>
-        <div class="legend-item"><div class="legend-dot" style="background:var(--hidden-color)"></div>Hidden state h<sub>t</sub></div>
-        <div class="legend-item"><div class="legend-dot" style="background:var(--muted)"></div>Not yet processed</div>
-      </div>
-
-      <div class="sequence-row" id="rnn-tokens"></div>
-
-      <div class="arch-diagram" id="rnn-arch"></div>
-
-      <div class="progress-bar"><div class="progress-fill" id="rnn-progress" style="width:0%"></div></div>
-
-      <div class="narration" id="rnn-narration">Press Play or use the step buttons to begin.</div>
-
-      <div class="equation-panel">
-        <label>CURRENT COMPUTATION</label>
-        <div class="equation" id="rnn-equation">
-          h<sub>t</sub> = tanh(W<sub>h</sub> · h<sub>t−1</sub> + W<sub>x</sub> · x<sub>t</sub> + b)
-        </div>
-        <div style="font-size:11px;color:var(--muted);margin-top:10px;font-style:italic">Vector values shown are illustrative approximations for pedagogical clarity, not computed from specific weights.</div>
-      </div>
-
-      <div class="state-panel">
-        <div class="state-box">
-          <label>INPUT x<sub>t</sub></label>
-          <div class="state-value input" id="rnn-input-val">—</div>
-        </div>
-        <div class="state-box">
-          <label>HIDDEN STATE h<sub>t</sub></label>
-          <div class="state-value" id="rnn-hidden-val">h₀ = [0, 0, 0, 0]</div>
+  <div class="views-container">
+    <!-- Rolled view -->
+    <div class="view-card">
+      <div class="view-card-header">
+        <span class="view-label">Rolled (single cell)</span>
+        <div class="token-badge-row">
+          <span class="token-badge-label">current:</span>
+          <span class="token-badge" id="rnn-rolled-token">—</span>
         </div>
       </div>
+      <div class="view-card-body">
+        <div class="rolled-wrapper">
+          <svg id="rnn-rolled-svg" viewBox="0 0 320 280" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width:320px;width:100%">
+            <!-- h_{t-1} arrow -->
+            <defs>
+              <marker id="rnn-arrow-head" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="#64748b"/>
+              </marker>
+              <marker id="rnn-arrow-green" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="#059669"/>
+              </marker>
+              <marker id="rnn-arrow-blue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="#2563eb"/>
+              </marker>
+            </defs>
 
-      <div class="controls">
-        <button class="btn" id="rnn-prev" onclick="rnnStep(-1)" disabled>← Prev</button>
-        <button class="btn primary" id="rnn-play" onclick="rnnTogglePlay()">▶ Play</button>
-        <button class="btn" id="rnn-next" onclick="rnnStep(1)">Next →</button>
-        <button class="btn" onclick="rnnReset()">↺ Reset</button>
-        <div class="speed-row">
-          Speed: <input type="range" id="rnn-speed" min="1" max="5" value="3">
+            <!-- self-loop arc -->
+            <path id="rnn-selfloop" d="M 118 100 C 90 50, 230 50, 202 100" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#rnn-arrow-head)"/>
+
+            <!-- cell box -->
+            <rect id="rnn-cell-box" x="100" y="100" width="120" height="80" rx="14" ry="14" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+
+            <!-- cell label -->
+            <text x="160" y="130" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="14" font-weight="500" fill="#1a1d2e">h = tanh</text>
+            <text x="160" y="150" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#64748b">&#x3A3;(W[h,x]+b)</text>
+            <text x="160" y="168" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#059669">hidden state</text>
+
+            <!-- h_{t-1} left arrow -->
+            <line id="rnn-hin" x1="28" y1="140" x2="96" y2="140" stroke="#059669" stroke-width="2" marker-end="url(#rnn-arrow-green)"/>
+            <text x="13" y="135" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#059669">h</text>
+            <text x="13" y="148" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#059669">t-1</text>
+
+            <!-- h_t right arrow -->
+            <line id="rnn-hout" x1="224" y1="140" x2="290" y2="140" stroke="#059669" stroke-width="2" marker-end="url(#rnn-arrow-green)"/>
+            <text x="305" y="135" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#059669">h</text>
+            <text x="305" y="148" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#059669">t</text>
+
+            <!-- x_t bottom arrow -->
+            <line id="rnn-xin" x1="160" y1="248" x2="160" y2="184" stroke="#2563eb" stroke-width="2" marker-end="url(#rnn-arrow-blue)"/>
+            <text x="160" y="265" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#2563eb">x</text>
+            <text x="168" y="265" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#2563eb">t</text>
+
+            <!-- token label below arrow -->
+            <rect id="rnn-token-rect" x="128" y="268" width="64" height="20" rx="6" fill="rgba(37,99,235,0.08)" stroke="rgba(37,99,235,0.2)" stroke-width="1"/>
+            <text id="rnn-token-text" x="160" y="282" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" font-weight="500" fill="#2563eb">—</text>
+          </svg>
         </div>
-        <div class="step-counter">Step <span id="rnn-step-num">0</span> / <span id="rnn-step-total">0</span></div>
+      </div>
+    </div>
+
+    <!-- Unrolled view -->
+    <div class="view-card">
+      <div class="view-card-header">
+        <span class="view-label">Unrolled (across time)</span>
+        <span style="font-size:12px;color:var(--muted)">t = 1 &rarr; 4</span>
+      </div>
+      <div class="view-card-body">
+        <div class="unrolled-wrap">
+          <div class="unrolled-cells" id="rnn-unrolled"></div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- ══════════════════════ LSTM PANEL ══════════════════════ -->
-  <div id="tab-lstm" class="tab-panel">
-    <div class="card">
-      <h2>LSTM — Long Short-Term Memory</h2>
-      <p class="subtitle">Solves the vanishing gradient problem with a cell state and three gates</p>
-
-      <div class="legend">
-        <div class="legend-item"><div class="legend-dot" style="background:var(--gate-forget)"></div>Forget gate f<sub>t</sub></div>
-        <div class="legend-item"><div class="legend-dot" style="background:var(--gate-input)"></div>Input gate i<sub>t</sub></div>
-        <div class="legend-item"><div class="legend-dot" style="background:var(--gate-output)"></div>Output gate o<sub>t</sub></div>
-        <div class="legend-item"><div class="legend-dot" style="background:var(--gate-cell)"></div>Cell state c<sub>t</sub></div>
-        <div class="legend-item"><div class="legend-dot" style="background:var(--hidden-color)"></div>Hidden state h<sub>t</sub></div>
+  <!-- Narration + values -->
+  <div class="info-row">
+    <div class="info-card">
+      <h4>Step Narration</h4>
+      <p class="narration-text" id="rnn-narration">Press Play or Next to begin stepping through the sequence.</p>
+    </div>
+    <div class="info-card">
+      <h4>State Values</h4>
+      <div class="values-grid" id="rnn-values">
+        <div class="val-row"><span class="val-name vx">x</span><span class="val-value" id="rnn-val-x">—</span></div>
+        <div class="val-row"><span class="val-name vh">h</span><span class="val-value" id="rnn-val-h">—</span></div>
       </div>
+      <p class="val-disclaimer">Values are illustrative approximations for pedagogical clarity.</p>
+    </div>
+  </div>
 
-      <div class="sequence-row" id="lstm-tokens"></div>
-
-      <div class="arch-diagram" id="lstm-arch"></div>
-
-      <div class="progress-bar"><div class="progress-fill" id="lstm-progress" style="width:0%"></div></div>
-
-      <div class="narration" id="lstm-narration">Press Play or use the step buttons to begin.</div>
-
-      <div class="equation-panel">
-        <label>CURRENT COMPUTATION</label>
-        <div class="equation" id="lstm-equation">
-          f<sub>t</sub> = σ(W<sub>f</sub>·[h<sub>t−1</sub>, x<sub>t</sub>] + b<sub>f</sub>)<br>
-          i<sub>t</sub> = σ(W<sub>i</sub>·[h<sub>t−1</sub>, x<sub>t</sub>] + b<sub>i</sub>)<br>
-          o<sub>t</sub> = σ(W<sub>o</sub>·[h<sub>t−1</sub>, x<sub>t</sub>] + b<sub>o</sub>)<br>
-          c̃<sub>t</sub> = tanh(W<sub>c</sub>·[h<sub>t−1</sub>, x<sub>t</sub>] + b<sub>c</sub>)<br>
-          c<sub>t</sub> = f<sub>t</sub> ⊙ c<sub>t−1</sub> + i<sub>t</sub> ⊙ c̃<sub>t</sub><br>
-          h<sub>t</sub> = o<sub>t</sub> ⊙ tanh(c<sub>t</sub>)
-        </div>
-        <div style="font-size:11px;color:var(--muted);margin-top:10px;font-style:italic">Vector values shown are illustrative approximations for pedagogical clarity, not computed from specific weights.</div>
+  <!-- Equations -->
+  <div class="equations-card">
+    <h3>RNN Equations</h3>
+    <div class="eq-grid">
+      <div class="eq-item eq-hidden">
+        <div class="eq-label">Hidden State Update</div>
+        <div class="eq-formula">h<sub>t</sub> = tanh(W<sub>h</sub>&middot;h<sub>t-1</sub> + W<sub>x</sub>&middot;x<sub>t</sub> + b)</div>
       </div>
+      <div class="eq-item">
+        <div class="eq-label">Output</div>
+        <div class="eq-formula">y<sub>t</sub> = softmax(W<sub>y</sub>&middot;h<sub>t</sub> + b<sub>y</sub>)</div>
+      </div>
+    </div>
+    <p class="val-disclaimer" style="margin-top:14px">Note: Repeated multiplication by W<sub>h</sub> over many steps causes gradient vanishing (|&lambda;|&lt;1) or explosion (|&lambda;|&gt;1), making long-range dependencies very hard to learn.</p>
+  </div>
+</div>
 
-      <div class="state-panel three">
-        <div class="state-box">
-          <label>FORGET GATE f<sub>t</sub></label>
-          <div class="state-value gate-f" id="lstm-f-val">—</div>
-        </div>
-        <div class="state-box">
-          <label>INPUT GATE i<sub>t</sub></label>
-          <div class="state-value gate-i" id="lstm-i-val">—</div>
-        </div>
-        <div class="state-box">
-          <label>OUTPUT GATE o<sub>t</sub></label>
-          <div class="state-value gate-o" id="lstm-o-val">—</div>
-        </div>
-        <div class="state-box">
-          <label>CELL STATE c<sub>t</sub></label>
-          <div class="state-value gate-c" id="lstm-c-val">c₀ = [0, 0, 0]</div>
-        </div>
-        <div class="state-box">
-          <label>HIDDEN STATE h<sub>t</sub></label>
-          <div class="state-value" id="lstm-h-val">h₀ = [0, 0, 0]</div>
-        </div>
-        <div class="state-box">
-          <label>INPUT x<sub>t</sub></label>
-          <div class="state-value input" id="lstm-x-val">—</div>
+<!-- ============================== LSTM PANEL ============================== -->
+<div id="panel-lstm" class="tab-panel">
+  <div class="panel-heading">
+    <h2>LSTM &mdash; <em>it was not that good</em></h2>
+    <p class="desc">Long Short-Term Memory uses three gates (forget, input, output) and a separate cell state <em>C</em><sub>t</sub> to selectively retain and discard information. Watch how "not" inverts the sentiment trajectory.</p>
+  </div>
+
+  <div class="controls-row">
+    <button class="ctrl-btn" id="lstm-prev" onclick="lstmPrev()">&#8592; Prev</button>
+    <button class="ctrl-btn primary" id="lstm-play" onclick="lstmPlayPause()">&#9654; Play</button>
+    <button class="ctrl-btn" id="lstm-next" onclick="lstmNext()">Next &#8594;</button>
+    <button class="ctrl-btn" onclick="lstmReset()">&#8635; Reset</button>
+    <div class="step-dots" id="lstm-dots"></div>
+    <span class="step-counter" id="lstm-counter">Step 0 / 5</span>
+    <div class="speed-row">
+      <label>Speed</label>
+      <input type="range" id="lstm-speed" min="1" max="5" value="3" oninput="updateSpeed('lstm')">
+    </div>
+  </div>
+
+  <div class="views-container">
+    <!-- Rolled LSTM -->
+    <div class="view-card">
+      <div class="view-card-header">
+        <span class="view-label">Rolled (single cell)</span>
+        <div class="token-badge-row">
+          <span class="token-badge-label">current:</span>
+          <span class="token-badge" id="lstm-rolled-token">—</span>
         </div>
       </div>
+      <div class="view-card-body">
+        <div class="rolled-wrapper">
+          <svg id="lstm-rolled-svg" viewBox="0 0 340 300" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width:340px;width:100%">
+            <defs>
+              <marker id="lstm-arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="#64748b"/>
+              </marker>
+              <marker id="lstm-arr-cyan" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="#0891b2"/>
+              </marker>
+              <marker id="lstm-arr-green" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="#059669"/>
+              </marker>
+              <marker id="lstm-arr-blue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="#2563eb"/>
+              </marker>
+            </defs>
 
-      <div class="controls">
-        <button class="btn" id="lstm-prev" onclick="lstmStep(-1)" disabled>← Prev</button>
-        <button class="btn primary" id="lstm-play" onclick="lstmTogglePlay()">▶ Play</button>
-        <button class="btn" id="lstm-next" onclick="lstmStep(1)">Next →</button>
-        <button class="btn" onclick="lstmReset()">↺ Reset</button>
-        <div class="speed-row">
-          Speed: <input type="range" id="lstm-speed" min="1" max="5" value="3">
+            <!-- Cell state highway top -->
+            <line x1="12" y1="38" x2="128" y2="38" stroke="#0891b2" stroke-width="2.5" marker-end="url(#lstm-arr-cyan)"/>
+            <text x="7" y="34" font-family="JetBrains Mono,monospace" font-size="10" fill="#0891b2">C</text>
+            <text x="7" y="44" font-family="JetBrains Mono,monospace" font-size="8" fill="#0891b2">t-1</text>
+            <line id="lstm-cell-out" x1="212" y1="38" x2="326" y2="38" stroke="#0891b2" stroke-width="2.5" marker-end="url(#lstm-arr-cyan)"/>
+            <text x="331" y="34" font-family="JetBrains Mono,monospace" font-size="10" fill="#0891b2">C</text>
+            <text x="331" y="44" font-family="JetBrains Mono,monospace" font-size="8" fill="#0891b2">t</text>
+
+            <!-- Forget gate -->
+            <circle id="lstm-fg-circle" cx="100" cy="110" r="22" fill="rgba(220,38,38,0.08)" stroke="#dc2626" stroke-width="1.5"/>
+            <text x="100" y="107" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" fill="#dc2626">&#x3C3;</text>
+            <text x="100" y="122" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#dc2626">forget</text>
+
+            <!-- × node (forget × C) -->
+            <circle cx="140" cy="38" r="12" fill="rgba(220,38,38,0.06)" stroke="#dc2626" stroke-width="1.5"/>
+            <text x="140" y="43" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="14" fill="#dc2626">&times;</text>
+            <line x1="100" y1="88" x2="130" y2="50" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="3,2"/>
+
+            <!-- Input gate -->
+            <circle id="lstm-ig-circle" cx="170" cy="110" r="22" fill="rgba(217,119,6,0.08)" stroke="#d97706" stroke-width="1.5"/>
+            <text x="170" y="107" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" fill="#d97706">&#x3C3;</text>
+            <text x="170" y="122" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#d97706">input</text>
+
+            <!-- Candidate tanh -->
+            <rect id="lstm-cg-rect" x="206" y="90" width="44" height="40" rx="8" fill="rgba(8,145,178,0.08)" stroke="#0891b2" stroke-width="1.5"/>
+            <text x="228" y="107" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#0891b2">tanh</text>
+            <text x="228" y="121" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#0891b2">c&#x303;</text>
+
+            <!-- × node (i × c~) -->
+            <circle cx="170" cy="38" r="12" fill="rgba(217,119,6,0.06)" stroke="#d97706" stroke-width="1.5"/>
+            <text x="170" y="43" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="14" fill="#d97706">&times;</text>
+            <line x1="170" y1="88" x2="170" y2="50" stroke="#d97706" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <line x1="228" y1="90" x2="185" y2="50" stroke="#0891b2" stroke-width="1.5" stroke-dasharray="3,2"/>
+
+            <!-- + node -->
+            <circle cx="195" cy="38" r="12" fill="rgba(5,150,105,0.06)" stroke="#059669" stroke-width="1.5"/>
+            <text x="195" y="43" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="14" fill="#059669">+</text>
+
+            <!-- Output gate -->
+            <circle id="lstm-og-circle" cx="240" cy="110" r="22" fill="rgba(124,58,237,0.08)" stroke="#7c3aed" stroke-width="1.5"/>
+            <text x="240" y="107" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" fill="#7c3aed">&#x3C3;</text>
+            <text x="240" y="122" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#7c3aed">output</text>
+
+            <!-- tanh final -->
+            <rect x="270" y="26" width="36" height="24" rx="6" fill="rgba(5,150,105,0.06)" stroke="#059669" stroke-width="1.5"/>
+            <text x="288" y="42" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#059669">tanh</text>
+
+            <!-- × output -->
+            <circle cx="308" cy="100" r="12" fill="rgba(124,58,237,0.06)" stroke="#7c3aed" stroke-width="1.5"/>
+            <text x="308" y="105" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="14" fill="#7c3aed">&times;</text>
+            <line x1="306" y1="50" x2="307" y2="88" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <line x1="240" y1="88" x2="295" y2="95" stroke="#7c3aed" stroke-width="1.5" stroke-dasharray="3,2"/>
+
+            <!-- h_{t-1} input -->
+            <line id="lstm-hin" x1="10" y1="155" x2="74" y2="155" stroke="#059669" stroke-width="2" marker-end="url(#lstm-arr-green)"/>
+            <text x="5" y="151" font-family="JetBrains Mono,monospace" font-size="10" fill="#059669">h</text>
+            <text x="5" y="161" font-family="JetBrains Mono,monospace" font-size="8" fill="#059669">t-1</text>
+
+            <!-- Branch h to gates -->
+            <line x1="80" y1="155" x2="100" y2="133" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <line x1="80" y1="155" x2="170" y2="133" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <line x1="80" y1="155" x2="228" y2="133" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <line x1="80" y1="155" x2="240" y2="133" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,2"/>
+
+            <!-- x_t input -->
+            <line id="lstm-xin" x1="170" y1="250" x2="170" y2="175" stroke="#2563eb" stroke-width="2" marker-end="url(#lstm-arr-blue)"/>
+            <text x="165" y="264" font-family="JetBrains Mono,monospace" font-size="10" fill="#2563eb">x</text>
+            <text x="172" y="264" font-family="JetBrains Mono,monospace" font-size="8" fill="#2563eb">t</text>
+
+            <!-- Branch x to gates -->
+            <line x1="170" y1="173" x2="100" y2="133" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <line x1="170" y1="173" x2="228" y2="133" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <line x1="170" y1="173" x2="240" y2="133" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="3,2"/>
+
+            <!-- h_t output bottom -->
+            <line id="lstm-hout" x1="308" y1="112" x2="308" y2="250" stroke="#059669" stroke-width="2" marker-end="url(#lstm-arr-green)"/>
+            <text x="316" y="265" font-family="JetBrains Mono,monospace" font-size="10" fill="#059669">h</text>
+            <text x="324" y="265" font-family="JetBrains Mono,monospace" font-size="8" fill="#059669">t</text>
+
+            <!-- token label -->
+            <rect id="lstm-token-rect" x="136" y="268" width="68" height="20" rx="6" fill="rgba(37,99,235,0.08)" stroke="rgba(37,99,235,0.2)" stroke-width="1"/>
+            <text id="lstm-token-text" x="170" y="282" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" font-weight="500" fill="#2563eb">—</text>
+          </svg>
         </div>
-        <div class="step-counter">Step <span id="lstm-step-num">0</span> / <span id="lstm-step-total">0</span></div>
+      </div>
+    </div>
+
+    <!-- Unrolled LSTM -->
+    <div class="view-card">
+      <div class="view-card-header">
+        <span class="view-label">Unrolled (across time)</span>
+        <span style="font-size:12px;color:var(--muted)">t = 1 &rarr; 5</span>
+      </div>
+      <div class="view-card-body">
+        <div class="unrolled-wrap">
+          <div class="unrolled-cells" id="lstm-unrolled"></div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- ══════════════════════ GRU PANEL ══════════════════════ -->
-  <div id="tab-gru" class="tab-panel">
-    <div class="card">
-      <h2>GRU — Gated Recurrent Unit</h2>
-      <p class="subtitle">Simpler than LSTM: merges cell & hidden state, uses only two gates</p>
-
-      <div class="legend">
-        <div class="legend-item"><div class="legend-dot" style="background:var(--gate-reset)"></div>Reset gate r<sub>t</sub></div>
-        <div class="legend-item"><div class="legend-dot" style="background:var(--gate-update)"></div>Update gate z<sub>t</sub></div>
-        <div class="legend-item"><div class="legend-dot" style="background:var(--hidden-color)"></div>Hidden state h<sub>t</sub></div>
+  <div class="info-row">
+    <div class="info-card">
+      <h4>Step Narration</h4>
+      <p class="narration-text" id="lstm-narration">Press Play or Next to begin stepping through the sequence.</p>
+    </div>
+    <div class="info-card">
+      <h4>Gate Values</h4>
+      <div class="values-grid" id="lstm-values">
+        <div class="val-row"><span class="val-name vf">f</span><span class="val-value" id="lstm-val-f">—</span></div>
+        <div class="val-row"><span class="val-name vi">i</span><span class="val-value" id="lstm-val-i">—</span></div>
+        <div class="val-row"><span class="val-name vo">o</span><span class="val-value" id="lstm-val-o">—</span></div>
+        <div class="val-row"><span class="val-name vc">C</span><span class="val-value" id="lstm-val-c">—</span></div>
+        <div class="val-row"><span class="val-name vh">h</span><span class="val-value" id="lstm-val-h">—</span></div>
       </div>
+      <p class="val-disclaimer">Values are illustrative approximations for pedagogical clarity.</p>
+    </div>
+  </div>
 
-      <div class="sequence-row" id="gru-tokens"></div>
-
-      <div class="arch-diagram" id="gru-arch"></div>
-
-      <div class="progress-bar"><div class="progress-fill" id="gru-progress" style="width:0%"></div></div>
-
-      <div class="narration" id="gru-narration">Press Play or use the step buttons to begin.</div>
-
-      <div class="equation-panel">
-        <label>CURRENT COMPUTATION</label>
-        <div class="equation" id="gru-equation">
-          r<sub>t</sub> = σ(W<sub>r</sub>·[h<sub>t−1</sub>, x<sub>t</sub>] + b<sub>r</sub>)<br>
-          z<sub>t</sub> = σ(W<sub>z</sub>·[h<sub>t−1</sub>, x<sub>t</sub>] + b<sub>z</sub>)<br>
-          h̃<sub>t</sub> = tanh(W·[r<sub>t</sub> ⊙ h<sub>t−1</sub>, x<sub>t</sub>] + b)<br>
-          h<sub>t</sub> = (1 − z<sub>t</sub>) ⊙ h<sub>t−1</sub> + z<sub>t</sub> ⊙ h̃<sub>t</sub>
-        </div>
-        <div style="font-size:11px;color:var(--muted);margin-top:10px;font-style:italic">Vector values shown are illustrative approximations for pedagogical clarity, not computed from specific weights.</div>
+  <div class="equations-card">
+    <h3>LSTM Equations</h3>
+    <div class="eq-grid">
+      <div class="eq-item eq-forget">
+        <div class="eq-label">Forget Gate</div>
+        <div class="eq-formula">f<sub>t</sub> = &sigma;(W<sub>f</sub>&middot;[h<sub>t-1</sub>, x<sub>t</sub>] + b<sub>f</sub>)</div>
       </div>
-
-      <div class="state-panel three">
-        <div class="state-box">
-          <label>RESET GATE r<sub>t</sub></label>
-          <div class="state-value gate-r" id="gru-r-val">—</div>
-        </div>
-        <div class="state-box">
-          <label>UPDATE GATE z<sub>t</sub></label>
-          <div class="state-value gate-u" id="gru-z-val">—</div>
-        </div>
-        <div class="state-box">
-          <label>CANDIDATE h̃<sub>t</sub></label>
-          <div class="state-value" id="gru-hc-val">—</div>
-        </div>
-        <div class="state-box" style="grid-column: span 1">
-          <label>HIDDEN STATE h<sub>t</sub></label>
-          <div class="state-value" id="gru-h-val">h₀ = [0, 0, 0]</div>
-        </div>
-        <div class="state-box">
-          <label>INPUT x<sub>t</sub></label>
-          <div class="state-value input" id="gru-x-val">—</div>
-        </div>
+      <div class="eq-item eq-input">
+        <div class="eq-label">Input Gate</div>
+        <div class="eq-formula">i<sub>t</sub> = &sigma;(W<sub>i</sub>&middot;[h<sub>t-1</sub>, x<sub>t</sub>] + b<sub>i</sub>)</div>
       </div>
-
-      <div class="controls">
-        <button class="btn" id="gru-prev" onclick="gruStep(-1)" disabled>← Prev</button>
-        <button class="btn primary" id="gru-play" onclick="gruTogglePlay()">▶ Play</button>
-        <button class="btn" id="gru-next" onclick="gruStep(1)">Next →</button>
-        <button class="btn" onclick="gruReset()">↺ Reset</button>
-        <div class="speed-row">
-          Speed: <input type="range" id="gru-speed" min="1" max="5" value="3">
-        </div>
-        <div class="step-counter">Step <span id="gru-step-num">0</span> / <span id="gru-step-total">0</span></div>
+      <div class="eq-item eq-cell">
+        <div class="eq-label">Candidate Cell</div>
+        <div class="eq-formula">c&#x303;<sub>t</sub> = tanh(W<sub>c</sub>&middot;[h<sub>t-1</sub>, x<sub>t</sub>] + b<sub>c</sub>)</div>
+      </div>
+      <div class="eq-item eq-cell">
+        <div class="eq-label">Cell State</div>
+        <div class="eq-formula">C<sub>t</sub> = f<sub>t</sub> &times; C<sub>t-1</sub> + i<sub>t</sub> &times; c&#x303;<sub>t</sub></div>
+      </div>
+      <div class="eq-item eq-output">
+        <div class="eq-label">Output Gate</div>
+        <div class="eq-formula">o<sub>t</sub> = &sigma;(W<sub>o</sub>&middot;[h<sub>t-1</sub>, x<sub>t</sub>] + b<sub>o</sub>)</div>
+      </div>
+      <div class="eq-item eq-hidden">
+        <div class="eq-label">Hidden State</div>
+        <div class="eq-formula">h<sub>t</sub> = o<sub>t</sub> &times; tanh(C<sub>t</sub>)</div>
       </div>
     </div>
   </div>
+</div>
+
+<!-- ============================== GRU PANEL ============================== -->
+<div id="panel-gru" class="tab-panel">
+  <div class="panel-heading">
+    <h2>GRU &mdash; <em>it was not that good</em></h2>
+    <p class="desc">Gated Recurrent Unit uses two gates (reset, update) with no separate cell state. Same sequence as LSTM above &mdash; compare the results and the architectural complexity.</p>
+  </div>
+
+  <div class="comparison-callout">
+    <p><strong>Comparison note:</strong> This panel uses the same input sequence as the LSTM tab. The GRU achieves the same sentiment inversion at "not" using only 2 gates and ~33% fewer parameters. No separate cell state &mdash; just a single hidden state h<sub>t</sub>.</p>
+  </div>
+
+  <div class="controls-row">
+    <button class="ctrl-btn" id="gru-prev" onclick="gruPrev()">&#8592; Prev</button>
+    <button class="ctrl-btn primary" id="gru-play" onclick="gruPlayPause()">&#9654; Play</button>
+    <button class="ctrl-btn" id="gru-next" onclick="gruNext()">Next &#8594;</button>
+    <button class="ctrl-btn" onclick="gruReset()">&#8635; Reset</button>
+    <div class="step-dots" id="gru-dots"></div>
+    <span class="step-counter" id="gru-counter">Step 0 / 5</span>
+    <div class="speed-row">
+      <label>Speed</label>
+      <input type="range" id="gru-speed" min="1" max="5" value="3" oninput="updateSpeed('gru')">
+    </div>
+  </div>
+
+  <div class="views-container">
+    <!-- Rolled GRU -->
+    <div class="view-card">
+      <div class="view-card-header">
+        <span class="view-label">Rolled (single cell)</span>
+        <div class="token-badge-row">
+          <span class="token-badge-label">current:</span>
+          <span class="token-badge" id="gru-rolled-token">—</span>
+        </div>
+      </div>
+      <div class="view-card-body">
+        <div class="rolled-wrapper">
+          <svg id="gru-rolled-svg" viewBox="0 0 320 270" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width:320px;width:100%">
+            <defs>
+              <marker id="gru-arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="#64748b"/>
+              </marker>
+              <marker id="gru-arr-green" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="#059669"/>
+              </marker>
+              <marker id="gru-arr-blue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="#2563eb"/>
+              </marker>
+            </defs>
+
+            <!-- Reset gate -->
+            <circle id="gru-rg-circle" cx="100" cy="100" r="24" fill="rgba(234,88,12,0.08)" stroke="#ea580c" stroke-width="1.5"/>
+            <text x="100" y="97" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" fill="#ea580c">&#x3C3;</text>
+            <text x="100" y="113" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#ea580c">reset r</text>
+
+            <!-- Update gate -->
+            <circle id="gru-zg-circle" cx="180" cy="100" r="24" fill="rgba(29,78,216,0.08)" stroke="#1d4ed8" stroke-width="1.5"/>
+            <text x="180" y="97" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" fill="#1d4ed8">&#x3C3;</text>
+            <text x="180" y="113" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#1d4ed8">update z</text>
+
+            <!-- Candidate tanh -->
+            <rect id="gru-cg-rect" x="228" y="82" width="48" height="36" rx="8" fill="rgba(5,150,105,0.07)" stroke="#059669" stroke-width="1.5"/>
+            <text x="252" y="97" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#059669">tanh</text>
+            <text x="252" y="111" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#059669">h&#x303;</text>
+
+            <!-- 1-z interpolation box -->
+            <rect x="130" y="155" width="60" height="30" rx="8" fill="rgba(29,78,216,0.06)" stroke="#1d4ed8" stroke-width="1.5"/>
+            <text x="160" y="166" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#1d4ed8">1 - z</text>
+            <text x="160" y="178" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#1d4ed8">interp.</text>
+
+            <!-- + node final -->
+            <circle cx="160" cy="50" r="14" fill="rgba(5,150,105,0.06)" stroke="#059669" stroke-width="1.5"/>
+            <text x="160" y="55" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="14" fill="#059669">+</text>
+
+            <!-- connections -->
+            <line x1="180" y1="76" x2="175" y2="64" stroke="#1d4ed8" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <line x1="252" y1="82" x2="170" y2="63" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <line x1="180" y1="76" x2="160" y2="155" stroke="#1d4ed8" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <line x1="160" y1="185" x2="148" y2="64" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <line x1="100" y1="76" x2="228" y2="95" stroke="#ea580c" stroke-width="1.5" stroke-dasharray="3,2"/>
+
+            <!-- h_{t-1} input -->
+            <line id="gru-hin" x1="10" y1="145" x2="70" y2="145" stroke="#059669" stroke-width="2" marker-end="url(#gru-arr-green)"/>
+            <text x="5" y="141" font-family="JetBrains Mono,monospace" font-size="10" fill="#059669">h</text>
+            <text x="5" y="151" font-family="JetBrains Mono,monospace" font-size="8" fill="#059669">t-1</text>
+            <line x1="75" y1="145" x2="100" y2="124" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <line x1="75" y1="145" x2="180" y2="124" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <line x1="75" y1="145" x2="228" y2="100" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,2"/>
+
+            <!-- x_t input -->
+            <line id="gru-xin" x1="160" y1="235" x2="160" y2="190" stroke="#2563eb" stroke-width="2" marker-end="url(#gru-arr-blue)"/>
+            <text x="155" y="249" font-family="JetBrains Mono,monospace" font-size="10" fill="#2563eb">x</text>
+            <text x="162" y="249" font-family="JetBrains Mono,monospace" font-size="8" fill="#2563eb">t</text>
+            <line x1="160" y1="190" x2="100" y2="124" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <line x1="160" y1="190" x2="180" y2="124" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="3,2"/>
+
+            <!-- h_t output -->
+            <line id="gru-hout" x1="160" y1="36" x2="160" y2="10" stroke="#059669" stroke-width="2" marker-end="url(#gru-arr-green)"/>
+            <text x="165" y="8" font-family="JetBrains Mono,monospace" font-size="10" fill="#059669">h</text>
+            <text x="172" y="8" font-family="JetBrains Mono,monospace" font-size="8" fill="#059669">t</text>
+
+            <!-- token label -->
+            <rect id="gru-token-rect" x="124" y="252" width="72" height="20" rx="6" fill="rgba(37,99,235,0.08)" stroke="rgba(37,99,235,0.2)" stroke-width="1"/>
+            <text id="gru-token-text" x="160" y="266" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" font-weight="500" fill="#2563eb">—</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Unrolled GRU -->
+    <div class="view-card">
+      <div class="view-card-header">
+        <span class="view-label">Unrolled (across time)</span>
+        <span style="font-size:12px;color:var(--muted)">t = 1 &rarr; 5</span>
+      </div>
+      <div class="view-card-body">
+        <div class="unrolled-wrap">
+          <div class="unrolled-cells" id="gru-unrolled"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-row">
+    <div class="info-card">
+      <h4>Step Narration</h4>
+      <p class="narration-text" id="gru-narration">Press Play or Next to begin stepping through the sequence.</p>
+    </div>
+    <div class="info-card">
+      <h4>Gate Values</h4>
+      <div class="values-grid" id="gru-values">
+        <div class="val-row"><span class="val-name vr">r</span><span class="val-value" id="gru-val-r">—</span></div>
+        <div class="val-row"><span class="val-name vz">z</span><span class="val-value" id="gru-val-z">—</span></div>
+        <div class="val-row"><span class="val-name vhc">h&#x303;</span><span class="val-value" id="gru-val-hc">—</span></div>
+        <div class="val-row"><span class="val-name vh">h</span><span class="val-value" id="gru-val-h">—</span></div>
+      </div>
+      <p class="val-disclaimer">Values are illustrative approximations for pedagogical clarity.</p>
+    </div>
+  </div>
+
+  <div class="equations-card">
+    <h3>GRU Equations</h3>
+    <div class="eq-grid">
+      <div class="eq-item eq-reset">
+        <div class="eq-label">Reset Gate</div>
+        <div class="eq-formula">r<sub>t</sub> = &sigma;(W<sub>r</sub>&middot;[h<sub>t-1</sub>, x<sub>t</sub>] + b<sub>r</sub>)</div>
+      </div>
+      <div class="eq-item eq-update">
+        <div class="eq-label">Update Gate</div>
+        <div class="eq-formula">z<sub>t</sub> = &sigma;(W<sub>z</sub>&middot;[h<sub>t-1</sub>, x<sub>t</sub>] + b<sub>z</sub>)</div>
+      </div>
+      <div class="eq-item eq-hidden">
+        <div class="eq-label">Candidate Hidden</div>
+        <div class="eq-formula">h&#x303;<sub>t</sub> = tanh(W<sub>h</sub>&middot;[r<sub>t</sub>&times;h<sub>t-1</sub>, x<sub>t</sub>] + b<sub>h</sub>)</div>
+      </div>
+      <div class="eq-item eq-hidden">
+        <div class="eq-label">Hidden State</div>
+        <div class="eq-formula">h<sub>t</sub> = (1 - z<sub>t</sub>) &times; h<sub>t-1</sub> + z<sub>t</sub> &times; h&#x303;<sub>t</sub></div>
+      </div>
+    </div>
+    <p class="val-disclaimer" style="margin-top:14px">The update gate z<sub>t</sub> combines the roles of forget and input gates from LSTM. No separate cell state is needed.</p>
+  </div>
+</div>
+
 </main>
 
 <footer>
-  DATA/MSML 641 — Natural Language Processing &nbsp;·&nbsp; University of Maryland &nbsp;·&nbsp; Summer 2026<br>
-  Lecture 3 Supplementary Material &nbsp;·&nbsp; Interactive visualization for in-class use
+  DATA/MSML 641 &nbsp;&middot;&nbsp; University of Maryland &nbsp;&middot;&nbsp; Summer 2026 &nbsp;&middot;&nbsp; Lecture 3 Supplementary Material
 </footer>
 
 <script>
-// ─── Shared data ────────────────────────────────────────────────────────────
-const TOKENS = ['the', 'movie', 'was', 'great'];
+// ============================================================
+// DATA
+// ============================================================
 
-// Simulated (illustrative) vector values — rounded for readability
 const RNN_STEPS = [
-  {
-    token: 'the',
-    input:  '[0.12, -0.05, 0.30, 0.08]',
-    hidden: '[0.11, -0.05, 0.29, 0.08]',
-    narration: '<strong>Step 1 — "the"</strong><br>We start with h₀ = [0,0,0,0] (zero vector). The word <em>"the"</em> is encoded as input x₁. We compute h₁ = tanh(W_h·h₀ + W_x·x₁ + b). Since h₀ is zero, this is essentially W_x·x₁ passed through tanh. The hidden state now encodes a small amount of information from the first word.',
-    eq: 'h₁ = tanh(W_h·<span class="eq-highlight">[0,0,0,0]</span> + W_x·<span class="eq-highlight">x("the")</span> + b)'
-  },
-  {
-    token: 'movie',
-    input:  '[0.58, 0.22, -0.14, 0.45]',
-    hidden: '[0.41, 0.09, 0.07, 0.34]',
-    narration: '<strong>Step 2 — "movie"</strong><br>Now h₁ is passed forward as context. We concatenate it with x₂ (embedding of <em>"movie"</em>) and apply the same weight matrix. The hidden state h₂ now encodes both "the" and "movie" — the network is building up a representation of the phrase so far.',
-    eq: 'h₂ = tanh(W_h·<span class="eq-highlight">h₁</span> + W_x·<span class="eq-highlight">x("movie")</span> + b)'
-  },
-  {
-    token: 'was',
-    input:  '[0.03, -0.18, 0.07, -0.09]',
-    hidden: '[0.29, -0.04, 0.11, 0.18]',
-    narration: '<strong>Step 3 — "was"</strong><br>The word <em>"was"</em> has a relatively small embedding (function word). The hidden state h₃ updates but the change is modest — the RNN is learning to give different weight to content vs. function words through training. Notice gradients get weaker as they travel back through these multiplications.',
-    eq: 'h₃ = tanh(W_h·<span class="eq-highlight">h₂</span> + W_x·<span class="eq-highlight">x("was")</span> + b)'
-  },
-  {
-    token: 'great',
-    input:  '[0.75, 0.62, -0.08, 0.80]',
-    hidden: '[0.62, 0.38, 0.03, 0.61]',
-    narration: '<strong>Step 4 — "great"</strong><br>The word <em>"great"</em> has a strong positive embedding. h₄ shifts significantly — this is the final hidden state we would feed into a classifier for sentiment analysis. The RNN has compressed the whole sentence "the movie was great" into a single vector h₄.',
-    eq: 'h₄ = tanh(W_h·<span class="eq-highlight">h₃</span> + W_x·<span class="eq-highlight">x("great")</span> + b)'
-  }
+  { token: 'The',  x: '[0.05, -0.02, 0.14, 0.03]', h: '[0.05, -0.02, 0.13, 0.03]',
+    narration: '"The" — h₀=[0,0,0,0] → h₁ is nearly zero. A function word at the start barely perturbs the hidden state; the network has little context to encode yet.' },
+  { token: 'sky',  x: '[0.62, 0.38, -0.11, 0.51]', h: '[0.44, 0.21, 0.03, 0.37]',
+    narration: '"sky" — a content noun with strong semantics. h₂ shifts meaningfully, encoding sky-related context. The hidden vector starts carrying real meaning.' },
+  { token: 'is',   x: '[0.04, -0.12, 0.06, -0.07]', h: '[0.31, 0.08, 0.05, 0.24]',
+    narration: '"is" — a linking verb; semantically light. The hidden state partially decays toward the prior context, a gentle neutral update before the key word.' },
+  { token: 'blue', x: '[0.71, 0.55, -0.09, 0.77]', h: '[0.63, 0.40, 0.02, 0.59]',
+    narration: '"blue" — strong color signal. h₄ encodes "sky = blue". The final hidden vector is ready for a classification head.\n\nBut what if we needed to remember a word from 20 steps ago? RNNs struggle — gradients vanish through repeated multiplication by W_h.' },
 ];
 
 const LSTM_STEPS = [
-  {
-    token: 'the',
-    f: '[0.52, 0.48, 0.50]', i: '[0.61, 0.55, 0.58]', o: '[0.49, 0.51, 0.50]',
-    c: '[0.13, 0.10, 0.12]', h: '[0.06, 0.05, 0.06]', x: '[0.12, -0.05, 0.30]',
-    narration: '<strong>Step 1 — "the"</strong><br>Starting fresh. The <span style="color:var(--gate-forget)">forget gate f₁ ≈ 0.5</span> (neutral — nothing to forget yet). The <span style="color:var(--gate-input)">input gate i₁ ≈ 0.6</span> allows a moderate write to the cell state. The <span style="color:var(--gate-output)">output gate o₁ ≈ 0.5</span> controls how much to expose. Cell state c₁ stores a little from "the". This function word barely changes memory.',
-    eq: 'f₁ ≈ 0.5 &nbsp; i₁ ≈ 0.6 &nbsp; o₁ ≈ 0.5<br>c₁ = <span class="eq-highlight">f₁</span>⊙c₀ + <span class="eq-highlight">i₁</span>⊙c̃₁'
-  },
-  {
-    token: 'movie',
-    f: '[0.58, 0.62, 0.55]', i: '[0.72, 0.68, 0.74]', o: '[0.55, 0.60, 0.53]',
-    c: '[0.38, 0.35, 0.41]', h: '[0.21, 0.20, 0.22]', x: '[0.58, 0.22, -0.14]',
-    narration: '<strong>Step 2 — "movie"</strong><br>The <span style="color:var(--gate-input)">input gate opens wider (≈0.72)</span> — "movie" is a content word, worth storing. The forget gate stays moderate. The cell state c₂ grows, encoding that we are talking about a movie. The hidden state h₂ reflects this.',
-    eq: 'f₂ ≈ 0.59 &nbsp; i₂ ≈ 0.71 &nbsp; o₂ ≈ 0.56<br>c₂ = <span class="eq-highlight">f₂</span>⊙c₁ + <span class="eq-highlight">i₂</span>⊙c̃₂'
-  },
-  {
-    token: 'was',
-    f: '[0.48, 0.52, 0.47]', i: '[0.38, 0.35, 0.40]', o: '[0.44, 0.46, 0.45]',
-    c: '[0.30, 0.29, 0.32]', h: '[0.13, 0.13, 0.14]', x: '[0.03, -0.18, 0.07]',
-    narration: '<strong>Step 3 — "was"</strong><br>The function word <em>"was"</em> triggers a <span style="color:var(--gate-input)">low input gate (≈0.38)</span> — little new information to write. The <span style="color:var(--gate-forget)">forget gate (≈0.49)</span> slightly suppresses old state. Cell state c₃ decreases slightly — the LSTM is protecting its memory of "movie" while acknowledging this is a past-tense verb.',
-    eq: 'f₃ ≈ 0.49 &nbsp; i₃ ≈ 0.38 &nbsp; o₃ ≈ 0.45<br>c₃ = <span class="eq-highlight">f₃</span>⊙c₂ + <span class="eq-highlight">i₃</span>⊙c̃₃'
-  },
-  {
-    token: 'great',
-    f: '[0.65, 0.71, 0.68]', i: '[0.85, 0.88, 0.82]', o: '[0.78, 0.80, 0.76]',
-    c: '[0.72, 0.78, 0.74]', h: '[0.56, 0.60, 0.55]', x: '[0.75, 0.62, -0.08]',
-    narration: '<strong>Step 4 — "great"</strong><br>The sentiment word triggers <span style="color:var(--gate-input)">a very high input gate (≈0.85)</span> — strongly positive signal worth writing. The <span style="color:var(--gate-output)">output gate opens wide (≈0.78)</span>. The cell state surges to c₄ ≈ 0.75. The final hidden state h₄ strongly encodes positive sentiment. This is what we would classify as "positive".',
-    eq: 'f₄ ≈ 0.68 &nbsp; i₄ ≈ 0.85 &nbsp; o₄ ≈ 0.78<br>c₄ = <span class="eq-highlight">f₄</span>⊙c₃ + <span class="eq-highlight">i₄</span>⊙c̃₄'
-  }
+  { token: 'it',
+    f:'[0.51, 0.49, 0.50]', i:'[0.55, 0.52, 0.54]', o:'[0.50, 0.51, 0.49]',
+    c:'[0.10, 0.08, 0.09]', h:'[0.05, 0.04, 0.04]',
+    narration: '"it" — all gates near 0.5 (neutral start). The cell state and hidden state are both close to zero. The LSTM is waiting for meaningful context before committing.' },
+  { token: 'was',
+    f:'[0.54, 0.57, 0.52]', i:'[0.62, 0.60, 0.64]', o:'[0.53, 0.55, 0.52]',
+    c:'[0.25, 0.22, 0.27]', h:'[0.13, 0.12, 0.14]',
+    narration: '"was" — slight positive lean builds up. The input gate opens moderately (0.62), writing a small positive signal into the cell state. Forget gate is permissive — prior context is retained.' },
+  { token: 'not',
+    f:'[0.87, 0.84, 0.89]', i:'[0.78, 0.81, 0.76]', o:'[0.71, 0.69, 0.73]',
+    c:'[-0.31, -0.28, -0.33]', h:'[-0.22, -0.19, -0.24]',
+    narration: '"not" ← KEY STEP. The forget gate fires hard (≈0.87, bright red) — erasing accumulated positive context. The input gate opens wide to write a strong negation signal. Cell state inverts to negative. This is the LSTM\'s core capability: controlled forgetting.' },
+  { token: 'that',
+    f:'[0.48, 0.50, 0.47]', i:'[0.24, 0.26, 0.22]', o:'[0.44, 0.46, 0.43]',
+    c:'[-0.26, -0.23, -0.28]', h:'[-0.11, -0.10, -0.12]',
+    narration: '"that" — a function word. The input gate is almost closed (0.24), preserving the negated cell state. The hidden state stays negative, faithfully carrying the "not" signal forward.' },
+  { token: 'good',
+    f:'[0.61, 0.64, 0.59]', i:'[0.69, 0.72, 0.67]', o:'[0.76, 0.79, 0.74]',
+    c:'[-0.08, -0.05, -0.10]', h:'[-0.06, -0.04, -0.07]',
+    narration: '"good" — input gate opens (positive word), but the cell state was already negative. The final h encodes negative sentiment despite the positive final word — exactly the right answer for "it was not that good".' },
 ];
 
 const GRU_STEPS = [
-  {
-    token: 'the',
-    r: '[0.55, 0.48, 0.52]', z: '[0.42, 0.45, 0.40]',
-    hc: '[0.08, -0.03, 0.11]', h: '[0.03, -0.01, 0.04]', x: '[0.12, -0.05, 0.30]',
-    narration: '<strong>Step 1 — "the"</strong><br>Starting with h₀ = 0. The <span style="color:var(--gate-reset)">reset gate r₁ ≈ 0.52</span> partially resets the previous hidden state before computing the candidate. The <span style="color:var(--gate-update)">update gate z₁ ≈ 0.42</span> controls how much of the new candidate to blend in. With h₀ = 0, the output is mostly from the candidate h̃₁.',
-    eq: 'r₁ ≈ 0.52 &nbsp; z₁ ≈ 0.42<br>h₁ = (1−<span class="eq-highlight">z₁</span>)⊙h₀ + <span class="eq-highlight">z₁</span>⊙h̃₁'
-  },
-  {
-    token: 'movie',
-    r: '[0.62, 0.68, 0.60]', z: '[0.70, 0.72, 0.68]',
-    hc: '[0.54, 0.41, 0.48]', h: '[0.38, 0.29, 0.33]', x: '[0.58, 0.22, -0.14]',
-    narration: '<strong>Step 2 — "movie"</strong><br>The <span style="color:var(--gate-update)">update gate z₂ ≈ 0.70</span> is high — the GRU decides to update significantly. The <span style="color:var(--gate-reset)">reset gate r₂ ≈ 0.63</span> allows substantial carry-over of h₁ into the candidate. h₂ grows to encode the "movie" concept. Compare with LSTM: same effect, fewer parameters.',
-    eq: 'r₂ ≈ 0.63 &nbsp; z₂ ≈ 0.70<br>h₂ = (1−<span class="eq-highlight">z₂</span>)⊙h₁ + <span class="eq-highlight">z₂</span>⊙h̃₂'
-  },
-  {
-    token: 'was',
-    r: '[0.41, 0.45, 0.38]', z: '[0.28, 0.30, 0.26]',
-    hc: '[0.12, 0.08, 0.14]', h: '[0.29, 0.21, 0.25]', x: '[0.03, -0.18, 0.07]',
-    narration: '<strong>Step 3 — "was"</strong><br>The <span style="color:var(--gate-update)">update gate z₃ ≈ 0.28</span> is low — the GRU keeps most of the previous hidden state h₂ and blends in very little new information. This is the GRU\'s way of "forgetting" — it\'s equivalent to LSTM\'s high forget gate + low input gate, but in a single operation.',
-    eq: 'r₃ ≈ 0.41 &nbsp; z₃ ≈ 0.28<br>h₃ = (1−<span class="eq-highlight">z₃</span>)⊙h₂ + <span class="eq-highlight">z₃</span>⊙h̃₃'
-  },
-  {
-    token: 'great',
-    r: '[0.72, 0.78, 0.70]', z: '[0.82, 0.85, 0.80]',
-    hc: '[0.71, 0.68, 0.73]', h: '[0.61, 0.59, 0.62]', x: '[0.75, 0.62, -0.08]',
-    narration: '<strong>Step 4 — "great"</strong><br>The <span style="color:var(--gate-update)">update gate z₄ ≈ 0.82</span> is very high — strongly update! The <span style="color:var(--gate-reset)">reset gate r₄ ≈ 0.73</span> allows most of h₃ into the candidate computation. h₄ ≈ 0.61 strongly reflects positive sentiment. <strong>GRU vs. LSTM:</strong> GRU uses 2 gates and no separate cell state — fewer parameters, often comparable performance.',
-    eq: 'r₄ ≈ 0.73 &nbsp; z₄ ≈ 0.82<br>h₄ = (1−<span class="eq-highlight">z₄</span>)⊙h₃ + <span class="eq-highlight">z₄</span>⊙h̃₄'
-  }
+  { token: 'it',
+    r:'[0.52, 0.50, 0.53]', z:'[0.38, 0.41, 0.36]',
+    hc:'[0.06, -0.02, 0.09]', h:'[0.02, -0.01, 0.03]',
+    narration: '"it" — update gate low (0.38): the GRU mostly retains the prior hidden state (zero). Reset gate neutral. The hidden state barely moves — same behavior as LSTM\'s neutral start.' },
+  { token: 'was',
+    r:'[0.60, 0.63, 0.58]', z:'[0.58, 0.61, 0.56]',
+    hc:'[0.34, 0.28, 0.38]', h:'[0.19, 0.16, 0.22]',
+    narration: '"was" — update gate rises to 0.58: the GRU blends the candidate (slightly positive) with prior state. The single update gate is doing the work of both forget and input gates from LSTM.' },
+  { token: 'not',
+    r:'[0.71, 0.74, 0.68]', z:'[0.82, 0.85, 0.80]',
+    hc:'[-0.44, -0.40, -0.48]', h:'[-0.20, -0.17, -0.23]',
+    narration: '"not" ← KEY STEP. Update gate surges (≈0.82). The candidate hidden state is strongly negative (-0.44). Because z is high, h_t leans heavily into the new candidate — hidden state inverts. Same inflection as LSTM, no separate cell state needed.' },
+  { token: 'that',
+    r:'[0.38, 0.40, 0.36]', z:'[0.22, 0.24, 0.20]',
+    hc:'[-0.18, -0.14, -0.21]', h:'[-0.17, -0.14, -0.20]',
+    narration: '"that" — update gate low (0.22): GRU mostly preserves prior h (negative). Reset gate also low — candidate is muted. The negative signal is faithfully held.' },
+  { token: 'good',
+    r:'[0.65, 0.68, 0.62]', z:'[0.73, 0.76, 0.71]',
+    hc:'[0.28, 0.31, 0.25]', h:'[-0.04, -0.01, -0.07]',
+    narration: '"good" — update gate high again (0.73), candidate positive (0.28), but the blend with the prior negative state yields a near-zero final h — slightly negative. Same result as LSTM, same sentence, ~33% fewer parameters.' },
 ];
 
-// ─── Tab switching ───────────────────────────────────────────────────────────
+// ============================================================
+// STATE
+// ============================================================
+
+const state = {
+  rnn:  { step: -1, playing: false, timer: null, delay: 1200 },
+  lstm: { step: -1, playing: false, timer: null, delay: 1200 },
+  gru:  { step: -1, playing: false, timer: null, delay: 1200 },
+};
+
+// ============================================================
+// TAB SWITCHING
+// ============================================================
+
 function switchTab(name, btn) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-' + name).classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.classList.remove('active');
+    b.setAttribute('aria-selected', 'false');
+  });
+  document.getElementById('panel-' + name).classList.add('active');
   btn.classList.add('active');
+  btn.setAttribute('aria-selected', 'true');
 }
 
-// ─── Generic helpers ─────────────────────────────────────────────────────────
-function buildTokens(containerId, steps, currentStep) {
-  const el = document.getElementById(containerId);
-  el.innerHTML = '<span class="seq-label">INPUT:</span>';
-  steps.forEach((s, i) => {
-    const t = document.createElement('span');
-    t.className = 'token' + (i === currentStep ? ' active' : i < currentStep ? ' done' : '');
-    t.textContent = s.token;
-    el.appendChild(t);
-    if (i < steps.length - 1) {
-      const arrow = document.createElement('span');
-      arrow.className = 'step-arrow';
-      arrow.textContent = '→';
-      el.appendChild(arrow);
-    }
-  });
-}
+// ============================================================
+// UNROLLED BUILDERS
+// ============================================================
 
-// ─── RNN ─────────────────────────────────────────────────────────────────────
-let rnnStep_ = -1;
-let rnnTimer = null;
-
-function buildRnnArch(currentStep) {
-  const el = document.getElementById('rnn-arch');
-  el.innerHTML = '';
-  // h0
-  const h0 = document.createElement('div');
-  h0.className = 'rnn-cell' + (currentStep >= 0 ? ' past' : '');
-  h0.innerHTML = `<div class="hidden-node">h₀</div><div class="cell-label">start</div>`;
-  el.appendChild(h0);
-
+function buildRnnUnrolled() {
+  const wrap = document.getElementById('rnn-unrolled');
+  wrap.innerHTML = '';
   RNN_STEPS.forEach((s, i) => {
-    const arrow = document.createElement('div');
-    arrow.className = 'conn-arrow' + (i <= currentStep ? ' active' : '');
-    arrow.textContent = '→';
-    el.appendChild(arrow);
-
+    if (i > 0) {
+      const conn = document.createElement('div');
+      conn.className = 'cell-connector';
+      conn.innerHTML = `<div class="arrow-line"></div><div class="arrow-head"></div>`;
+      wrap.appendChild(conn);
+    }
     const cell = document.createElement('div');
-    cell.className = 'rnn-cell' + (i === currentStep ? ' active' : i < currentStep ? ' past' : '');
+    cell.className = 'rnn-ucell future';
+    cell.id = 'rnn-ucell-' + i;
     cell.innerHTML = `
-      <div class="input-node">x${i+1}</div>
-      <div class="cell-box rnn-box">
-        <div style="font-size:11px;color:var(--hidden-color);font-weight:700">Σ</div>
-        <div style="font-size:9px;color:var(--muted)">tanh</div>
+      <div class="xt-arrow"></div>
+      <div class="rnn-ucell-box">
+        <span class="cell-name">h<sub>${i+1}</sub></span>
+        <span class="cell-fn">tanh</span>
       </div>
-      <div class="hidden-node">h${i+1}</div>
-      <div class="cell-label">"${s.token}"</div>
+      <div class="token-label">"${s.token}"</div>
     `;
-    el.appendChild(cell);
+    wrap.appendChild(cell);
   });
 }
 
-function rnnRender() {
-  const step = rnnStep_;
-  buildTokens('rnn-tokens', RNN_STEPS, step);
-  buildRnnArch(step);
-  document.getElementById('rnn-progress').style.width = (step < 0 ? 0 : ((step + 1) / RNN_STEPS.length * 100)) + '%';
-  document.getElementById('rnn-step-num').textContent = Math.max(0, step + 1);
-  document.getElementById('rnn-step-total').textContent = RNN_STEPS.length;
-  document.getElementById('rnn-prev').disabled = step < 0;
-  document.getElementById('rnn-next').disabled = step >= RNN_STEPS.length - 1;
+function buildLstmUnrolled() {
+  const wrap = document.getElementById('lstm-unrolled');
+  wrap.innerHTML = '';
+  LSTM_STEPS.forEach((s, i) => {
+    if (i > 0) {
+      const conn = document.createElement('div');
+      conn.className = 'cell-connector';
+      conn.innerHTML = `<div class="arrow-line" style="background:var(--col-cell)"></div><div class="arrow-head" style="border-left-color:var(--col-cell)"></div>`;
+      wrap.appendChild(conn);
+    }
+    const cell = document.createElement('div');
+    cell.className = 'lstm-ucell future';
+    cell.id = 'lstm-ucell-' + i;
+    cell.innerHTML = `
+      <div class="xt-arrow"></div>
+      <div class="lstm-ucell-box">
+        <div class="lstm-cell-bar">C<sub>${i}</sub>&rarr;C<sub>${i+1}</sub></div>
+        <div class="lstm-gates-grid">
+          <div class="lstm-gate-dot fg">f</div>
+          <div class="lstm-gate-dot ig">i</div>
+          <div class="lstm-gate-dot og">o</div>
+          <div class="lstm-gate-dot cg">c&#x303;</div>
+        </div>
+        <div class="lstm-hidden-bar">h<sub>${i+1}</sub></div>
+      </div>
+      <div class="token-label">"${s.token}"</div>
+    `;
+    wrap.appendChild(cell);
+  });
+}
 
-  if (step < 0) {
-    document.getElementById('rnn-narration').innerHTML = 'Press <strong>Play</strong> or <strong>Next →</strong> to begin the forward pass.';
-    document.getElementById('rnn-input-val').textContent = '—';
-    document.getElementById('rnn-hidden-val').textContent = 'h₀ = [0, 0, 0, 0]';
-    document.getElementById('rnn-equation').innerHTML = 'h<sub>t</sub> = tanh(W<sub>h</sub> · h<sub>t−1</sub> + W<sub>x</sub> · x<sub>t</sub> + b)';
-  } else {
-    const s = RNN_STEPS[step];
-    document.getElementById('rnn-narration').innerHTML = s.narration;
-    document.getElementById('rnn-input-val').textContent = `x("${s.token}") = ${s.input}`;
-    document.getElementById('rnn-hidden-val').textContent = `h${step+1} = ${s.hidden}`;
-    document.getElementById('rnn-equation').innerHTML = s.eq;
+function buildGruUnrolled() {
+  const wrap = document.getElementById('gru-unrolled');
+  wrap.innerHTML = '';
+  GRU_STEPS.forEach((s, i) => {
+    if (i > 0) {
+      const conn = document.createElement('div');
+      conn.className = 'cell-connector';
+      conn.innerHTML = `<div class="arrow-line" style="background:var(--col-update)"></div><div class="arrow-head" style="border-left-color:var(--col-update)"></div>`;
+      wrap.appendChild(conn);
+    }
+    const cell = document.createElement('div');
+    cell.className = 'gru-ucell future';
+    cell.id = 'gru-ucell-' + i;
+    cell.innerHTML = `
+      <div class="xt-arrow"></div>
+      <div class="gru-ucell-box">
+        <div class="gru-gates-area">
+          <div class="gru-gate-dot rg">r</div>
+          <div class="gru-gate-dot zg">z</div>
+          <div class="gru-gate-dot hc">h&#x303;</div>
+          <div class="gru-gate-dot ht">h<sub>${i+1}</sub></div>
+        </div>
+        <div class="gru-hidden-bar">h<sub>${i+1}</sub></div>
+      </div>
+      <div class="token-label">"${s.token}"</div>
+    `;
+    wrap.appendChild(cell);
+  });
+}
+
+// ============================================================
+// DOTS BUILDER
+// ============================================================
+
+function buildDots(model, count) {
+  const el = document.getElementById(model + '-dots');
+  el.innerHTML = '';
+  for (let i = 0; i < count; i++) {
+    const d = document.createElement('div');
+    d.className = 'step-dot';
+    d.id = model + '-dot-' + i;
+    el.appendChild(d);
   }
 }
 
-function rnnStep(dir) {
-  rnnStep_ = Math.max(-1, Math.min(RNN_STEPS.length - 1, rnnStep_ + dir));
-  rnnRender();
-  if (rnnStep_ >= RNN_STEPS.length - 1 && rnnTimer) rnnStop();
+// ============================================================
+// RENDER
+// ============================================================
+
+function setVal(id, val) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.remove('fade');
+  void el.offsetWidth;
+  el.textContent = val;
 }
 
-function rnnTogglePlay() {
-  if (rnnTimer) { rnnStop(); return; }
-  if (rnnStep_ >= RNN_STEPS.length - 1) { rnnStep_ = -1; rnnRender(); }
-  rnnPlay();
+function setNarration(model, text) {
+  const el = document.getElementById(model + '-narration');
+  el.classList.add('fade');
+  setTimeout(() => {
+    el.textContent = text;
+    el.classList.remove('fade');
+  }, 150);
 }
 
-function rnnPlay() {
-  const btn = document.getElementById('rnn-play');
-  btn.textContent = '⏸ Pause';
-  btn.classList.add('playing');
-  const delay = () => Math.max(400, 1800 - (parseInt(document.getElementById('rnn-speed').value) - 1) * 350);
-  const tick = () => {
-    if (rnnStep_ >= RNN_STEPS.length - 1) { rnnStop(); return; }
-    rnnStep(1);
-    rnnTimer = setTimeout(tick, delay());
+function updateDots(model, step, total) {
+  for (let i = 0; i < total; i++) {
+    const d = document.getElementById(model + '-dot-' + i);
+    if (!d) continue;
+    d.className = 'step-dot';
+    if (i < step) d.classList.add('past');
+    if (i === step) {
+      if (model === 'lstm') d.classList.add('active-lstm');
+      else if (model === 'gru') d.classList.add('active-gru');
+      else d.classList.add('active');
+    }
+  }
+}
+
+function renderRnn(step) {
+  const steps = RNN_STEPS;
+  const isActive = step >= 0 && step < steps.length;
+
+  // token badge
+  const tok = isActive ? '"' + steps[step].token + '"' : '—';
+  document.getElementById('rnn-rolled-token').textContent = tok;
+
+  // SVG token text
+  const txtEl = document.getElementById('rnn-token-text');
+  if (txtEl) txtEl.textContent = isActive ? steps[step].token : '—';
+
+  // SVG cell glow
+  const cellBox = document.getElementById('rnn-cell-box');
+  if (cellBox) {
+    if (isActive) {
+      cellBox.setAttribute('stroke', '#059669');
+      cellBox.setAttribute('stroke-width', '2.5');
+      cellBox.setAttribute('fill', 'rgba(5,150,105,0.05)');
+    } else {
+      cellBox.setAttribute('stroke', '#e2e8f0');
+      cellBox.setAttribute('stroke-width', '2');
+      cellBox.setAttribute('fill', 'white');
+    }
+  }
+
+  // Arrows animation
+  ['rnn-hin','rnn-hout','rnn-xin','rnn-selfloop'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (isActive) el.classList.add('flow-anim');
+    else el.classList.remove('flow-anim');
+  });
+
+  // Unrolled cells
+  steps.forEach((_, i) => {
+    const cell = document.getElementById('rnn-ucell-' + i);
+    if (!cell) return;
+    cell.className = 'rnn-ucell';
+    if (i < step) cell.classList.add('past');
+    else if (i === step) cell.classList.add('active');
+    else cell.classList.add('future');
+  });
+
+  // values
+  if (isActive) {
+    setVal('rnn-val-x', steps[step].x);
+    setVal('rnn-val-h', steps[step].h);
+    setNarration('rnn', steps[step].narration);
+  } else {
+    setVal('rnn-val-x', '—');
+    setVal('rnn-val-h', '—');
+  }
+
+  document.getElementById('rnn-counter').textContent = `Step ${isActive ? step+1 : 0} / ${steps.length}`;
+  updateDots('rnn', step, steps.length);
+  updateBtnState('rnn', step, steps.length);
+}
+
+function renderLstm(step) {
+  const steps = LSTM_STEPS;
+  const isActive = step >= 0 && step < steps.length;
+
+  document.getElementById('lstm-rolled-token').textContent = isActive ? '"' + steps[step].token + '"' : '—';
+  const txtEl = document.getElementById('lstm-token-text');
+  if (txtEl) txtEl.textContent = isActive ? steps[step].token : '—';
+
+  // Gate circle glow
+  const gateColors = {
+    'lstm-fg-circle': isActive ? '#dc2626' : null,
+    'lstm-ig-circle': isActive ? '#d97706' : null,
+    'lstm-og-circle': isActive ? '#7c3aed' : null,
+    'lstm-cg-rect':   isActive ? '#0891b2' : null,
   };
-  rnnTimer = setTimeout(tick, 400);
+  Object.entries(gateColors).forEach(([id, color]) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (color) {
+      el.style.filter = `drop-shadow(0 0 6px ${color}80)`;
+      el.style.strokeWidth = '2.5';
+    } else {
+      el.style.filter = '';
+      el.style.strokeWidth = '1.5';
+    }
+  });
+
+  steps.forEach((_, i) => {
+    const cell = document.getElementById('lstm-ucell-' + i);
+    if (!cell) return;
+    cell.className = 'lstm-ucell';
+    if (i < step) cell.classList.add('past');
+    else if (i === step) cell.classList.add('active');
+    else cell.classList.add('future');
+  });
+
+  if (isActive) {
+    setVal('lstm-val-f', steps[step].f);
+    setVal('lstm-val-i', steps[step].i);
+    setVal('lstm-val-o', steps[step].o);
+    setVal('lstm-val-c', steps[step].c);
+    setVal('lstm-val-h', steps[step].h);
+    setNarration('lstm', steps[step].narration);
+  } else {
+    ['f','i','o','c','h'].forEach(k => setVal('lstm-val-' + k, '—'));
+  }
+
+  document.getElementById('lstm-counter').textContent = `Step ${isActive ? step+1 : 0} / ${steps.length}`;
+  updateDots('lstm', step, steps.length);
+  updateBtnState('lstm', step, steps.length);
 }
 
-function rnnStop() {
-  clearTimeout(rnnTimer); rnnTimer = null;
-  const btn = document.getElementById('rnn-play');
-  btn.textContent = '▶ Play';
-  btn.classList.remove('playing');
+function renderGru(step) {
+  const steps = GRU_STEPS;
+  const isActive = step >= 0 && step < steps.length;
+
+  document.getElementById('gru-rolled-token').textContent = isActive ? '"' + steps[step].token + '"' : '—';
+  const txtEl = document.getElementById('gru-token-text');
+  if (txtEl) txtEl.textContent = isActive ? steps[step].token : '—';
+
+  ['gru-rg-circle','gru-zg-circle'].forEach((id, idx) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const col = idx === 0 ? '#ea580c' : '#1d4ed8';
+    if (isActive) {
+      el.style.filter = `drop-shadow(0 0 6px ${col}80)`;
+      el.style.strokeWidth = '2.5';
+    } else {
+      el.style.filter = '';
+      el.style.strokeWidth = '1.5';
+    }
+  });
+
+  steps.forEach((_, i) => {
+    const cell = document.getElementById('gru-ucell-' + i);
+    if (!cell) return;
+    cell.className = 'gru-ucell';
+    if (i < step) cell.classList.add('past');
+    else if (i === step) cell.classList.add('active');
+    else cell.classList.add('future');
+  });
+
+  if (isActive) {
+    setVal('gru-val-r', steps[step].r);
+    setVal('gru-val-z', steps[step].z);
+    setVal('gru-val-hc', steps[step].hc);
+    setVal('gru-val-h', steps[step].h);
+    setNarration('gru', steps[step].narration);
+  } else {
+    ['r','z','hc','h'].forEach(k => setVal('gru-val-' + k, '—'));
+  }
+
+  document.getElementById('gru-counter').textContent = `Step ${isActive ? step+1 : 0} / ${steps.length}`;
+  updateDots('gru', step, steps.length);
+  updateBtnState('gru', step, steps.length);
+}
+
+function updateBtnState(model, step, total) {
+  const prevBtn = document.getElementById(model + '-prev');
+  const nextBtn = document.getElementById(model + '-next');
+  if (prevBtn) prevBtn.disabled = step <= 0;
+  if (nextBtn) nextBtn.disabled = step >= total - 1;
+}
+
+// ============================================================
+// CONTROLS
+// ============================================================
+
+function updateSpeed(model) {
+  const slider = document.getElementById(model + '-speed');
+  const val = parseInt(slider.value);
+  // slider 1-5: map to 2000ms-400ms
+  state[model].delay = 2400 - (val * 400);
+}
+
+// --- RNN ---
+function rnnPrev() {
+  stopPlaying('rnn');
+  if (state.rnn.step > 0) { state.rnn.step--; renderRnn(state.rnn.step); }
+}
+
+function rnnNext() {
+  if (state.rnn.step < RNN_STEPS.length - 1) {
+    state.rnn.step++;
+    renderRnn(state.rnn.step);
+  } else {
+    stopPlaying('rnn');
+  }
 }
 
 function rnnReset() {
-  rnnStop(); rnnStep_ = -1; rnnRender();
+  stopPlaying('rnn');
+  state.rnn.step = -1;
+  renderRnn(-1);
+  setNarration('rnn', 'Press Play or Next to begin stepping through the sequence.');
 }
 
-// ─── LSTM ─────────────────────────────────────────────────────────────────────
-let lstmStep_ = -1;
-let lstmTimer = null;
-
-function buildLstmArch(currentStep) {
-  const el = document.getElementById('lstm-arch');
-  el.innerHTML = '';
-
-  // c0/h0
-  const start = document.createElement('div');
-  start.className = 'lstm-cell' + (currentStep >= 0 ? ' past' : '');
-  start.innerHTML = `
-    <div class="hidden-node">h₀</div>
-    <div class="cell-label">start</div>
-  `;
-  el.appendChild(start);
-
-  LSTM_STEPS.forEach((s, i) => {
-    const arrow = document.createElement('div');
-    arrow.className = 'conn-arrow' + (i <= currentStep ? ' active' : '');
-    arrow.textContent = '→';
-    el.appendChild(arrow);
-
-    const cell = document.createElement('div');
-    cell.className = 'lstm-cell' + (i === currentStep ? ' active' : i < currentStep ? ' past' : '');
-    cell.innerHTML = `
-      <div class="input-node">x${i+1}</div>
-      <div class="lstm-box">
-        <div class="gate-row">
-          <div class="gate forget">f</div>
-          <div class="gate input-g">i</div>
-          <div class="gate output">o</div>
-          <div class="gate cell-g">c</div>
-        </div>
-        <div class="hidden-node" style="width:28px;height:28px;font-size:9px">h${i+1}</div>
-      </div>
-      <div class="cell-label">"${s.token}"</div>
-    `;
-    el.appendChild(cell);
-  });
+function rnnPlayPause() {
+  if (state.rnn.playing) stopPlaying('rnn');
+  else startPlaying('rnn');
 }
 
-function lstmRender() {
-  const step = lstmStep_;
-  buildTokens('lstm-tokens', LSTM_STEPS, step);
-  buildLstmArch(step);
-  document.getElementById('lstm-progress').style.width = (step < 0 ? 0 : ((step + 1) / LSTM_STEPS.length * 100)) + '%';
-  document.getElementById('lstm-step-num').textContent = Math.max(0, step + 1);
-  document.getElementById('lstm-step-total').textContent = LSTM_STEPS.length;
-  document.getElementById('lstm-prev').disabled = step < 0;
-  document.getElementById('lstm-next').disabled = step >= LSTM_STEPS.length - 1;
+// --- LSTM ---
+function lstmPrev() {
+  stopPlaying('lstm');
+  if (state.lstm.step > 0) { state.lstm.step--; renderLstm(state.lstm.step); }
+}
 
-  if (step < 0) {
-    document.getElementById('lstm-narration').innerHTML = 'Press <strong>Play</strong> or <strong>Next →</strong> to begin.';
-    document.getElementById('lstm-f-val').textContent = '—';
-    document.getElementById('lstm-i-val').textContent = '—';
-    document.getElementById('lstm-o-val').textContent = '—';
-    document.getElementById('lstm-c-val').textContent = 'c₀ = [0, 0, 0]';
-    document.getElementById('lstm-h-val').textContent = 'h₀ = [0, 0, 0]';
-    document.getElementById('lstm-x-val').textContent = '—';
-    document.getElementById('lstm-equation').innerHTML = `
-      f<sub>t</sub> = σ(W<sub>f</sub>·[h<sub>t−1</sub>, x<sub>t</sub>] + b<sub>f</sub>)<br>
-      i<sub>t</sub> = σ(W<sub>i</sub>·[h<sub>t−1</sub>, x<sub>t</sub>] + b<sub>i</sub>)<br>
-      o<sub>t</sub> = σ(W<sub>o</sub>·[h<sub>t−1</sub>, x<sub>t</sub>] + b<sub>o</sub>)<br>
-      c̃<sub>t</sub> = tanh(W<sub>c</sub>·[h<sub>t−1</sub>, x<sub>t</sub>] + b<sub>c</sub>)<br>
-      c<sub>t</sub> = f<sub>t</sub> ⊙ c<sub>t−1</sub> + i<sub>t</sub> ⊙ c̃<sub>t</sub><br>
-      h<sub>t</sub> = o<sub>t</sub> ⊙ tanh(c<sub>t</sub>)`;
+function lstmNext() {
+  if (state.lstm.step < LSTM_STEPS.length - 1) {
+    state.lstm.step++;
+    renderLstm(state.lstm.step);
   } else {
-    const s = LSTM_STEPS[step];
-    document.getElementById('lstm-narration').innerHTML = s.narration;
-    document.getElementById('lstm-f-val').textContent = s.f;
-    document.getElementById('lstm-i-val').textContent = s.i;
-    document.getElementById('lstm-o-val').textContent = s.o;
-    document.getElementById('lstm-c-val').textContent = s.c;
-    document.getElementById('lstm-h-val').textContent = s.h;
-    document.getElementById('lstm-x-val').textContent = `x("${s.token}") = ${s.x}`;
-    document.getElementById('lstm-equation').innerHTML = s.eq;
+    stopPlaying('lstm');
   }
 }
 
-function lstmStep(dir) {
-  lstmStep_ = Math.max(-1, Math.min(LSTM_STEPS.length - 1, lstmStep_ + dir));
-  lstmRender();
-  if (lstmStep_ >= LSTM_STEPS.length - 1 && lstmTimer) lstmStop();
+function lstmReset() {
+  stopPlaying('lstm');
+  state.lstm.step = -1;
+  renderLstm(-1);
+  setNarration('lstm', 'Press Play or Next to begin stepping through the sequence.');
 }
 
-function lstmTogglePlay() {
-  if (lstmTimer) { lstmStop(); return; }
-  if (lstmStep_ >= LSTM_STEPS.length - 1) { lstmStep_ = -1; lstmRender(); }
-  lstmPlay();
+function lstmPlayPause() {
+  if (state.lstm.playing) stopPlaying('lstm');
+  else startPlaying('lstm');
 }
 
-function lstmPlay() {
-  const btn = document.getElementById('lstm-play');
-  btn.textContent = '⏸ Pause';
-  btn.classList.add('playing');
-  const delay = () => Math.max(400, 2000 - (parseInt(document.getElementById('lstm-speed').value) - 1) * 400);
-  const tick = () => {
-    if (lstmStep_ >= LSTM_STEPS.length - 1) { lstmStop(); return; }
-    lstmStep(1);
-    lstmTimer = setTimeout(tick, delay());
-  };
-  lstmTimer = setTimeout(tick, 400);
+// --- GRU ---
+function gruPrev() {
+  stopPlaying('gru');
+  if (state.gru.step > 0) { state.gru.step--; renderGru(state.gru.step); }
 }
 
-function lstmStop() {
-  clearTimeout(lstmTimer); lstmTimer = null;
-  const btn = document.getElementById('lstm-play');
-  btn.textContent = '▶ Play';
-  btn.classList.remove('playing');
-}
-
-function lstmReset() { lstmStop(); lstmStep_ = -1; lstmRender(); }
-
-// ─── GRU ─────────────────────────────────────────────────────────────────────
-let gruStep_ = -1;
-let gruTimer = null;
-
-function buildGruArch(currentStep) {
-  const el = document.getElementById('gru-arch');
-  el.innerHTML = '';
-
-  const start = document.createElement('div');
-  start.className = 'gru-cell' + (currentStep >= 0 ? ' past' : '');
-  start.innerHTML = `<div class="hidden-node">h₀</div><div class="cell-label">start</div>`;
-  el.appendChild(start);
-
-  GRU_STEPS.forEach((s, i) => {
-    const arrow = document.createElement('div');
-    arrow.className = 'conn-arrow' + (i <= currentStep ? ' active' : '');
-    arrow.textContent = '→';
-    el.appendChild(arrow);
-
-    const cell = document.createElement('div');
-    cell.className = 'gru-cell' + (i === currentStep ? ' active' : i < currentStep ? ' past' : '');
-    cell.innerHTML = `
-      <div class="input-node">x${i+1}</div>
-      <div class="gru-box">
-        <div style="display:flex;gap:5px;">
-          <div class="gru-gate reset">r</div>
-          <div class="gru-gate update">z</div>
-        </div>
-        <div class="hidden-node" style="width:28px;height:28px;font-size:9px">h${i+1}</div>
-      </div>
-      <div class="cell-label">"${s.token}"</div>
-    `;
-    el.appendChild(cell);
-  });
-}
-
-function gruRender() {
-  const step = gruStep_;
-  buildTokens('gru-tokens', GRU_STEPS, step);
-  buildGruArch(step);
-  document.getElementById('gru-progress').style.width = (step < 0 ? 0 : ((step + 1) / GRU_STEPS.length * 100)) + '%';
-  document.getElementById('gru-step-num').textContent = Math.max(0, step + 1);
-  document.getElementById('gru-step-total').textContent = GRU_STEPS.length;
-  document.getElementById('gru-prev').disabled = step < 0;
-  document.getElementById('gru-next').disabled = step >= GRU_STEPS.length - 1;
-
-  if (step < 0) {
-    document.getElementById('gru-narration').innerHTML = 'Press <strong>Play</strong> or <strong>Next →</strong> to begin.';
-    ['r','z','hc','h','x'].forEach(k => document.getElementById(`gru-${k}-val`).textContent = '—');
-    document.getElementById('gru-h-val').textContent = 'h₀ = [0, 0, 0]';
-    document.getElementById('gru-equation').innerHTML = `
-      r<sub>t</sub> = σ(W<sub>r</sub>·[h<sub>t−1</sub>, x<sub>t</sub>] + b<sub>r</sub>)<br>
-      z<sub>t</sub> = σ(W<sub>z</sub>·[h<sub>t−1</sub>, x<sub>t</sub>] + b<sub>z</sub>)<br>
-      h̃<sub>t</sub> = tanh(W·[r<sub>t</sub> ⊙ h<sub>t−1</sub>, x<sub>t</sub>] + b)<br>
-      h<sub>t</sub> = (1 − z<sub>t</sub>) ⊙ h<sub>t−1</sub> + z<sub>t</sub> ⊙ h̃<sub>t</sub>`;
+function gruNext() {
+  if (state.gru.step < GRU_STEPS.length - 1) {
+    state.gru.step++;
+    renderGru(state.gru.step);
   } else {
-    const s = GRU_STEPS[step];
-    document.getElementById('gru-narration').innerHTML = s.narration;
-    document.getElementById('gru-r-val').textContent = s.r;
-    document.getElementById('gru-z-val').textContent = s.z;
-    document.getElementById('gru-hc-val').textContent = s.hc;
-    document.getElementById('gru-h-val').textContent = s.h;
-    document.getElementById('gru-x-val').textContent = `x("${s.token}") = ${s.x}`;
-    document.getElementById('gru-equation').innerHTML = s.eq;
+    stopPlaying('gru');
   }
 }
 
-function gruStep(dir) {
-  gruStep_ = Math.max(-1, Math.min(GRU_STEPS.length - 1, gruStep_ + dir));
-  gruRender();
-  if (gruStep_ >= GRU_STEPS.length - 1 && gruTimer) gruStop();
+function gruReset() {
+  stopPlaying('gru');
+  state.gru.step = -1;
+  renderGru(-1);
+  setNarration('gru', 'Press Play or Next to begin stepping through the sequence.');
 }
 
-function gruTogglePlay() {
-  if (gruTimer) { gruStop(); return; }
-  if (gruStep_ >= GRU_STEPS.length - 1) { gruStep_ = -1; gruRender(); }
-  gruPlay();
+function gruPlayPause() {
+  if (state.gru.playing) stopPlaying('gru');
+  else startPlaying('gru');
 }
 
-function gruPlay() {
-  const btn = document.getElementById('gru-play');
-  btn.textContent = '⏸ Pause';
-  btn.classList.add('playing');
-  const delay = () => Math.max(400, 1900 - (parseInt(document.getElementById('gru-speed').value) - 1) * 375);
-  const tick = () => {
-    if (gruStep_ >= GRU_STEPS.length - 1) { gruStop(); return; }
-    gruStep(1);
-    gruTimer = setTimeout(tick, delay());
-  };
-  gruTimer = setTimeout(tick, 400);
+// ============================================================
+// PLAY / STOP
+// ============================================================
+
+const stepFns = { rnn: rnnNext, lstm: lstmNext, gru: gruNext };
+const totalSteps = { rnn: RNN_STEPS.length, lstm: LSTM_STEPS.length, gru: GRU_STEPS.length };
+
+function startPlaying(model) {
+  if (state[model].playing) return;
+  if (state[model].step >= totalSteps[model] - 1) {
+    state[model].step = -1;
+  }
+  state[model].playing = true;
+  document.getElementById(model + '-play').textContent = '⏸ Pause';
+  tick(model);
 }
 
-function gruStop() {
-  clearTimeout(gruTimer); gruTimer = null;
-  const btn = document.getElementById('gru-play');
-  btn.textContent = '▶ Play';
-  btn.classList.remove('playing');
+function tick(model) {
+  if (!state[model].playing) return;
+  stepFns[model]();
+  if (state[model].step >= totalSteps[model] - 1) {
+    stopPlaying(model);
+    return;
+  }
+  state[model].timer = setTimeout(() => tick(model), state[model].delay);
 }
 
-function gruReset() { gruStop(); gruStep_ = -1; gruRender(); }
+function stopPlaying(model) {
+  state[model].playing = false;
+  if (state[model].timer) { clearTimeout(state[model].timer); state[model].timer = null; }
+  document.getElementById(model + '-play').textContent = '▶ Play';
+}
 
-// ─── Init ────────────────────────────────────────────────────────────────────
-rnnRender();
-lstmRender();
-gruRender();
+// ============================================================
+// INIT
+// ============================================================
+
+buildRnnUnrolled();
+buildLstmUnrolled();
+buildGruUnrolled();
+buildDots('rnn', RNN_STEPS.length);
+buildDots('lstm', LSTM_STEPS.length);
+buildDots('gru', GRU_STEPS.length);
+renderRnn(-1);
+renderLstm(-1);
+renderGru(-1);
+updateBtnState('rnn', -1, RNN_STEPS.length);
+updateBtnState('lstm', -1, LSTM_STEPS.length);
+updateBtnState('gru', -1, GRU_STEPS.length);
 </script>
 </body>
 </html>
