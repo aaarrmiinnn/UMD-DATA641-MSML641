@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lecture 3 Supplementary — RNN, LSTM &amp; GRU | DATA/MSML 641</title>
+<title>Lecture 3 Supplementary: RNN, LSTM &amp; GRU | DATA/MSML 641</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -962,29 +962,29 @@ svg text { font-family: 'DM Sans', sans-serif; }
    ========================================================= */
 const RNN_STEPS = [
   { token:'The',  h:'[0.05, -0.02, 0.13]',
-    note:'"The" — function word. h₁ barely moves from h₀=[0,0,0].' },
+    note:'"The": function word. h₁ barely moves from h₀=[0,0,0].' },
   { token:'sky',  h:'[0.44, 0.21, 0.37]',
-    note:'"sky" — content noun. h₂ shifts to encode sky-context.' },
+    note:'"sky": content noun. h₂ shifts to encode sky-context.' },
   { token:'is',   h:'[0.31, 0.08, 0.24]',
-    note:'"is" — linking verb, neutral update.' },
+    note:'"is": linking verb, neutral update.' },
   { token:'blue', h:'[0.63, 0.40, 0.59]',
-    note:'"blue" — strong color signal. h₄ encodes "sky=blue" for classification. In RNNs, gradients vanish over long sequences — h₄ can barely "remember" words from 20 steps ago.' },
+    note:'"blue": strong color signal. h₄ encodes "sky=blue" for classification. In RNNs, gradients vanish over long sequences: h₄ can barely "remember" words from 20 steps ago.' },
 ];
 
 const LSTM_STEPS = [
-  { token:'it',   f:0.51, i:0.55, o:0.50, c:0.09,  h:0.04,  note:'"it" — all gates neutral. Waiting for meaningful context.' },
-  { token:'was',  f:0.54, i:0.62, o:0.53, c:0.25,  h:0.13,  note:'"was" — input gate opens (0.62). Small positive signal written to cell state.' },
-  { token:'not',  f:0.87, i:0.78, o:0.71, c:-0.31, h:-0.22, note:'KEY: "not" — forget gate fires hard (0.87). Erases prior context. Input gate writes strong negation. Cell state inverts to negative.' },
-  { token:'that', f:0.48, i:0.24, o:0.44, c:-0.26, h:-0.11, note:'"that" — input gate almost closed (0.24). Negative state preserved faithfully.' },
-  { token:'good', f:0.61, i:0.69, o:0.76, c:-0.08, h:-0.06, note:'"good" — positive word, but cell state was already negative. Final h encodes negative sentiment.' },
+  { token:'it',   f:0.51, i:0.55, o:0.50, c:0.09,  h:0.04,  note:'"it": all gates neutral. Waiting for meaningful context.' },
+  { token:'was',  f:0.54, i:0.62, o:0.53, c:0.25,  h:0.13,  note:'"was": input gate opens (0.62). Small positive signal written to cell state.' },
+  { token:'not',  f:0.87, i:0.78, o:0.71, c:-0.31, h:-0.22, note:'KEY: "not": forget gate fires hard (0.87). Erases prior context. Input gate writes strong negation. Cell state inverts to negative.' },
+  { token:'that', f:0.48, i:0.24, o:0.44, c:-0.26, h:-0.11, note:'"that": input gate almost closed (0.24). Negative state preserved faithfully.' },
+  { token:'good', f:0.61, i:0.69, o:0.76, c:-0.08, h:-0.06, note:'"good": positive word, but cell state was already negative. Final h encodes negative sentiment.' },
 ];
 
 const GRU_STEPS = [
-  { token:'it',   r:0.52, z:0.38, hc:0.06,  h:0.02,  note:'"it" — update gate low (0.38). GRU mostly keeps h₀.' },
-  { token:'was',  r:0.60, z:0.58, hc:0.34,  h:0.19,  note:'"was" — update gate 0.58. z acts as combined forget+input.' },
-  { token:'not',  r:0.71, z:0.82, hc:-0.44, h:-0.20, note:'KEY: "not" — update gate high (0.82), candidate strongly negative. h inverts. Same result as LSTM with 2 gates instead of 4.' },
-  { token:'that', r:0.38, z:0.22, hc:-0.18, h:-0.17, note:'"that" — update gate low (0.22). Prior negative state preserved.' },
-  { token:'good', r:0.65, z:0.73, hc:0.28,  h:-0.04, note:'"good" — positive candidate blends with negative prior. Final h slightly negative.' },
+  { token:'it',   r:0.52, z:0.38, hc:0.06,  h:0.02,  note:'"it": update gate low (0.38). GRU mostly keeps h₀.' },
+  { token:'was',  r:0.60, z:0.58, hc:0.34,  h:0.19,  note:'"was": update gate 0.58. z acts as combined forget+input.' },
+  { token:'not',  r:0.71, z:0.82, hc:-0.44, h:-0.20, note:'KEY: "not": update gate high (0.82), candidate strongly negative. h inverts. Same result as LSTM with 2 gates instead of 4.' },
+  { token:'that', r:0.38, z:0.22, hc:-0.18, h:-0.17, note:'"that": update gate low (0.22). Prior negative state preserved.' },
+  { token:'good', r:0.65, z:0.73, hc:0.28,  h:-0.04, note:'"good": positive candidate blends with negative prior. Final h slightly negative.' },
 ];
 
 /* =========================================================
