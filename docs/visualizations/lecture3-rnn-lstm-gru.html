@@ -217,7 +217,6 @@ main {
   border: 1px solid var(--border);
   border-radius: 16px;
   box-shadow: var(--shadow);
-  overflow: hidden;
 }
 
 .view-card-header {
@@ -946,7 +945,7 @@ footer {
     <div class="lecture-badge">Lecture 3 Supplementary</div>
   </div>
   <h1>Recurrent <span>Neural Networks</span></h1>
-  <p class="subtitle">Understanding RNN, LSTM, and GRU through animated examples &mdash; step through each model to see how hidden states, gates, and memory evolve across a sequence.</p>
+  <p class="subtitle">Step through each model to see how hidden states, gates, and memory evolve across a sequence.</p>
 </header>
 
 <nav class="tab-bar" role="tablist">
@@ -966,8 +965,8 @@ footer {
 <!-- ============================== RNN PANEL ============================== -->
 <div id="panel-rnn" class="tab-panel active">
   <div class="panel-heading">
-    <h2>Vanilla RNN &mdash; <em>The sky is blue</em></h2>
-    <p class="desc">A single hidden state <em>h</em><sub>t</sub> = tanh(W·[h<sub>t-1</sub>, x<sub>t</sub>] + b) accumulates context word by word. Step through the sequence to watch the hidden state update.</p>
+    <h2>Vanilla RNN: <em>The sky is blue</em></h2>
+    <p class="desc">h<sub>t</sub> = tanh(W·[h<sub>t-1</sub>, x<sub>t</sub>] + b). The hidden state accumulates context word by word. In the rolled view, h<sub>t</sub> loops back as h<sub>t-1</sub> on the next timestep.</p>
   </div>
 
   <div class="controls-row">
@@ -995,12 +994,8 @@ footer {
       </div>
       <div class="view-card-body">
         <div class="rolled-wrapper">
-          <svg id="rnn-rolled-svg" viewBox="0 0 320 280" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width:320px;width:100%">
-            <!-- h_{t-1} arrow -->
+          <svg id="rnn-rolled-svg" viewBox="0 0 320 300" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width:320px;width:100%">
             <defs>
-              <marker id="rnn-arrow-head" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-                <path d="M0,0 L0,6 L8,3 z" fill="#64748b"/>
-              </marker>
               <marker id="rnn-arrow-green" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
                 <path d="M0,0 L0,6 L8,3 z" fill="#059669"/>
               </marker>
@@ -1009,35 +1004,38 @@ footer {
               </marker>
             </defs>
 
-            <!-- self-loop arc -->
-            <path id="rnn-selfloop" d="M 118 100 C 90 50, 230 50, 202 100" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#rnn-arrow-head)"/>
+            <!-- self-loop: h_t exits right, arcs over top, re-enters as h_{t-1} from left -->
+            <!-- Path: starts at right side of h_t exit, curves UP and over, ends at left side pointing into h_{t-1} -->
+            <path id="rnn-selfloop" d="M 252,145 C 280,100 280,28 160,28 C 40,28 40,100 68,145" stroke="#059669" stroke-width="2" fill="none" marker-end="url(#rnn-arrow-green)"/>
+            <!-- Loop label at top -->
+            <text x="160" y="22" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#059669">h recurs (h_t becomes h_{t-1})</text>
 
             <!-- cell box -->
-            <rect id="rnn-cell-box" x="100" y="100" width="120" height="80" rx="14" ry="14" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+            <rect id="rnn-cell-box" x="80" y="110" width="160" height="80" rx="14" ry="14" fill="white" stroke="#e2e8f0" stroke-width="2"/>
 
-            <!-- cell label -->
-            <text x="160" y="130" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="14" font-weight="500" fill="#1a1d2e">h = tanh</text>
-            <text x="160" y="150" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#64748b">&#x3A3;(W[h,x]+b)</text>
-            <text x="160" y="168" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#059669">hidden state</text>
+            <!-- cell labels -->
+            <text x="160" y="140" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" font-weight="500" fill="#1a1d2e">tanh</text>
+            <text x="160" y="158" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#64748b">W&#x2099;h&#x209C;&#x208B;&#x2081; + W&#x2093;x&#x209C; + b</text>
+            <text x="160" y="176" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#059669">hidden state h&#x209C;</text>
 
-            <!-- h_{t-1} left arrow -->
-            <line id="rnn-hin" x1="28" y1="140" x2="96" y2="140" stroke="#059669" stroke-width="2" marker-end="url(#rnn-arrow-green)"/>
-            <text x="13" y="135" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#059669">h</text>
-            <text x="13" y="148" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#059669">t-1</text>
+            <!-- h_{t-1} left arrow (from self-loop endpoint to cell) -->
+            <line id="rnn-hin" x1="16" y1="150" x2="78" y2="150" stroke="#059669" stroke-width="2" marker-end="url(#rnn-arrow-green)"/>
+            <text x="12" y="145" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#059669">h</text>
+            <text x="12" y="157" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#059669">t-1</text>
 
             <!-- h_t right arrow -->
-            <line id="rnn-hout" x1="224" y1="140" x2="290" y2="140" stroke="#059669" stroke-width="2" marker-end="url(#rnn-arrow-green)"/>
-            <text x="305" y="135" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#059669">h</text>
-            <text x="305" y="148" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#059669">t</text>
+            <line id="rnn-hout" x1="242" y1="150" x2="296" y2="150" stroke="#059669" stroke-width="2" marker-end="url(#rnn-arrow-green)"/>
+            <text x="308" y="145" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#059669">h</text>
+            <text x="308" y="157" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#059669">t</text>
 
             <!-- x_t bottom arrow -->
-            <line id="rnn-xin" x1="160" y1="248" x2="160" y2="184" stroke="#2563eb" stroke-width="2" marker-end="url(#rnn-arrow-blue)"/>
-            <text x="160" y="265" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#2563eb">x</text>
-            <text x="168" y="265" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#2563eb">t</text>
+            <line id="rnn-xin" x1="160" y1="260" x2="160" y2="192" stroke="#2563eb" stroke-width="2" marker-end="url(#rnn-arrow-blue)"/>
+            <text x="160" y="274" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#2563eb">x</text>
+            <text x="167" y="274" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#2563eb">t</text>
 
-            <!-- token label below arrow -->
-            <rect id="rnn-token-rect" x="128" y="268" width="64" height="20" rx="6" fill="rgba(37,99,235,0.08)" stroke="rgba(37,99,235,0.2)" stroke-width="1"/>
-            <text id="rnn-token-text" x="160" y="282" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" font-weight="500" fill="#2563eb">—</text>
+            <!-- token label -->
+            <rect id="rnn-token-rect" x="124" y="278" width="72" height="20" rx="6" fill="rgba(37,99,235,0.08)" stroke="rgba(37,99,235,0.2)" stroke-width="1"/>
+            <text id="rnn-token-text" x="160" y="292" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" font-weight="500" fill="#2563eb">-</text>
           </svg>
         </div>
       </div>
@@ -1093,8 +1091,8 @@ footer {
 <!-- ============================== LSTM PANEL ============================== -->
 <div id="panel-lstm" class="tab-panel">
   <div class="panel-heading">
-    <h2>LSTM &mdash; <em>it was not that good</em></h2>
-    <p class="desc">Long Short-Term Memory uses three gates (forget, input, output) and a separate cell state <em>C</em><sub>t</sub> to selectively retain and discard information. Watch how "not" inverts the sentiment trajectory.</p>
+    <h2>LSTM: <em>it was not that good</em></h2>
+    <p class="desc">Three gates (forget, input, output) and a separate cell state C<sub>t</sub> allow selective memory. Watch how "not" inverts the sentiment via the forget gate.</p>
   </div>
 
   <div class="controls-row">
@@ -1122,11 +1120,9 @@ footer {
       </div>
       <div class="view-card-body">
         <div class="rolled-wrapper">
-          <svg id="lstm-rolled-svg" viewBox="0 0 340 300" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width:340px;width:100%">
+          <!-- LSTM rolled: highway y=65, gate circles y=160, inputs y=230 -->
+          <svg id="lstm-rolled-svg" viewBox="0 0 360 340" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width:360px;width:100%">
             <defs>
-              <marker id="lstm-arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-                <path d="M0,0 L0,6 L8,3 z" fill="#64748b"/>
-              </marker>
               <marker id="lstm-arr-cyan" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
                 <path d="M0,0 L0,6 L8,3 z" fill="#0891b2"/>
               </marker>
@@ -1138,88 +1134,103 @@ footer {
               </marker>
             </defs>
 
-            <!-- Cell state highway top -->
-            <line x1="12" y1="38" x2="128" y2="38" stroke="#0891b2" stroke-width="2.5" marker-end="url(#lstm-arr-cyan)"/>
-            <text x="7" y="34" font-family="JetBrains Mono,monospace" font-size="10" fill="#0891b2">C</text>
-            <text x="7" y="44" font-family="JetBrains Mono,monospace" font-size="8" fill="#0891b2">t-1</text>
-            <line id="lstm-cell-out" x1="212" y1="38" x2="326" y2="38" stroke="#0891b2" stroke-width="2.5" marker-end="url(#lstm-arr-cyan)"/>
-            <text x="331" y="34" font-family="JetBrains Mono,monospace" font-size="10" fill="#0891b2">C</text>
-            <text x="331" y="44" font-family="JetBrains Mono,monospace" font-size="8" fill="#0891b2">t</text>
+            <!-- ── Cell state highway (y=65) ── -->
+            <!-- C_{t-1} in -->
+            <line x1="12" y1="65" x2="95" y2="65" stroke="#0891b2" stroke-width="2.5" marker-end="url(#lstm-arr-cyan)"/>
+            <text x="8" y="58" font-family="JetBrains Mono,monospace" font-size="10" fill="#0891b2">C</text>
+            <text x="8" y="70" font-family="JetBrains Mono,monospace" font-size="8" fill="#0891b2">t-1</text>
 
-            <!-- Forget gate -->
-            <circle id="lstm-fg-circle" cx="100" cy="110" r="22" fill="rgba(220,38,38,0.08)" stroke="#dc2626" stroke-width="1.5"/>
-            <text x="100" y="107" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" fill="#dc2626">&#x3C3;</text>
-            <text x="100" y="122" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#dc2626">forget</text>
+            <!-- × forget node on highway -->
+            <circle cx="110" cy="65" r="13" fill="rgba(220,38,38,0.07)" stroke="#dc2626" stroke-width="1.5"/>
+            <text x="110" y="70" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" fill="#dc2626">&times;</text>
 
-            <!-- × node (forget × C) -->
-            <circle cx="140" cy="38" r="12" fill="rgba(220,38,38,0.06)" stroke="#dc2626" stroke-width="1.5"/>
-            <text x="140" y="43" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="14" fill="#dc2626">&times;</text>
-            <line x1="100" y1="88" x2="130" y2="50" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <!-- highway segment after × forget -->
+            <line x1="123" y1="65" x2="188" y2="65" stroke="#0891b2" stroke-width="2"/>
 
-            <!-- Input gate -->
-            <circle id="lstm-ig-circle" cx="170" cy="110" r="22" fill="rgba(217,119,6,0.08)" stroke="#d97706" stroke-width="1.5"/>
-            <text x="170" y="107" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" fill="#d97706">&#x3C3;</text>
-            <text x="170" y="122" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#d97706">input</text>
+            <!-- + node on highway -->
+            <circle cx="200" cy="65" r="13" fill="rgba(5,150,105,0.07)" stroke="#059669" stroke-width="1.5"/>
+            <text x="200" y="70" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="14" fill="#059669">+</text>
+
+            <!-- C_t out -->
+            <line x1="213" y1="65" x2="300" y2="65" stroke="#0891b2" stroke-width="2.5" marker-end="url(#lstm-arr-cyan)"/>
+            <text x="306" y="58" font-family="JetBrains Mono,monospace" font-size="10" fill="#0891b2">C</text>
+            <text x="306" y="70" font-family="JetBrains Mono,monospace" font-size="8" fill="#0891b2">t</text>
+
+            <!-- tanh(C_t) block feeding into × output -->
+            <rect x="256" y="82" width="40" height="26" rx="6" fill="rgba(5,150,105,0.07)" stroke="#059669" stroke-width="1.5"/>
+            <text x="276" y="99" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#059669">tanh</text>
+            <!-- branch from highway to tanh block -->
+            <line x1="258" y1="65" x2="258" y2="82" stroke="#0891b2" stroke-width="1.5" stroke-dasharray="3,2"/>
+
+            <!-- × output node (below tanh) -->
+            <circle cx="276" cy="128" r="13" fill="rgba(124,58,237,0.07)" stroke="#7c3aed" stroke-width="1.5"/>
+            <text x="276" y="133" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" fill="#7c3aed">&times;</text>
+            <!-- tanh feeds down to × output -->
+            <line x1="276" y1="108" x2="276" y2="115" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,2"/>
+
+            <!-- × input*candidate node (feeds into + node on highway from below) -->
+            <circle cx="200" cy="118" r="13" fill="rgba(217,119,6,0.07)" stroke="#d97706" stroke-width="1.5"/>
+            <text x="200" y="123" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" fill="#d97706">&times;</text>
+            <!-- feeds up to + node -->
+            <line x1="200" y1="105" x2="200" y2="78" stroke="#d97706" stroke-width="1.5" stroke-dasharray="3,2"/>
+
+            <!-- ── Gate circles (y=185) ── -->
+            <!-- Forget σ -->
+            <circle id="lstm-fg-circle" cx="90" cy="185" r="22" fill="rgba(220,38,38,0.07)" stroke="#dc2626" stroke-width="1.5"/>
+            <text x="90" y="182" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" fill="#dc2626">&#x3C3;</text>
+            <text x="90" y="198" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#dc2626">forget</text>
+            <!-- forget feeds up to × forget on highway -->
+            <line x1="90" y1="163" x2="108" y2="78" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="3,2"/>
+
+            <!-- Input σ -->
+            <circle id="lstm-ig-circle" cx="165" cy="185" r="22" fill="rgba(217,119,6,0.07)" stroke="#d97706" stroke-width="1.5"/>
+            <text x="165" y="182" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" fill="#d97706">&#x3C3;</text>
+            <text x="165" y="198" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#d97706">input</text>
+            <!-- input feeds to × input*cand -->
+            <line x1="170" y1="163" x2="196" y2="131" stroke="#d97706" stroke-width="1.5" stroke-dasharray="3,2"/>
 
             <!-- Candidate tanh -->
-            <rect id="lstm-cg-rect" x="206" y="90" width="44" height="40" rx="8" fill="rgba(8,145,178,0.08)" stroke="#0891b2" stroke-width="1.5"/>
-            <text x="228" y="107" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#0891b2">tanh</text>
-            <text x="228" y="121" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#0891b2">c&#x303;</text>
+            <rect id="lstm-cg-rect" x="212" y="167" width="44" height="36" rx="8" fill="rgba(8,145,178,0.07)" stroke="#0891b2" stroke-width="1.5"/>
+            <text x="234" y="183" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#0891b2">tanh</text>
+            <text x="234" y="197" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#0891b2">c&#x303;</text>
+            <!-- candidate feeds to × input*cand -->
+            <line x1="213" y1="175" x2="204" y2="131" stroke="#0891b2" stroke-width="1.5" stroke-dasharray="3,2"/>
 
-            <!-- × node (i × c~) -->
-            <circle cx="170" cy="38" r="12" fill="rgba(217,119,6,0.06)" stroke="#d97706" stroke-width="1.5"/>
-            <text x="170" y="43" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="14" fill="#d97706">&times;</text>
-            <line x1="170" y1="88" x2="170" y2="50" stroke="#d97706" stroke-width="1.5" stroke-dasharray="3,2"/>
-            <line x1="228" y1="90" x2="185" y2="50" stroke="#0891b2" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <!-- Output σ -->
+            <circle id="lstm-og-circle" cx="276" cy="185" r="22" fill="rgba(124,58,237,0.07)" stroke="#7c3aed" stroke-width="1.5"/>
+            <text x="276" y="182" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" fill="#7c3aed">&#x3C3;</text>
+            <text x="276" y="198" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#7c3aed">output</text>
+            <!-- output gate feeds up to × output -->
+            <line x1="276" y1="163" x2="276" y2="141" stroke="#7c3aed" stroke-width="1.5" stroke-dasharray="3,2"/>
 
-            <!-- + node -->
-            <circle cx="195" cy="38" r="12" fill="rgba(5,150,105,0.06)" stroke="#059669" stroke-width="1.5"/>
-            <text x="195" y="43" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="14" fill="#059669">+</text>
+            <!-- ── Inputs: h_{t-1} and x_t (y=240) ── -->
+            <line id="lstm-hin" x1="10" y1="240" x2="52" y2="240" stroke="#059669" stroke-width="2" marker-end="url(#lstm-arr-green)"/>
+            <text x="6" y="234" font-family="JetBrains Mono,monospace" font-size="10" fill="#059669">h</text>
+            <text x="6" y="247" font-family="JetBrains Mono,monospace" font-size="8" fill="#059669">t-1</text>
+            <!-- h_{t-1} fans to all gates -->
+            <line x1="58" y1="240" x2="84" y2="207" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <line x1="58" y1="240" x2="154" y2="207" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <line x1="58" y1="240" x2="218" y2="203" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <line x1="58" y1="240" x2="262" y2="207" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,2"/>
 
-            <!-- Output gate -->
-            <circle id="lstm-og-circle" cx="240" cy="110" r="22" fill="rgba(124,58,237,0.08)" stroke="#7c3aed" stroke-width="1.5"/>
-            <text x="240" y="107" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" fill="#7c3aed">&#x3C3;</text>
-            <text x="240" y="122" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#7c3aed">output</text>
+            <!-- x_t arrow -->
+            <line id="lstm-xin" x1="180" y1="300" x2="180" y2="258" stroke="#2563eb" stroke-width="2" marker-end="url(#lstm-arr-blue)"/>
+            <text x="175" y="312" font-family="JetBrains Mono,monospace" font-size="10" fill="#2563eb">x</text>
+            <text x="182" y="312" font-family="JetBrains Mono,monospace" font-size="8" fill="#2563eb">t</text>
+            <!-- x_t fans to all gates -->
+            <line x1="180" y1="256" x2="96" y2="207" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <line x1="180" y1="256" x2="170" y2="207" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <line x1="180" y1="256" x2="226" y2="203" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <line x1="180" y1="256" x2="270" y2="207" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="3,2"/>
 
-            <!-- tanh final -->
-            <rect x="270" y="26" width="36" height="24" rx="6" fill="rgba(5,150,105,0.06)" stroke="#059669" stroke-width="1.5"/>
-            <text x="288" y="42" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#059669">tanh</text>
-
-            <!-- × output -->
-            <circle cx="308" cy="100" r="12" fill="rgba(124,58,237,0.06)" stroke="#7c3aed" stroke-width="1.5"/>
-            <text x="308" y="105" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="14" fill="#7c3aed">&times;</text>
-            <line x1="306" y1="50" x2="307" y2="88" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,2"/>
-            <line x1="240" y1="88" x2="295" y2="95" stroke="#7c3aed" stroke-width="1.5" stroke-dasharray="3,2"/>
-
-            <!-- h_{t-1} input -->
-            <line id="lstm-hin" x1="10" y1="155" x2="74" y2="155" stroke="#059669" stroke-width="2" marker-end="url(#lstm-arr-green)"/>
-            <text x="5" y="151" font-family="JetBrains Mono,monospace" font-size="10" fill="#059669">h</text>
-            <text x="5" y="161" font-family="JetBrains Mono,monospace" font-size="8" fill="#059669">t-1</text>
-
-            <!-- Branch h to gates -->
-            <line x1="80" y1="155" x2="100" y2="133" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,2"/>
-            <line x1="80" y1="155" x2="170" y2="133" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,2"/>
-            <line x1="80" y1="155" x2="228" y2="133" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,2"/>
-            <line x1="80" y1="155" x2="240" y2="133" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,2"/>
-
-            <!-- x_t input -->
-            <line id="lstm-xin" x1="170" y1="250" x2="170" y2="175" stroke="#2563eb" stroke-width="2" marker-end="url(#lstm-arr-blue)"/>
-            <text x="165" y="264" font-family="JetBrains Mono,monospace" font-size="10" fill="#2563eb">x</text>
-            <text x="172" y="264" font-family="JetBrains Mono,monospace" font-size="8" fill="#2563eb">t</text>
-
-            <!-- Branch x to gates -->
-            <line x1="170" y1="173" x2="100" y2="133" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="3,2"/>
-            <line x1="170" y1="173" x2="228" y2="133" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="3,2"/>
-            <line x1="170" y1="173" x2="240" y2="133" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="3,2"/>
-
-            <!-- h_t output bottom -->
-            <line id="lstm-hout" x1="308" y1="112" x2="308" y2="250" stroke="#059669" stroke-width="2" marker-end="url(#lstm-arr-green)"/>
-            <text x="316" y="265" font-family="JetBrains Mono,monospace" font-size="10" fill="#059669">h</text>
-            <text x="324" y="265" font-family="JetBrains Mono,monospace" font-size="8" fill="#059669">t</text>
+            <!-- h_t exits right from × output node -->
+            <line id="lstm-hout" x1="289" y1="128" x2="348" y2="128" stroke="#059669" stroke-width="2" marker-end="url(#lstm-arr-green)"/>
+            <text x="350" y="123" font-family="JetBrains Mono,monospace" font-size="10" fill="#059669">h</text>
+            <text x="350" y="134" font-family="JetBrains Mono,monospace" font-size="8" fill="#059669">t</text>
 
             <!-- token label -->
-            <rect id="lstm-token-rect" x="136" y="268" width="68" height="20" rx="6" fill="rgba(37,99,235,0.08)" stroke="rgba(37,99,235,0.2)" stroke-width="1"/>
-            <text id="lstm-token-text" x="170" y="282" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" font-weight="500" fill="#2563eb">—</text>
+            <rect id="lstm-token-rect" x="144" y="316" width="72" height="20" rx="6" fill="rgba(37,99,235,0.08)" stroke="rgba(37,99,235,0.2)" stroke-width="1"/>
+            <text id="lstm-token-text" x="180" y="330" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" font-weight="500" fill="#2563eb">-</text>
           </svg>
         </div>
       </div>
@@ -1291,12 +1302,8 @@ footer {
 <!-- ============================== GRU PANEL ============================== -->
 <div id="panel-gru" class="tab-panel">
   <div class="panel-heading">
-    <h2>GRU &mdash; <em>it was not that good</em></h2>
-    <p class="desc">Gated Recurrent Unit uses two gates (reset, update) with no separate cell state. Same sequence as LSTM above &mdash; compare the results and the architectural complexity.</p>
-  </div>
-
-  <div class="comparison-callout">
-    <p><strong>Comparison note:</strong> This panel uses the same input sequence as the LSTM tab. The GRU achieves the same sentiment inversion at "not" using only 2 gates and ~33% fewer parameters. No separate cell state &mdash; just a single hidden state h<sub>t</sub>.</p>
+    <h2>GRU: <em>it was not that good</em></h2>
+    <p class="desc">Two gates (reset, update), no separate cell state. Same sequence as LSTM for direct comparison. The update gate z<sub>t</sub> combines the roles of forget and input from LSTM.</p>
   </div>
 
   <div class="controls-row">
@@ -1324,11 +1331,9 @@ footer {
       </div>
       <div class="view-card-body">
         <div class="rolled-wrapper">
-          <svg id="gru-rolled-svg" viewBox="0 0 320 270" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width:320px;width:100%">
+          <!-- GRU rolled: gates y=150, + node y=75, inputs y=230 -->
+          <svg id="gru-rolled-svg" viewBox="0 0 340 320" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width:340px;width:100%">
             <defs>
-              <marker id="gru-arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-                <path d="M0,0 L0,6 L8,3 z" fill="#64748b"/>
-              </marker>
               <marker id="gru-arr-green" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
                 <path d="M0,0 L0,6 L8,3 z" fill="#059669"/>
               </marker>
@@ -1337,60 +1342,59 @@ footer {
               </marker>
             </defs>
 
-            <!-- Reset gate -->
-            <circle id="gru-rg-circle" cx="100" cy="100" r="24" fill="rgba(234,88,12,0.08)" stroke="#ea580c" stroke-width="1.5"/>
-            <text x="100" y="97" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" fill="#ea580c">&#x3C3;</text>
-            <text x="100" y="113" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#ea580c">reset r</text>
+            <!-- + node (interpolation output) -->
+            <circle cx="170" cy="75" r="14" fill="rgba(5,150,105,0.07)" stroke="#059669" stroke-width="1.5"/>
+            <text x="170" y="80" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="14" fill="#059669">+</text>
 
-            <!-- Update gate -->
-            <circle id="gru-zg-circle" cx="180" cy="100" r="24" fill="rgba(29,78,216,0.08)" stroke="#1d4ed8" stroke-width="1.5"/>
-            <text x="180" y="97" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" fill="#1d4ed8">&#x3C3;</text>
-            <text x="180" y="113" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#1d4ed8">update z</text>
+            <!-- h_t output from + node -->
+            <line id="gru-hout" x1="170" y1="61" x2="170" y2="30" stroke="#059669" stroke-width="2" marker-end="url(#gru-arr-green)"/>
+            <text x="162" y="24" font-family="JetBrains Mono,monospace" font-size="10" fill="#059669">h</text>
+            <text x="171" y="24" font-family="JetBrains Mono,monospace" font-size="8" fill="#059669">t</text>
 
-            <!-- Candidate tanh -->
-            <rect id="gru-cg-rect" x="228" y="82" width="48" height="36" rx="8" fill="rgba(5,150,105,0.07)" stroke="#059669" stroke-width="1.5"/>
-            <text x="252" y="97" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#059669">tanh</text>
-            <text x="252" y="111" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#059669">h&#x303;</text>
+            <!-- Candidate tanh block -->
+            <rect id="gru-cg-rect" x="244" y="100" width="48" height="36" rx="8" fill="rgba(5,150,105,0.07)" stroke="#059669" stroke-width="1.5"/>
+            <text x="268" y="116" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" fill="#059669">tanh</text>
+            <text x="268" y="129" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#059669">h&#x303;</text>
+            <!-- candidate feeds into + node (z * h~) -->
+            <line x1="254" y1="100" x2="180" y2="84" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,2"/>
 
-            <!-- 1-z interpolation box -->
-            <rect x="130" y="155" width="60" height="30" rx="8" fill="rgba(29,78,216,0.06)" stroke="#1d4ed8" stroke-width="1.5"/>
-            <text x="160" y="166" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#1d4ed8">1 - z</text>
-            <text x="160" y="178" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#1d4ed8">interp.</text>
+            <!-- Update gate σ -->
+            <circle id="gru-zg-circle" cx="170" cy="160" r="22" fill="rgba(29,78,216,0.07)" stroke="#1d4ed8" stroke-width="1.5"/>
+            <text x="170" y="157" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" fill="#1d4ed8">&#x3C3;</text>
+            <text x="170" y="172" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#1d4ed8">update z</text>
+            <!-- update feeds to + node: z * h~ path AND (1-z) * h_{t-1} path -->
+            <line x1="170" y1="138" x2="170" y2="89" stroke="#1d4ed8" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <!-- (1-z) branch: feeds left to + node for the h_{t-1} contribution -->
+            <line x1="152" y1="154" x2="108" y2="85" stroke="#1d4ed8" stroke-width="1.5" stroke-dasharray="3,2"/>
 
-            <!-- + node final -->
-            <circle cx="160" cy="50" r="14" fill="rgba(5,150,105,0.06)" stroke="#059669" stroke-width="1.5"/>
-            <text x="160" y="55" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="14" fill="#059669">+</text>
+            <!-- Reset gate σ -->
+            <circle id="gru-rg-circle" cx="80" cy="160" r="22" fill="rgba(234,88,12,0.07)" stroke="#ea580c" stroke-width="1.5"/>
+            <text x="80" y="157" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" fill="#ea580c">&#x3C3;</text>
+            <text x="80" y="172" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#ea580c">reset r</text>
+            <!-- reset feeds to candidate tanh (r × h_{t-1}) -->
+            <line x1="100" y1="148" x2="244" y2="118" stroke="#ea580c" stroke-width="1.5" stroke-dasharray="3,2"/>
 
-            <!-- connections -->
-            <line x1="180" y1="76" x2="175" y2="64" stroke="#1d4ed8" stroke-width="1.5" stroke-dasharray="3,2"/>
-            <line x1="252" y1="82" x2="170" y2="63" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,2"/>
-            <line x1="180" y1="76" x2="160" y2="155" stroke="#1d4ed8" stroke-width="1.5" stroke-dasharray="3,2"/>
-            <line x1="160" y1="185" x2="148" y2="64" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,2"/>
-            <line x1="100" y1="76" x2="228" y2="95" stroke="#ea580c" stroke-width="1.5" stroke-dasharray="3,2"/>
-
-            <!-- h_{t-1} input -->
-            <line id="gru-hin" x1="10" y1="145" x2="70" y2="145" stroke="#059669" stroke-width="2" marker-end="url(#gru-arr-green)"/>
-            <text x="5" y="141" font-family="JetBrains Mono,monospace" font-size="10" fill="#059669">h</text>
-            <text x="5" y="151" font-family="JetBrains Mono,monospace" font-size="8" fill="#059669">t-1</text>
-            <line x1="75" y1="145" x2="100" y2="124" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,2"/>
-            <line x1="75" y1="145" x2="180" y2="124" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,2"/>
-            <line x1="75" y1="145" x2="228" y2="100" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <!-- h_{t-1} input (also passes through + node as (1-z)*h_{t-1}) -->
+            <line id="gru-hin" x1="10" y1="225" x2="50" y2="225" stroke="#059669" stroke-width="2" marker-end="url(#gru-arr-green)"/>
+            <text x="6" y="219" font-family="JetBrains Mono,monospace" font-size="10" fill="#059669">h</text>
+            <text x="6" y="231" font-family="JetBrains Mono,monospace" font-size="8" fill="#059669">t-1</text>
+            <!-- h_{t-1} fans to gates and candidate -->
+            <line x1="55" y1="225" x2="72" y2="182" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <line x1="55" y1="225" x2="155" y2="182" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <line x1="55" y1="225" x2="244" y2="136" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,2"/>
 
             <!-- x_t input -->
-            <line id="gru-xin" x1="160" y1="235" x2="160" y2="190" stroke="#2563eb" stroke-width="2" marker-end="url(#gru-arr-blue)"/>
-            <text x="155" y="249" font-family="JetBrains Mono,monospace" font-size="10" fill="#2563eb">x</text>
-            <text x="162" y="249" font-family="JetBrains Mono,monospace" font-size="8" fill="#2563eb">t</text>
-            <line x1="160" y1="190" x2="100" y2="124" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="3,2"/>
-            <line x1="160" y1="190" x2="180" y2="124" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="3,2"/>
-
-            <!-- h_t output -->
-            <line id="gru-hout" x1="160" y1="36" x2="160" y2="10" stroke="#059669" stroke-width="2" marker-end="url(#gru-arr-green)"/>
-            <text x="165" y="8" font-family="JetBrains Mono,monospace" font-size="10" fill="#059669">h</text>
-            <text x="172" y="8" font-family="JetBrains Mono,monospace" font-size="8" fill="#059669">t</text>
+            <line id="gru-xin" x1="250" y1="285" x2="250" y2="258" stroke="#2563eb" stroke-width="2" marker-end="url(#gru-arr-blue)"/>
+            <text x="245" y="298" font-family="JetBrains Mono,monospace" font-size="10" fill="#2563eb">x</text>
+            <text x="252" y="298" font-family="JetBrains Mono,monospace" font-size="8" fill="#2563eb">t</text>
+            <!-- x_t fans to gates and candidate -->
+            <line x1="250" y1="256" x2="90" y2="182" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <line x1="250" y1="256" x2="180" y2="182" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <line x1="250" y1="256" x2="268" y2="136" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="3,2"/>
 
             <!-- token label -->
-            <rect id="gru-token-rect" x="124" y="252" width="72" height="20" rx="6" fill="rgba(37,99,235,0.08)" stroke="rgba(37,99,235,0.2)" stroke-width="1"/>
-            <text id="gru-token-text" x="160" y="266" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" font-weight="500" fill="#2563eb">—</text>
+            <rect id="gru-token-rect" x="214" y="300" width="72" height="20" rx="6" fill="rgba(37,99,235,0.08)" stroke="rgba(37,99,235,0.2)" stroke-width="1"/>
+            <text id="gru-token-text" x="250" y="314" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="11" font-weight="500" fill="#2563eb">-</text>
           </svg>
         </div>
       </div>
