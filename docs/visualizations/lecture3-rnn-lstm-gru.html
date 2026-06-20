@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lecture 3 Supplementary — RNN, LSTM & GRU Visualizer | DATA/MSML 641</title>
+<style>
+  :root {
+    --umd-red: #e21833;
+    --umd-gold: #ffd200;
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #232636;
+    --border: #2e3148;
+    --text: #e8eaf0;
+    --muted: #7a7f9a;
+    --input-color: #5b8dee;
+    --hidden-color: #43d9a0;
+    --gate-forget: #ff6b6b;
+    --gate-input: #ffd166;
+    --gate-output: #a78bfa;
+    --gate-cell: #06d6a0;
+    --gate-reset: #ff9f43;
+    --gate-update: #54a0ff;
+    --active-glow: 0 0 18px rgba(253,210,0,0.45);
+    --font: 'Segoe UI', system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    min-height: 100vh;
+  }
+
+  /* ─── Header ─── */
+  header {
+    background: linear-gradient(135deg, #12141f 0%, #1a1d27 100%);
+    border-bottom: 2px solid var(--umd-red);
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .umd-badge {
+    background: var(--umd-red);
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+  .lecture-badge {
+    background: var(--umd-gold);
+    color: #111;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+  header h1 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  header p {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+  .header-text { flex: 1; }
+
+  /* ─── Layout ─── */
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 24px;
+  }
+
+  .intro {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin-bottom: 28px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+  .intro strong { color: var(--text); }
+
+  /* ─── Tabs ─── */
+  .tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+  .tab-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tab-btn:hover { border-color: var(--umd-gold); color: var(--text); }
+  .tab-btn.active {
+    background: var(--umd-red);
+    border-color: var(--umd-red);
+    color: #fff;
+    box-shadow: 0 0 14px rgba(226,24,51,0.4);
+  }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ─── Panel card ─── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+  .card h2 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--text);
+  }
+  .card .subtitle {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 18px;
+  }
+
+  /* ─── Sequence tokens ─── */
+  .sequence-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .seq-label {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-right: 4px;
+  }
+  .token {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    transition: all 0.35s;
+    position: relative;
+  }
+  .token.active {
+    background: var(--input-color);
+    border-color: var(--input-color);
+    color: #fff;
+    box-shadow: 0 0 14px rgba(91,141,238,0.55);
+    transform: translateY(-3px);
+  }
+  .token.done {
+    background: var(--surface2);
+    border-color: var(--hidden-color);
+    color: var(--hidden-color);
+    opacity: 0.75;
+  }
+  .step-arrow {
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  /* ─── Architecture diagram ─── */
+  .arch-diagram {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 24px;
+    overflow-x: auto;
+    padding: 10px 0;
+  }
+
+  /* RNN cell */
+  .rnn-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    opacity: 0.35;
+    transition: opacity 0.4s, transform 0.4s;
+    min-width: 90px;
+  }
+  .rnn-cell.active {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+  .rnn-cell.past { opacity: 0.65; }
+
+  .cell-box {
+    width: 72px;
+    height: 72px;
+    border-radius: 10px;
+    border: 2px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    gap: 4px;
+    transition: all 0.4s;
+    position: relative;
+  }
+  .cell-box.rnn-box {
+    background: linear-gradient(135deg, #1e2240, #252a42);
+    border-color: #3a3f60;
+  }
+  .rnn-cell.active .cell-box.rnn-box {
+    border-color: var(--hidden-color);
+    box-shadow: 0 0 18px rgba(67,217,160,0.35);
+  }
+  .cell-label { font-size: 10px; color: var(--muted); }
+
+  .hidden-node {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    background: var(--surface2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 700;
+    transition: all 0.4s;
+  }
+  .rnn-cell.active .hidden-node, .rnn-cell.past .hidden-node {
+    border-color: var(--hidden-color);
+    background: rgba(67,217,160,0.15);
+    color: var(--hidden-color);
+    box-shadow: 0 0 10px rgba(67,217,160,0.3);
+  }
+
+  .input-node {
+    width: 28px; height: 28px;
+    border-radius: 6px;
+    border: 2px solid var(--border);
+    background: var(--surface2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px; font-weight: 700;
+    transition: all 0.4s;
+  }
+  .rnn-cell.active .input-node {
+    border-color: var(--input-color);
+    background: rgba(91,141,238,0.2);
+    color: var(--input-color);
+    box-shadow: 0 0 10px rgba(91,141,238,0.3);
+  }
+
+  .conn-arrow {
+    font-size: 18px;
+    color: var(--border);
+    transition: color 0.4s;
+    padding: 0 4px;
+    display: flex;
+    align-items: center;
+    height: 72px;
+    margin-top: -18px;
+  }
+  .conn-arrow.active { color: var(--hidden-color); }
+
+  /* LSTM cell */
+  .lstm-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    opacity: 0.35;
+    transition: opacity 0.4s, transform 0.4s;
+    min-width: 110px;
+  }
+  .lstm-cell.active { opacity: 1; transform: scale(1.05); }
+  .lstm-cell.past { opacity: 0.65; }
+
+  .lstm-box {
+    width: 100px;
+    border-radius: 10px;
+    border: 2px solid var(--border);
+    background: linear-gradient(135deg, #1e2240, #252a42);
+    padding: 8px;
+    transition: all 0.4s;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .lstm-cell.active .lstm-box {
+    border-color: var(--gate-cell);
+    box-shadow: 0 0 18px rgba(6,214,160,0.3);
+  }
+
+  .gate-row {
+    display: flex;
+    gap: 3px;
+    justify-content: center;
+  }
+  .gate {
+    width: 20px; height: 20px;
+    border-radius: 4px;
+    font-size: 8px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.4s;
+    opacity: 0.4;
+  }
+  .gate.forget { background: rgba(255,107,107,0.2); border: 1px solid var(--gate-forget); color: var(--gate-forget); }
+  .gate.input-g { background: rgba(255,209,102,0.2); border: 1px solid var(--gate-input); color: var(--gate-input); }
+  .gate.output { background: rgba(167,139,250,0.2); border: 1px solid var(--gate-output); color: var(--gate-output); }
+  .gate.cell-g { background: rgba(6,214,160,0.2); border: 1px solid var(--gate-cell); color: var(--gate-cell); }
+
+  .lstm-cell.active .gate { opacity: 1; box-shadow: 0 0 8px rgba(255,255,255,0.15); }
+
+  /* GRU cell */
+  .gru-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    opacity: 0.35;
+    transition: opacity 0.4s, transform 0.4s;
+    min-width: 100px;
+  }
+  .gru-cell.active { opacity: 1; transform: scale(1.06); }
+  .gru-cell.past { opacity: 0.65; }
+
+  .gru-box {
+    width: 88px;
+    border-radius: 10px;
+    border: 2px solid var(--border);
+    background: linear-gradient(135deg, #1e2240, #252a42);
+    padding: 8px;
+    transition: all 0.4s;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+  }
+  .gru-cell.active .gru-box {
+    border-color: var(--gate-update);
+    box-shadow: 0 0 18px rgba(84,160,255,0.3);
+  }
+  .gru-gate {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    font-size: 8px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.4s;
+    opacity: 0.4;
+  }
+  .gru-gate.reset { background: rgba(255,159,67,0.2); border: 1px solid var(--gate-reset); color: var(--gate-reset); }
+  .gru-gate.update { background: rgba(84,160,255,0.2); border: 1px solid var(--gate-update); color: var(--gate-update); }
+  .gru-cell.active .gru-gate { opacity: 1; box-shadow: 0 0 8px rgba(255,255,255,0.15); }
+
+  /* ─── State display ─── */
+  .state-panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .state-panel.three { grid-template-columns: 1fr 1fr 1fr; }
+
+  .state-box {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+  }
+  .state-box label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .state-value {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 12px;
+    color: var(--hidden-color);
+    word-break: break-all;
+    line-height: 1.6;
+    min-height: 36px;
+    transition: color 0.3s;
+  }
+  .state-value.gate-f { color: var(--gate-forget); }
+  .state-value.gate-i { color: var(--gate-input); }
+  .state-value.gate-o { color: var(--gate-output); }
+  .state-value.gate-c { color: var(--gate-cell); }
+  .state-value.gate-r { color: var(--gate-reset); }
+  .state-value.gate-u { color: var(--gate-update); }
+  .state-value.input { color: var(--input-color); }
+
+  /* ─── Equation display ─── */
+  .equation-panel {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 20px;
+  }
+  .equation-panel label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .equation {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 13px;
+    color: var(--text);
+    line-height: 2;
+  }
+  .eq-highlight { color: var(--umd-gold); font-weight: 700; }
+
+  /* ─── Narration ─── */
+  .narration {
+    background: linear-gradient(135deg, rgba(226,24,51,0.1), rgba(253,210,0,0.05));
+    border: 1px solid rgba(226,24,51,0.25);
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.65;
+    min-height: 56px;
+    margin-bottom: 20px;
+    transition: all 0.3s;
+  }
+
+  /* ─── Controls ─── */
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 9px 18px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btn:hover { border-color: var(--umd-gold); color: var(--umd-gold); }
+  .btn:disabled { opacity: 0.35; cursor: not-allowed; }
+  .btn.primary {
+    background: var(--umd-red);
+    border-color: var(--umd-red);
+    color: #fff;
+  }
+  .btn.primary:hover { background: #c0122a; border-color: #c0122a; color: #fff; }
+  .btn.primary.playing {
+    background: #2e3148;
+    border-color: var(--umd-gold);
+    color: var(--umd-gold);
+  }
+
+  .step-counter {
+    font-size: 13px;
+    color: var(--muted);
+    margin-left: auto;
+  }
+  .step-counter span { color: var(--text); font-weight: 700; }
+
+  /* ─── Progress bar ─── */
+  .progress-bar {
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    margin-bottom: 22px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--umd-red), var(--umd-gold));
+    border-radius: 2px;
+    transition: width 0.4s;
+  }
+
+  /* ─── Legend ─── */
+  .legend {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .legend-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ─── Speed control ─── */
+  .speed-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .speed-row input[type=range] {
+    accent-color: var(--umd-gold);
+    width: 90px;
+  }
+
+  /* ─── Footer ─── */
+  footer {
+    text-align: center;
+    padding: 28px;
+    font-size: 12px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    margin-top: 16px;
+  }
+  footer a { color: var(--umd-gold); text-decoration: none; }
+
+  @media (max-width: 600px) {
+    .state-panel, .state-panel.three { grid-template-columns: 1fr; }
+    .arch-diagram { justify-content: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="umd-badge">DATA/MSML 641</div>
+  </div>
+  <div class="header-text">
+    <h1>Recurrent Neural Networks — Interactive Visualizer</h1>
+    <p>Supplementary material &nbsp;·&nbsp; <span style="color:var(--umd-gold);font-weight:700;">Lecture 3</span> &nbsp;·&nbsp; Summer 2026</p>
+  </div>
+  <div>
+    <div class="lecture-badge">Lecture 3</div>
+  </div>
+</header>
+
+<main>
+  <div class="intro">
+    <strong>How to use:</strong> Select a model tab below. Press <strong>Play</strong> to auto-animate the forward pass through the sentence <em>"the movie was great"</em>, or use <strong>← →</strong> to step manually. Watch how each token updates the hidden state (and gates for LSTM/GRU). The current equation and a plain-English explanation are shown at each step.
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('rnn', this)">Vanilla RNN</button>
+    <button class="tab-btn" onclick="switchTab('lstm', this)">LSTM</button>
+    <button class="tab-btn" onclick="switchTab('gru', this)">GRU</button>
+  </div>
+
+  <!-- ══════════════════════ RNN PANEL ══════════════════════ -->
+  <div id="tab-rnn" class="tab-panel active">
+    <div class="card">
+      <h2>Vanilla RNN — Forward Pass</h2>
+      <p class="subtitle">Hidden state h<sub>t</sub> = tanh(W<sub>h</sub>·h<sub>t−1</sub> + W<sub>x</sub>·x<sub>t</sub> + b)</p>
+
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--input-color)"></div>Current input x<sub>t</sub></div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--hidden-color)"></div>Hidden state h<sub>t</sub></div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--muted)"></div>Not yet processed</div>
+      </div>
+
+      <div class="sequence-row" id="rnn-tokens"></div>
+
+      <div class="arch-diagram" id="rnn-arch"></div>
+
+      <div class="progress-bar"><div class="progress-fill" id="rnn-progress" style="width:0%"></div></div>
+
+      <div class="narration" id="rnn-narration">Press Play or use the step buttons to begin.</div>
+
+      <div class="equation-panel">
+        <label>CURRENT COMPUTATION</label>
+        <div class="equation" id="rnn-equation">
+          h<sub>t</sub> = tanh(W<sub>h</sub> · h<sub>t−1</sub> + W<sub>x</sub> · x<sub>t</sub> + b)
+        </div>
+        <div style="font-size:11px;color:var(--muted);margin-top:10px;font-style:italic">Vector values shown are illustrative approximations for pedagogical clarity, not computed from specific weights.</div>
+      </div>
+
+      <div class="state-panel">
+        <div class="state-box">
+          <label>INPUT x<sub>t</sub></label>
+          <div class="state-value input" id="rnn-input-val">—</div>
+        </div>
+        <div class="state-box">
+          <label>HIDDEN STATE h<sub>t</sub></label>
+          <div class="state-value" id="rnn-hidden-val">h₀ = [0, 0, 0, 0]</div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button class="btn" id="rnn-prev" onclick="rnnStep(-1)" disabled>← Prev</button>
+        <button class="btn primary" id="rnn-play" onclick="rnnTogglePlay()">▶ Play</button>
+        <button class="btn" id="rnn-next" onclick="rnnStep(1)">Next →</button>
+        <button class="btn" onclick="rnnReset()">↺ Reset</button>
+        <div class="speed-row">
+          Speed: <input type="range" id="rnn-speed" min="1" max="5" value="3">
+        </div>
+        <div class="step-counter">Step <span id="rnn-step-num">0</span> / <span id="rnn-step-total">0</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════ LSTM PANEL ══════════════════════ -->
+  <div id="tab-lstm" class="tab-panel">
+    <div class="card">
+      <h2>LSTM — Long Short-Term Memory</h2>
+      <p class="subtitle">Solves the vanishing gradient problem with a cell state and three gates</p>
+
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--gate-forget)"></div>Forget gate f<sub>t</sub></div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--gate-input)"></div>Input gate i<sub>t</sub></div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--gate-output)"></div>Output gate o<sub>t</sub></div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--gate-cell)"></div>Cell state c<sub>t</sub></div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--hidden-color)"></div>Hidden state h<sub>t</sub></div>
+      </div>
+
+      <div class="sequence-row" id="lstm-tokens"></div>
+
+      <div class="arch-diagram" id="lstm-arch"></div>
+
+      <div class="progress-bar"><div class="progress-fill" id="lstm-progress" style="width:0%"></div></div>
+
+      <div class="narration" id="lstm-narration">Press Play or use the step buttons to begin.</div>
+
+      <div class="equation-panel">
+        <label>CURRENT COMPUTATION</label>
+        <div class="equation" id="lstm-equation">
+          f<sub>t</sub> = σ(W<sub>f</sub>·[h<sub>t−1</sub>, x<sub>t</sub>] + b<sub>f</sub>)<br>
+          i<sub>t</sub> = σ(W<sub>i</sub>·[h<sub>t−1</sub>, x<sub>t</sub>] + b<sub>i</sub>)<br>
+          o<sub>t</sub> = σ(W<sub>o</sub>·[h<sub>t−1</sub>, x<sub>t</sub>] + b<sub>o</sub>)<br>
+          c̃<sub>t</sub> = tanh(W<sub>c</sub>·[h<sub>t−1</sub>, x<sub>t</sub>] + b<sub>c</sub>)<br>
+          c<sub>t</sub> = f<sub>t</sub> ⊙ c<sub>t−1</sub> + i<sub>t</sub> ⊙ c̃<sub>t</sub><br>
+          h<sub>t</sub> = o<sub>t</sub> ⊙ tanh(c<sub>t</sub>)
+        </div>
+        <div style="font-size:11px;color:var(--muted);margin-top:10px;font-style:italic">Vector values shown are illustrative approximations for pedagogical clarity, not computed from specific weights.</div>
+      </div>
+
+      <div class="state-panel three">
+        <div class="state-box">
+          <label>FORGET GATE f<sub>t</sub></label>
+          <div class="state-value gate-f" id="lstm-f-val">—</div>
+        </div>
+        <div class="state-box">
+          <label>INPUT GATE i<sub>t</sub></label>
+          <div class="state-value gate-i" id="lstm-i-val">—</div>
+        </div>
+        <div class="state-box">
+          <label>OUTPUT GATE o<sub>t</sub></label>
+          <div class="state-value gate-o" id="lstm-o-val">—</div>
+        </div>
+        <div class="state-box">
+          <label>CELL STATE c<sub>t</sub></label>
+          <div class="state-value gate-c" id="lstm-c-val">c₀ = [0, 0, 0]</div>
+        </div>
+        <div class="state-box">
+          <label>HIDDEN STATE h<sub>t</sub></label>
+          <div class="state-value" id="lstm-h-val">h₀ = [0, 0, 0]</div>
+        </div>
+        <div class="state-box">
+          <label>INPUT x<sub>t</sub></label>
+          <div class="state-value input" id="lstm-x-val">—</div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button class="btn" id="lstm-prev" onclick="lstmStep(-1)" disabled>← Prev</button>
+        <button class="btn primary" id="lstm-play" onclick="lstmTogglePlay()">▶ Play</button>
+        <button class="btn" id="lstm-next" onclick="lstmStep(1)">Next →</button>
+        <button class="btn" onclick="lstmReset()">↺ Reset</button>
+        <div class="speed-row">
+          Speed: <input type="range" id="lstm-speed" min="1" max="5" value="3">
+        </div>
+        <div class="step-counter">Step <span id="lstm-step-num">0</span> / <span id="lstm-step-total">0</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════ GRU PANEL ══════════════════════ -->
+  <div id="tab-gru" class="tab-panel">
+    <div class="card">
+      <h2>GRU — Gated Recurrent Unit</h2>
+      <p class="subtitle">Simpler than LSTM: merges cell & hidden state, uses only two gates</p>
+
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--gate-reset)"></div>Reset gate r<sub>t</sub></div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--gate-update)"></div>Update gate z<sub>t</sub></div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--hidden-color)"></div>Hidden state h<sub>t</sub></div>
+      </div>
+
+      <div class="sequence-row" id="gru-tokens"></div>
+
+      <div class="arch-diagram" id="gru-arch"></div>
+
+      <div class="progress-bar"><div class="progress-fill" id="gru-progress" style="width:0%"></div></div>
+
+      <div class="narration" id="gru-narration">Press Play or use the step buttons to begin.</div>
+
+      <div class="equation-panel">
+        <label>CURRENT COMPUTATION</label>
+        <div class="equation" id="gru-equation">
+          r<sub>t</sub> = σ(W<sub>r</sub>·[h<sub>t−1</sub>, x<sub>t</sub>] + b<sub>r</sub>)<br>
+          z<sub>t</sub> = σ(W<sub>z</sub>·[h<sub>t−1</sub>, x<sub>t</sub>] + b<sub>z</sub>)<br>
+          h̃<sub>t</sub> = tanh(W·[r<sub>t</sub> ⊙ h<sub>t−1</sub>, x<sub>t</sub>] + b)<br>
+          h<sub>t</sub> = (1 − z<sub>t</sub>) ⊙ h<sub>t−1</sub> + z<sub>t</sub> ⊙ h̃<sub>t</sub>
+        </div>
+        <div style="font-size:11px;color:var(--muted);margin-top:10px;font-style:italic">Vector values shown are illustrative approximations for pedagogical clarity, not computed from specific weights.</div>
+      </div>
+
+      <div class="state-panel three">
+        <div class="state-box">
+          <label>RESET GATE r<sub>t</sub></label>
+          <div class="state-value gate-r" id="gru-r-val">—</div>
+        </div>
+        <div class="state-box">
+          <label>UPDATE GATE z<sub>t</sub></label>
+          <div class="state-value gate-u" id="gru-z-val">—</div>
+        </div>
+        <div class="state-box">
+          <label>CANDIDATE h̃<sub>t</sub></label>
+          <div class="state-value" id="gru-hc-val">—</div>
+        </div>
+        <div class="state-box" style="grid-column: span 1">
+          <label>HIDDEN STATE h<sub>t</sub></label>
+          <div class="state-value" id="gru-h-val">h₀ = [0, 0, 0]</div>
+        </div>
+        <div class="state-box">
+          <label>INPUT x<sub>t</sub></label>
+          <div class="state-value input" id="gru-x-val">—</div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button class="btn" id="gru-prev" onclick="gruStep(-1)" disabled>← Prev</button>
+        <button class="btn primary" id="gru-play" onclick="gruTogglePlay()">▶ Play</button>
+        <button class="btn" id="gru-next" onclick="gruStep(1)">Next →</button>
+        <button class="btn" onclick="gruReset()">↺ Reset</button>
+        <div class="speed-row">
+          Speed: <input type="range" id="gru-speed" min="1" max="5" value="3">
+        </div>
+        <div class="step-counter">Step <span id="gru-step-num">0</span> / <span id="gru-step-total">0</span></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  DATA/MSML 641 — Natural Language Processing &nbsp;·&nbsp; University of Maryland &nbsp;·&nbsp; Summer 2026<br>
+  Lecture 3 Supplementary Material &nbsp;·&nbsp; Interactive visualization for in-class use
+</footer>
+
+<script>
+// ─── Shared data ────────────────────────────────────────────────────────────
+const TOKENS = ['the', 'movie', 'was', 'great'];
+
+// Simulated (illustrative) vector values — rounded for readability
+const RNN_STEPS = [
+  {
+    token: 'the',
+    input:  '[0.12, -0.05, 0.30, 0.08]',
+    hidden: '[0.11, -0.05, 0.29, 0.08]',
+    narration: '<strong>Step 1 — "the"</strong><br>We start with h₀ = [0,0,0,0] (zero vector). The word <em>"the"</em> is encoded as input x₁. We compute h₁ = tanh(W_h·h₀ + W_x·x₁ + b). Since h₀ is zero, this is essentially W_x·x₁ passed through tanh. The hidden state now encodes a small amount of information from the first word.',
+    eq: 'h₁ = tanh(W_h·<span class="eq-highlight">[0,0,0,0]</span> + W_x·<span class="eq-highlight">x("the")</span> + b)'
+  },
+  {
+    token: 'movie',
+    input:  '[0.58, 0.22, -0.14, 0.45]',
+    hidden: '[0.41, 0.09, 0.07, 0.34]',
+    narration: '<strong>Step 2 — "movie"</strong><br>Now h₁ is passed forward as context. We concatenate it with x₂ (embedding of <em>"movie"</em>) and apply the same weight matrix. The hidden state h₂ now encodes both "the" and "movie" — the network is building up a representation of the phrase so far.',
+    eq: 'h₂ = tanh(W_h·<span class="eq-highlight">h₁</span> + W_x·<span class="eq-highlight">x("movie")</span> + b)'
+  },
+  {
+    token: 'was',
+    input:  '[0.03, -0.18, 0.07, -0.09]',
+    hidden: '[0.29, -0.04, 0.11, 0.18]',
+    narration: '<strong>Step 3 — "was"</strong><br>The word <em>"was"</em> has a relatively small embedding (function word). The hidden state h₃ updates but the change is modest — the RNN is learning to give different weight to content vs. function words through training. Notice gradients get weaker as they travel back through these multiplications.',
+    eq: 'h₃ = tanh(W_h·<span class="eq-highlight">h₂</span> + W_x·<span class="eq-highlight">x("was")</span> + b)'
+  },
+  {
+    token: 'great',
+    input:  '[0.75, 0.62, -0.08, 0.80]',
+    hidden: '[0.62, 0.38, 0.03, 0.61]',
+    narration: '<strong>Step 4 — "great"</strong><br>The word <em>"great"</em> has a strong positive embedding. h₄ shifts significantly — this is the final hidden state we would feed into a classifier for sentiment analysis. The RNN has compressed the whole sentence "the movie was great" into a single vector h₄.',
+    eq: 'h₄ = tanh(W_h·<span class="eq-highlight">h₃</span> + W_x·<span class="eq-highlight">x("great")</span> + b)'
+  }
+];
+
+const LSTM_STEPS = [
+  {
+    token: 'the',
+    f: '[0.52, 0.48, 0.50]', i: '[0.61, 0.55, 0.58]', o: '[0.49, 0.51, 0.50]',
+    c: '[0.13, 0.10, 0.12]', h: '[0.06, 0.05, 0.06]', x: '[0.12, -0.05, 0.30]',
+    narration: '<strong>Step 1 — "the"</strong><br>Starting fresh. The <span style="color:var(--gate-forget)">forget gate f₁ ≈ 0.5</span> (neutral — nothing to forget yet). The <span style="color:var(--gate-input)">input gate i₁ ≈ 0.6</span> allows a moderate write to the cell state. The <span style="color:var(--gate-output)">output gate o₁ ≈ 0.5</span> controls how much to expose. Cell state c₁ stores a little from "the". This function word barely changes memory.',
+    eq: 'f₁ ≈ 0.5 &nbsp; i₁ ≈ 0.6 &nbsp; o₁ ≈ 0.5<br>c₁ = <span class="eq-highlight">f₁</span>⊙c₀ + <span class="eq-highlight">i₁</span>⊙c̃₁'
+  },
+  {
+    token: 'movie',
+    f: '[0.58, 0.62, 0.55]', i: '[0.72, 0.68, 0.74]', o: '[0.55, 0.60, 0.53]',
+    c: '[0.38, 0.35, 0.41]', h: '[0.21, 0.20, 0.22]', x: '[0.58, 0.22, -0.14]',
+    narration: '<strong>Step 2 — "movie"</strong><br>The <span style="color:var(--gate-input)">input gate opens wider (≈0.72)</span> — "movie" is a content word, worth storing. The forget gate stays moderate. The cell state c₂ grows, encoding that we are talking about a movie. The hidden state h₂ reflects this.',
+    eq: 'f₂ ≈ 0.59 &nbsp; i₂ ≈ 0.71 &nbsp; o₂ ≈ 0.56<br>c₂ = <span class="eq-highlight">f₂</span>⊙c₁ + <span class="eq-highlight">i₂</span>⊙c̃₂'
+  },
+  {
+    token: 'was',
+    f: '[0.48, 0.52, 0.47]', i: '[0.38, 0.35, 0.40]', o: '[0.44, 0.46, 0.45]',
+    c: '[0.30, 0.29, 0.32]', h: '[0.13, 0.13, 0.14]', x: '[0.03, -0.18, 0.07]',
+    narration: '<strong>Step 3 — "was"</strong><br>The function word <em>"was"</em> triggers a <span style="color:var(--gate-input)">low input gate (≈0.38)</span> — little new information to write. The <span style="color:var(--gate-forget)">forget gate (≈0.49)</span> slightly suppresses old state. Cell state c₃ decreases slightly — the LSTM is protecting its memory of "movie" while acknowledging this is a past-tense verb.',
+    eq: 'f₃ ≈ 0.49 &nbsp; i₃ ≈ 0.38 &nbsp; o₃ ≈ 0.45<br>c₃ = <span class="eq-highlight">f₃</span>⊙c₂ + <span class="eq-highlight">i₃</span>⊙c̃₃'
+  },
+  {
+    token: 'great',
+    f: '[0.65, 0.71, 0.68]', i: '[0.85, 0.88, 0.82]', o: '[0.78, 0.80, 0.76]',
+    c: '[0.72, 0.78, 0.74]', h: '[0.56, 0.60, 0.55]', x: '[0.75, 0.62, -0.08]',
+    narration: '<strong>Step 4 — "great"</strong><br>The sentiment word triggers <span style="color:var(--gate-input)">a very high input gate (≈0.85)</span> — strongly positive signal worth writing. The <span style="color:var(--gate-output)">output gate opens wide (≈0.78)</span>. The cell state surges to c₄ ≈ 0.75. The final hidden state h₄ strongly encodes positive sentiment. This is what we would classify as "positive".',
+    eq: 'f₄ ≈ 0.68 &nbsp; i₄ ≈ 0.85 &nbsp; o₄ ≈ 0.78<br>c₄ = <span class="eq-highlight">f₄</span>⊙c₃ + <span class="eq-highlight">i₄</span>⊙c̃₄'
+  }
+];
+
+const GRU_STEPS = [
+  {
+    token: 'the',
+    r: '[0.55, 0.48, 0.52]', z: '[0.42, 0.45, 0.40]',
+    hc: '[0.08, -0.03, 0.11]', h: '[0.03, -0.01, 0.04]', x: '[0.12, -0.05, 0.30]',
+    narration: '<strong>Step 1 — "the"</strong><br>Starting with h₀ = 0. The <span style="color:var(--gate-reset)">reset gate r₁ ≈ 0.52</span> partially resets the previous hidden state before computing the candidate. The <span style="color:var(--gate-update)">update gate z₁ ≈ 0.42</span> controls how much of the new candidate to blend in. With h₀ = 0, the output is mostly from the candidate h̃₁.',
+    eq: 'r₁ ≈ 0.52 &nbsp; z₁ ≈ 0.42<br>h₁ = (1−<span class="eq-highlight">z₁</span>)⊙h₀ + <span class="eq-highlight">z₁</span>⊙h̃₁'
+  },
+  {
+    token: 'movie',
+    r: '[0.62, 0.68, 0.60]', z: '[0.70, 0.72, 0.68]',
+    hc: '[0.54, 0.41, 0.48]', h: '[0.38, 0.29, 0.33]', x: '[0.58, 0.22, -0.14]',
+    narration: '<strong>Step 2 — "movie"</strong><br>The <span style="color:var(--gate-update)">update gate z₂ ≈ 0.70</span> is high — the GRU decides to update significantly. The <span style="color:var(--gate-reset)">reset gate r₂ ≈ 0.63</span> allows substantial carry-over of h₁ into the candidate. h₂ grows to encode the "movie" concept. Compare with LSTM: same effect, fewer parameters.',
+    eq: 'r₂ ≈ 0.63 &nbsp; z₂ ≈ 0.70<br>h₂ = (1−<span class="eq-highlight">z₂</span>)⊙h₁ + <span class="eq-highlight">z₂</span>⊙h̃₂'
+  },
+  {
+    token: 'was',
+    r: '[0.41, 0.45, 0.38]', z: '[0.28, 0.30, 0.26]',
+    hc: '[0.12, 0.08, 0.14]', h: '[0.29, 0.21, 0.25]', x: '[0.03, -0.18, 0.07]',
+    narration: '<strong>Step 3 — "was"</strong><br>The <span style="color:var(--gate-update)">update gate z₃ ≈ 0.28</span> is low — the GRU keeps most of the previous hidden state h₂ and blends in very little new information. This is the GRU\'s way of "forgetting" — it\'s equivalent to LSTM\'s high forget gate + low input gate, but in a single operation.',
+    eq: 'r₃ ≈ 0.41 &nbsp; z₃ ≈ 0.28<br>h₃ = (1−<span class="eq-highlight">z₃</span>)⊙h₂ + <span class="eq-highlight">z₃</span>⊙h̃₃'
+  },
+  {
+    token: 'great',
+    r: '[0.72, 0.78, 0.70]', z: '[0.82, 0.85, 0.80]',
+    hc: '[0.71, 0.68, 0.73]', h: '[0.61, 0.59, 0.62]', x: '[0.75, 0.62, -0.08]',
+    narration: '<strong>Step 4 — "great"</strong><br>The <span style="color:var(--gate-update)">update gate z₄ ≈ 0.82</span> is very high — strongly update! The <span style="color:var(--gate-reset)">reset gate r₄ ≈ 0.73</span> allows most of h₃ into the candidate computation. h₄ ≈ 0.61 strongly reflects positive sentiment. <strong>GRU vs. LSTM:</strong> GRU uses 2 gates and no separate cell state — fewer parameters, often comparable performance.',
+    eq: 'r₄ ≈ 0.73 &nbsp; z₄ ≈ 0.82<br>h₄ = (1−<span class="eq-highlight">z₄</span>)⊙h₃ + <span class="eq-highlight">z₄</span>⊙h̃₄'
+  }
+];
+
+// ─── Tab switching ───────────────────────────────────────────────────────────
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ─── Generic helpers ─────────────────────────────────────────────────────────
+function buildTokens(containerId, steps, currentStep) {
+  const el = document.getElementById(containerId);
+  el.innerHTML = '<span class="seq-label">INPUT:</span>';
+  steps.forEach((s, i) => {
+    const t = document.createElement('span');
+    t.className = 'token' + (i === currentStep ? ' active' : i < currentStep ? ' done' : '');
+    t.textContent = s.token;
+    el.appendChild(t);
+    if (i < steps.length - 1) {
+      const arrow = document.createElement('span');
+      arrow.className = 'step-arrow';
+      arrow.textContent = '→';
+      el.appendChild(arrow);
+    }
+  });
+}
+
+// ─── RNN ─────────────────────────────────────────────────────────────────────
+let rnnStep_ = -1;
+let rnnTimer = null;
+
+function buildRnnArch(currentStep) {
+  const el = document.getElementById('rnn-arch');
+  el.innerHTML = '';
+  // h0
+  const h0 = document.createElement('div');
+  h0.className = 'rnn-cell' + (currentStep >= 0 ? ' past' : '');
+  h0.innerHTML = `<div class="hidden-node">h₀</div><div class="cell-label">start</div>`;
+  el.appendChild(h0);
+
+  RNN_STEPS.forEach((s, i) => {
+    const arrow = document.createElement('div');
+    arrow.className = 'conn-arrow' + (i <= currentStep ? ' active' : '');
+    arrow.textContent = '→';
+    el.appendChild(arrow);
+
+    const cell = document.createElement('div');
+    cell.className = 'rnn-cell' + (i === currentStep ? ' active' : i < currentStep ? ' past' : '');
+    cell.innerHTML = `
+      <div class="input-node">x${i+1}</div>
+      <div class="cell-box rnn-box">
+        <div style="font-size:11px;color:var(--hidden-color);font-weight:700">Σ</div>
+        <div style="font-size:9px;color:var(--muted)">tanh</div>
+      </div>
+      <div class="hidden-node">h${i+1}</div>
+      <div class="cell-label">"${s.token}"</div>
+    `;
+    el.appendChild(cell);
+  });
+}
+
+function rnnRender() {
+  const step = rnnStep_;
+  buildTokens('rnn-tokens', RNN_STEPS, step);
+  buildRnnArch(step);
+  document.getElementById('rnn-progress').style.width = (step < 0 ? 0 : ((step + 1) / RNN_STEPS.length * 100)) + '%';
+  document.getElementById('rnn-step-num').textContent = Math.max(0, step + 1);
+  document.getElementById('rnn-step-total').textContent = RNN_STEPS.length;
+  document.getElementById('rnn-prev').disabled = step < 0;
+  document.getElementById('rnn-next').disabled = step >= RNN_STEPS.length - 1;
+
+  if (step < 0) {
+    document.getElementById('rnn-narration').innerHTML = 'Press <strong>Play</strong> or <strong>Next →</strong> to begin the forward pass.';
+    document.getElementById('rnn-input-val').textContent = '—';
+    document.getElementById('rnn-hidden-val').textContent = 'h₀ = [0, 0, 0, 0]';
+    document.getElementById('rnn-equation').innerHTML = 'h<sub>t</sub> = tanh(W<sub>h</sub> · h<sub>t−1</sub> + W<sub>x</sub> · x<sub>t</sub> + b)';
+  } else {
+    const s = RNN_STEPS[step];
+    document.getElementById('rnn-narration').innerHTML = s.narration;
+    document.getElementById('rnn-input-val').textContent = `x("${s.token}") = ${s.input}`;
+    document.getElementById('rnn-hidden-val').textContent = `h${step+1} = ${s.hidden}`;
+    document.getElementById('rnn-equation').innerHTML = s.eq;
+  }
+}
+
+function rnnStep(dir) {
+  rnnStep_ = Math.max(-1, Math.min(RNN_STEPS.length - 1, rnnStep_ + dir));
+  rnnRender();
+  if (rnnStep_ >= RNN_STEPS.length - 1 && rnnTimer) rnnStop();
+}
+
+function rnnTogglePlay() {
+  if (rnnTimer) { rnnStop(); return; }
+  if (rnnStep_ >= RNN_STEPS.length - 1) { rnnStep_ = -1; rnnRender(); }
+  rnnPlay();
+}
+
+function rnnPlay() {
+  const btn = document.getElementById('rnn-play');
+  btn.textContent = '⏸ Pause';
+  btn.classList.add('playing');
+  const delay = () => Math.max(400, 1800 - (parseInt(document.getElementById('rnn-speed').value) - 1) * 350);
+  const tick = () => {
+    if (rnnStep_ >= RNN_STEPS.length - 1) { rnnStop(); return; }
+    rnnStep(1);
+    rnnTimer = setTimeout(tick, delay());
+  };
+  rnnTimer = setTimeout(tick, 400);
+}
+
+function rnnStop() {
+  clearTimeout(rnnTimer); rnnTimer = null;
+  const btn = document.getElementById('rnn-play');
+  btn.textContent = '▶ Play';
+  btn.classList.remove('playing');
+}
+
+function rnnReset() {
+  rnnStop(); rnnStep_ = -1; rnnRender();
+}
+
+// ─── LSTM ─────────────────────────────────────────────────────────────────────
+let lstmStep_ = -1;
+let lstmTimer = null;
+
+function buildLstmArch(currentStep) {
+  const el = document.getElementById('lstm-arch');
+  el.innerHTML = '';
+
+  // c0/h0
+  const start = document.createElement('div');
+  start.className = 'lstm-cell' + (currentStep >= 0 ? ' past' : '');
+  start.innerHTML = `
+    <div class="hidden-node">h₀</div>
+    <div class="cell-label">start</div>
+  `;
+  el.appendChild(start);
+
+  LSTM_STEPS.forEach((s, i) => {
+    const arrow = document.createElement('div');
+    arrow.className = 'conn-arrow' + (i <= currentStep ? ' active' : '');
+    arrow.textContent = '→';
+    el.appendChild(arrow);
+
+    const cell = document.createElement('div');
+    cell.className = 'lstm-cell' + (i === currentStep ? ' active' : i < currentStep ? ' past' : '');
+    cell.innerHTML = `
+      <div class="input-node">x${i+1}</div>
+      <div class="lstm-box">
+        <div class="gate-row">
+          <div class="gate forget">f</div>
+          <div class="gate input-g">i</div>
+          <div class="gate output">o</div>
+          <div class="gate cell-g">c</div>
+        </div>
+        <div class="hidden-node" style="width:28px;height:28px;font-size:9px">h${i+1}</div>
+      </div>
+      <div class="cell-label">"${s.token}"</div>
+    `;
+    el.appendChild(cell);
+  });
+}
+
+function lstmRender() {
+  const step = lstmStep_;
+  buildTokens('lstm-tokens', LSTM_STEPS, step);
+  buildLstmArch(step);
+  document.getElementById('lstm-progress').style.width = (step < 0 ? 0 : ((step + 1) / LSTM_STEPS.length * 100)) + '%';
+  document.getElementById('lstm-step-num').textContent = Math.max(0, step + 1);
+  document.getElementById('lstm-step-total').textContent = LSTM_STEPS.length;
+  document.getElementById('lstm-prev').disabled = step < 0;
+  document.getElementById('lstm-next').disabled = step >= LSTM_STEPS.length - 1;
+
+  if (step < 0) {
+    document.getElementById('lstm-narration').innerHTML = 'Press <strong>Play</strong> or <strong>Next →</strong> to begin.';
+    document.getElementById('lstm-f-val').textContent = '—';
+    document.getElementById('lstm-i-val').textContent = '—';
+    document.getElementById('lstm-o-val').textContent = '—';
+    document.getElementById('lstm-c-val').textContent = 'c₀ = [0, 0, 0]';
+    document.getElementById('lstm-h-val').textContent = 'h₀ = [0, 0, 0]';
+    document.getElementById('lstm-x-val').textContent = '—';
+    document.getElementById('lstm-equation').innerHTML = `
+      f<sub>t</sub> = σ(W<sub>f</sub>·[h<sub>t−1</sub>, x<sub>t</sub>] + b<sub>f</sub>)<br>
+      i<sub>t</sub> = σ(W<sub>i</sub>·[h<sub>t−1</sub>, x<sub>t</sub>] + b<sub>i</sub>)<br>
+      o<sub>t</sub> = σ(W<sub>o</sub>·[h<sub>t−1</sub>, x<sub>t</sub>] + b<sub>o</sub>)<br>
+      c̃<sub>t</sub> = tanh(W<sub>c</sub>·[h<sub>t−1</sub>, x<sub>t</sub>] + b<sub>c</sub>)<br>
+      c<sub>t</sub> = f<sub>t</sub> ⊙ c<sub>t−1</sub> + i<sub>t</sub> ⊙ c̃<sub>t</sub><br>
+      h<sub>t</sub> = o<sub>t</sub> ⊙ tanh(c<sub>t</sub>)`;
+  } else {
+    const s = LSTM_STEPS[step];
+    document.getElementById('lstm-narration').innerHTML = s.narration;
+    document.getElementById('lstm-f-val').textContent = s.f;
+    document.getElementById('lstm-i-val').textContent = s.i;
+    document.getElementById('lstm-o-val').textContent = s.o;
+    document.getElementById('lstm-c-val').textContent = s.c;
+    document.getElementById('lstm-h-val').textContent = s.h;
+    document.getElementById('lstm-x-val').textContent = `x("${s.token}") = ${s.x}`;
+    document.getElementById('lstm-equation').innerHTML = s.eq;
+  }
+}
+
+function lstmStep(dir) {
+  lstmStep_ = Math.max(-1, Math.min(LSTM_STEPS.length - 1, lstmStep_ + dir));
+  lstmRender();
+  if (lstmStep_ >= LSTM_STEPS.length - 1 && lstmTimer) lstmStop();
+}
+
+function lstmTogglePlay() {
+  if (lstmTimer) { lstmStop(); return; }
+  if (lstmStep_ >= LSTM_STEPS.length - 1) { lstmStep_ = -1; lstmRender(); }
+  lstmPlay();
+}
+
+function lstmPlay() {
+  const btn = document.getElementById('lstm-play');
+  btn.textContent = '⏸ Pause';
+  btn.classList.add('playing');
+  const delay = () => Math.max(400, 2000 - (parseInt(document.getElementById('lstm-speed').value) - 1) * 400);
+  const tick = () => {
+    if (lstmStep_ >= LSTM_STEPS.length - 1) { lstmStop(); return; }
+    lstmStep(1);
+    lstmTimer = setTimeout(tick, delay());
+  };
+  lstmTimer = setTimeout(tick, 400);
+}
+
+function lstmStop() {
+  clearTimeout(lstmTimer); lstmTimer = null;
+  const btn = document.getElementById('lstm-play');
+  btn.textContent = '▶ Play';
+  btn.classList.remove('playing');
+}
+
+function lstmReset() { lstmStop(); lstmStep_ = -1; lstmRender(); }
+
+// ─── GRU ─────────────────────────────────────────────────────────────────────
+let gruStep_ = -1;
+let gruTimer = null;
+
+function buildGruArch(currentStep) {
+  const el = document.getElementById('gru-arch');
+  el.innerHTML = '';
+
+  const start = document.createElement('div');
+  start.className = 'gru-cell' + (currentStep >= 0 ? ' past' : '');
+  start.innerHTML = `<div class="hidden-node">h₀</div><div class="cell-label">start</div>`;
+  el.appendChild(start);
+
+  GRU_STEPS.forEach((s, i) => {
+    const arrow = document.createElement('div');
+    arrow.className = 'conn-arrow' + (i <= currentStep ? ' active' : '');
+    arrow.textContent = '→';
+    el.appendChild(arrow);
+
+    const cell = document.createElement('div');
+    cell.className = 'gru-cell' + (i === currentStep ? ' active' : i < currentStep ? ' past' : '');
+    cell.innerHTML = `
+      <div class="input-node">x${i+1}</div>
+      <div class="gru-box">
+        <div style="display:flex;gap:5px;">
+          <div class="gru-gate reset">r</div>
+          <div class="gru-gate update">z</div>
+        </div>
+        <div class="hidden-node" style="width:28px;height:28px;font-size:9px">h${i+1}</div>
+      </div>
+      <div class="cell-label">"${s.token}"</div>
+    `;
+    el.appendChild(cell);
+  });
+}
+
+function gruRender() {
+  const step = gruStep_;
+  buildTokens('gru-tokens', GRU_STEPS, step);
+  buildGruArch(step);
+  document.getElementById('gru-progress').style.width = (step < 0 ? 0 : ((step + 1) / GRU_STEPS.length * 100)) + '%';
+  document.getElementById('gru-step-num').textContent = Math.max(0, step + 1);
+  document.getElementById('gru-step-total').textContent = GRU_STEPS.length;
+  document.getElementById('gru-prev').disabled = step < 0;
+  document.getElementById('gru-next').disabled = step >= GRU_STEPS.length - 1;
+
+  if (step < 0) {
+    document.getElementById('gru-narration').innerHTML = 'Press <strong>Play</strong> or <strong>Next →</strong> to begin.';
+    ['r','z','hc','h','x'].forEach(k => document.getElementById(`gru-${k}-val`).textContent = '—');
+    document.getElementById('gru-h-val').textContent = 'h₀ = [0, 0, 0]';
+    document.getElementById('gru-equation').innerHTML = `
+      r<sub>t</sub> = σ(W<sub>r</sub>·[h<sub>t−1</sub>, x<sub>t</sub>] + b<sub>r</sub>)<br>
+      z<sub>t</sub> = σ(W<sub>z</sub>·[h<sub>t−1</sub>, x<sub>t</sub>] + b<sub>z</sub>)<br>
+      h̃<sub>t</sub> = tanh(W·[r<sub>t</sub> ⊙ h<sub>t−1</sub>, x<sub>t</sub>] + b)<br>
+      h<sub>t</sub> = (1 − z<sub>t</sub>) ⊙ h<sub>t−1</sub> + z<sub>t</sub> ⊙ h̃<sub>t</sub>`;
+  } else {
+    const s = GRU_STEPS[step];
+    document.getElementById('gru-narration').innerHTML = s.narration;
+    document.getElementById('gru-r-val').textContent = s.r;
+    document.getElementById('gru-z-val').textContent = s.z;
+    document.getElementById('gru-hc-val').textContent = s.hc;
+    document.getElementById('gru-h-val').textContent = s.h;
+    document.getElementById('gru-x-val').textContent = `x("${s.token}") = ${s.x}`;
+    document.getElementById('gru-equation').innerHTML = s.eq;
+  }
+}
+
+function gruStep(dir) {
+  gruStep_ = Math.max(-1, Math.min(GRU_STEPS.length - 1, gruStep_ + dir));
+  gruRender();
+  if (gruStep_ >= GRU_STEPS.length - 1 && gruTimer) gruStop();
+}
+
+function gruTogglePlay() {
+  if (gruTimer) { gruStop(); return; }
+  if (gruStep_ >= GRU_STEPS.length - 1) { gruStep_ = -1; gruRender(); }
+  gruPlay();
+}
+
+function gruPlay() {
+  const btn = document.getElementById('gru-play');
+  btn.textContent = '⏸ Pause';
+  btn.classList.add('playing');
+  const delay = () => Math.max(400, 1900 - (parseInt(document.getElementById('gru-speed').value) - 1) * 375);
+  const tick = () => {
+    if (gruStep_ >= GRU_STEPS.length - 1) { gruStop(); return; }
+    gruStep(1);
+    gruTimer = setTimeout(tick, delay());
+  };
+  gruTimer = setTimeout(tick, 400);
+}
+
+function gruStop() {
+  clearTimeout(gruTimer); gruTimer = null;
+  const btn = document.getElementById('gru-play');
+  btn.textContent = '▶ Play';
+  btn.classList.remove('playing');
+}
+
+function gruReset() { gruStop(); gruStep_ = -1; gruRender(); }
+
+// ─── Init ────────────────────────────────────────────────────────────────────
+rnnRender();
+lstmRender();
+gruRender();
+</script>
+</body>
+</html>
