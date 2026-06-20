@@ -581,9 +581,9 @@
   </div>
 
   <div class="tabs">
-    <button class="tab-btn active" onclick="switchTab('rnn')">Vanilla RNN</button>
-    <button class="tab-btn" onclick="switchTab('lstm')">LSTM</button>
-    <button class="tab-btn" onclick="switchTab('gru')">GRU</button>
+    <button class="tab-btn active" onclick="switchTab('rnn', this)">Vanilla RNN</button>
+    <button class="tab-btn" onclick="switchTab('lstm', this)">LSTM</button>
+    <button class="tab-btn" onclick="switchTab('gru', this)">GRU</button>
   </div>
 
   <!-- ══════════════════════ RNN PANEL ══════════════════════ -->
@@ -611,6 +611,7 @@
         <div class="equation" id="rnn-equation">
           h<sub>t</sub> = tanh(W<sub>h</sub> · h<sub>t−1</sub> + W<sub>x</sub> · x<sub>t</sub> + b)
         </div>
+        <div style="font-size:11px;color:var(--muted);margin-top:10px;font-style:italic">Vector values shown are illustrative approximations for pedagogical clarity, not computed from specific weights.</div>
       </div>
 
       <div class="state-panel">
@@ -669,6 +670,7 @@
           c<sub>t</sub> = f<sub>t</sub> ⊙ c<sub>t−1</sub> + i<sub>t</sub> ⊙ c̃<sub>t</sub><br>
           h<sub>t</sub> = o<sub>t</sub> ⊙ tanh(c<sub>t</sub>)
         </div>
+        <div style="font-size:11px;color:var(--muted);margin-top:10px;font-style:italic">Vector values shown are illustrative approximations for pedagogical clarity, not computed from specific weights.</div>
       </div>
 
       <div class="state-panel three">
@@ -734,11 +736,12 @@
       <div class="equation-panel">
         <label>CURRENT COMPUTATION</label>
         <div class="equation" id="gru-equation">
-          r<sub>t</sub> = σ(W<sub>r</sub>·[h<sub>t−1</sub>, x<sub>t</sub>])<br>
-          z<sub>t</sub> = σ(W<sub>z</sub>·[h<sub>t−1</sub>, x<sub>t</sub>])<br>
-          h̃<sub>t</sub> = tanh(W·[r<sub>t</sub> ⊙ h<sub>t−1</sub>, x<sub>t</sub>])<br>
+          r<sub>t</sub> = σ(W<sub>r</sub>·[h<sub>t−1</sub>, x<sub>t</sub>] + b<sub>r</sub>)<br>
+          z<sub>t</sub> = σ(W<sub>z</sub>·[h<sub>t−1</sub>, x<sub>t</sub>] + b<sub>z</sub>)<br>
+          h̃<sub>t</sub> = tanh(W·[r<sub>t</sub> ⊙ h<sub>t−1</sub>, x<sub>t</sub>] + b)<br>
           h<sub>t</sub> = (1 − z<sub>t</sub>) ⊙ h<sub>t−1</sub> + z<sub>t</sub> ⊙ h̃<sub>t</sub>
         </div>
+        <div style="font-size:11px;color:var(--muted);margin-top:10px;font-style:italic">Vector values shown are illustrative approximations for pedagogical clarity, not computed from specific weights.</div>
       </div>
 
       <div class="state-panel three">
@@ -882,11 +885,11 @@ const GRU_STEPS = [
 ];
 
 // ─── Tab switching ───────────────────────────────────────────────────────────
-function switchTab(name) {
+function switchTab(name, btn) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + name).classList.add('active');
-  event.target.classList.add('active');
+  btn.classList.add('active');
 }
 
 // ─── Generic helpers ─────────────────────────────────────────────────────────
@@ -931,7 +934,7 @@ function buildRnnArch(currentStep) {
     cell.innerHTML = `
       <div class="input-node">x${i+1}</div>
       <div class="cell-box rnn-box">
-        <div style="font-size:13px;color:var(--hidden-color)">⊕</div>
+        <div style="font-size:11px;color:var(--hidden-color);font-weight:700">Σ</div>
         <div style="font-size:9px;color:var(--muted)">tanh</div>
       </div>
       <div class="hidden-node">h${i+1}</div>
@@ -981,7 +984,7 @@ function rnnPlay() {
   const btn = document.getElementById('rnn-play');
   btn.textContent = '⏸ Pause';
   btn.classList.add('playing');
-  const delay = () => 1800 - (parseInt(document.getElementById('rnn-speed').value) - 1) * 300;
+  const delay = () => Math.max(400, 1800 - (parseInt(document.getElementById('rnn-speed').value) - 1) * 350);
   const tick = () => {
     if (rnnStep_ >= RNN_STEPS.length - 1) { rnnStop(); return; }
     rnnStep(1);
@@ -1055,7 +1058,9 @@ function lstmRender() {
 
   if (step < 0) {
     document.getElementById('lstm-narration').innerHTML = 'Press <strong>Play</strong> or <strong>Next →</strong> to begin.';
-    ['f','i','o','c','h'].forEach(k => document.getElementById(`lstm-${k}-val`).textContent = '—');
+    document.getElementById('lstm-f-val').textContent = '—';
+    document.getElementById('lstm-i-val').textContent = '—';
+    document.getElementById('lstm-o-val').textContent = '—';
     document.getElementById('lstm-c-val').textContent = 'c₀ = [0, 0, 0]';
     document.getElementById('lstm-h-val').textContent = 'h₀ = [0, 0, 0]';
     document.getElementById('lstm-x-val').textContent = '—';
@@ -1095,7 +1100,7 @@ function lstmPlay() {
   const btn = document.getElementById('lstm-play');
   btn.textContent = '⏸ Pause';
   btn.classList.add('playing');
-  const delay = () => 2000 - (parseInt(document.getElementById('lstm-speed').value) - 1) * 350;
+  const delay = () => Math.max(400, 2000 - (parseInt(document.getElementById('lstm-speed').value) - 1) * 400);
   const tick = () => {
     if (lstmStep_ >= LSTM_STEPS.length - 1) { lstmStop(); return; }
     lstmStep(1);
@@ -1164,9 +1169,9 @@ function gruRender() {
     ['r','z','hc','h','x'].forEach(k => document.getElementById(`gru-${k}-val`).textContent = '—');
     document.getElementById('gru-h-val').textContent = 'h₀ = [0, 0, 0]';
     document.getElementById('gru-equation').innerHTML = `
-      r<sub>t</sub> = σ(W<sub>r</sub>·[h<sub>t−1</sub>, x<sub>t</sub>])<br>
-      z<sub>t</sub> = σ(W<sub>z</sub>·[h<sub>t−1</sub>, x<sub>t</sub>])<br>
-      h̃<sub>t</sub> = tanh(W·[r<sub>t</sub> ⊙ h<sub>t−1</sub>, x<sub>t</sub>])<br>
+      r<sub>t</sub> = σ(W<sub>r</sub>·[h<sub>t−1</sub>, x<sub>t</sub>] + b<sub>r</sub>)<br>
+      z<sub>t</sub> = σ(W<sub>z</sub>·[h<sub>t−1</sub>, x<sub>t</sub>] + b<sub>z</sub>)<br>
+      h̃<sub>t</sub> = tanh(W·[r<sub>t</sub> ⊙ h<sub>t−1</sub>, x<sub>t</sub>] + b)<br>
       h<sub>t</sub> = (1 − z<sub>t</sub>) ⊙ h<sub>t−1</sub> + z<sub>t</sub> ⊙ h̃<sub>t</sub>`;
   } else {
     const s = GRU_STEPS[step];
@@ -1196,7 +1201,7 @@ function gruPlay() {
   const btn = document.getElementById('gru-play');
   btn.textContent = '⏸ Pause';
   btn.classList.add('playing');
-  const delay = () => 1900 - (parseInt(document.getElementById('gru-speed').value) - 1) * 320;
+  const delay = () => Math.max(400, 1900 - (parseInt(document.getElementById('gru-speed').value) - 1) * 375);
   const tick = () => {
     if (gruStep_ >= GRU_STEPS.length - 1) { gruStop(); return; }
     gruStep(1);
