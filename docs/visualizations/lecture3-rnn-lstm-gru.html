@@ -30,7 +30,7 @@
 html, body { height: 100%; }
 body {
   font-family: 'DM Sans', sans-serif;
-  font-size: 14px;
+  font-size: 15px;
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
@@ -132,7 +132,7 @@ body {
   border-radius: 5px;
   padding: 4px 10px;
   font-family: 'DM Sans', sans-serif;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 500;
   color: var(--text);
   cursor: pointer;
@@ -196,7 +196,7 @@ body {
 .rolled-svg-wrap { display: flex; justify-content: center; }
 .unrolled-wrap {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0;
   overflow-x: auto;
   padding: 8px 4px 4px;
@@ -303,11 +303,15 @@ body {
 .cell-token.past-token { opacity: 0.6; }
 .cell-token.future-token { opacity: 0.25; }
 
+.rnn-cell-top-spacer {
+  height: 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 2px;
+}
 .y-arrow-wrap {
-  position: absolute;
-  top: -42px;
-  right: 50%;
-  transform: translateX(50%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -334,12 +338,13 @@ body {
 .lstm-unroll-outer {
   width: 100%;
   overflow-x: auto;
+  overflow-y: visible;
 }
 .lstm-unroll-inner {
   display: flex;
   align-items: flex-end;
   gap: 0;
-  padding: 36px 8px 8px;
+  padding: 40px 8px 36px;
   position: relative;
   min-width: max-content;
 }
@@ -479,7 +484,7 @@ body {
   margin-top: 1px;
 }
 .narration-text {
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.55;
   color: var(--text);
 }
@@ -752,34 +757,19 @@ svg text { font-family: 'DM Sans', sans-serif; }
             <rect id="lstm-rolled-cell" x="40" y="52" width="240" height="128" rx="9"
               fill="white" stroke="#cbd5e1" stroke-width="2"/>
 
-            <!-- 2x2 gate layout inside box -->
-            <!-- f gate: top-left ~(85,90) -->
-            <circle cx="85" cy="88" r="14" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
-            <text x="85" y="93" font-size="12" fill="#dc2626" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="600">f</text>
-            <text x="85" y="124" font-size="9" fill="#dc2626" font-family="DM Sans,sans-serif" text-anchor="middle">forget</text>
-            <!-- i gate: top-right ~(155,90) -->
-            <circle cx="155" cy="88" r="14" fill="#fffbeb" stroke="#d97706" stroke-width="1.5"/>
-            <text x="155" y="93" font-size="12" fill="#d97706" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="600">i</text>
-            <text x="155" y="124" font-size="9" fill="#d97706" font-family="DM Sans,sans-serif" text-anchor="middle">input</text>
-            <!-- c~ gate: bottom-left ~(225,90 shifted) — actually top-center area -->
-            <!-- Rearrange to fit 4 gates cleanly: f=90, i=140, c~=190, o=240 x coords -->
-            <!-- Redo: 4 gates in a row with labels -->
-            <!-- Clear and redo gate layout as 4 evenly spaced in box -->
-            <!-- f at x=78, i at x=135, c~ at x=192, o at x=249... too wide. Use x=80,130,180,230 -->
-
-            <!-- Hide previous circles, redraw in row layout -->
+            <!-- 4 gates in a row at y=102 -->
             <!-- f gate -->
             <circle cx="80" cy="102" r="16" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
-            <text x="80" y="107" font-size="13" fill="#dc2626" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="700">f</text>
+            <text x="80" y="107" font-size="14" fill="#dc2626" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="700">f</text>
             <!-- i gate -->
             <circle cx="130" cy="102" r="16" fill="#fffbeb" stroke="#d97706" stroke-width="1.5"/>
-            <text x="130" y="107" font-size="13" fill="#d97706" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="700">i</text>
+            <text x="130" y="107" font-size="14" fill="#d97706" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="700">i</text>
             <!-- c~ gate -->
             <circle cx="180" cy="102" r="16" fill="#ecfeff" stroke="#0891b2" stroke-width="1.5"/>
-            <text x="180" y="106" font-size="11" fill="#0891b2" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="700">c&#771;</text>
+            <text x="180" y="106" font-size="14" fill="#0891b2" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="700">c&#771;</text>
             <!-- o gate -->
             <circle cx="230" cy="102" r="16" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.5"/>
-            <text x="230" y="107" font-size="13" fill="#7c3aed" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="700">o</text>
+            <text x="230" y="107" font-size="14" fill="#7c3aed" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="700">o</text>
 
             <!-- Gate labels below circles -->
             <text x="80" y="128" font-size="8.5" fill="#dc2626" font-family="DM Sans,sans-serif" text-anchor="middle">forget</text>
@@ -912,13 +902,13 @@ svg text { font-family: 'DM Sans', sans-serif; }
             <!-- 3 gate labels inside: r, z, h~ -->
             <!-- r at (100,105) orange, z at (135,105) indigo, h~ at (170,105) green -->
             <circle cx="98" cy="103" r="13" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5"/>
-            <text x="98" y="107" font-size="12" fill="#ea580c" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="700">r</text>
+            <text x="98" y="107" font-size="14" fill="#ea580c" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="700">r</text>
 
             <circle cx="135" cy="103" r="13" fill="#eef2ff" stroke="#4338ca" stroke-width="1.5"/>
-            <text x="135" y="107" font-size="12" fill="#4338ca" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="700">z</text>
+            <text x="135" y="107" font-size="14" fill="#4338ca" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="700">z</text>
 
             <circle cx="172" cy="103" r="13" fill="#ecfdf5" stroke="#059669" stroke-width="1.5"/>
-            <text x="172" y="106" font-size="10" fill="#059669" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="700">h&#771;</text>
+            <text x="172" y="106" font-size="14" fill="#059669" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="700">h&#771;</text>
 
             <!-- x_t arrow -->
             <line x1="135" y1="210" x2="135" y2="148" stroke="#2563eb" stroke-width="2" marker-end="url(#arr-blue3)"/>
@@ -1057,12 +1047,15 @@ function buildRNNUnrolled() {
   // h0 start
   const startEl = document.createElement('div');
   startEl.className = 'unroll-start';
+  startEl.style.marginTop = '51px'; // 65px center - 14px (half circle height)
   startEl.innerHTML = `<div class="h0-circle">h<sub style="font-size:7px">0</sub></div>`;
   wrap.appendChild(startEl);
 
   // arrow from h0
   const a0 = document.createElement('div');
   a0.className = 'h-arrow-right';
+  a0.style.alignSelf = 'flex-start';
+  a0.style.marginTop = '65px';
   wrap.appendChild(a0);
 
   RNN_STEPS.forEach((s, i) => {
@@ -1070,18 +1063,19 @@ function buildRNNUnrolled() {
 
     const col = document.createElement('div');
     col.className = 'rnn-cell-wrap';
-    col.style.position = 'relative';
 
-    // y_t above last cell
+    // 36px top spacer: empty for non-last, y_t label+arrow for last
+    const topSpacer = document.createElement('div');
+    topSpacer.className = 'rnn-cell-top-spacer';
     if (isLast) {
-      const yWrap = document.createElement('div');
-      yWrap.className = 'y-arrow-wrap';
-      yWrap.innerHTML = `
-        <div class="y-label">y<sub style="font-size:7px">t</sub></div>
-        <div class="y-arrow-line"></div>
-        <div class="y-arrow-head" style="transform:rotate(180deg); margin-top:-2px;"></div>`;
-      col.appendChild(yWrap);
+      topSpacer.innerHTML = `
+        <div class="y-arrow-wrap">
+          <div class="y-label">y<sub style="font-size:7px">t</sub></div>
+          <div class="y-arrow-line"></div>
+          <div class="y-arrow-head" style="transform:rotate(180deg); margin-top:-2px;"></div>
+        </div>`;
     }
+    col.appendChild(topSpacer);
 
     const cell = document.createElement('div');
     cell.className = 'rnn-cell future';
@@ -1106,7 +1100,7 @@ function buildRNNUnrolled() {
       const arr = document.createElement('div');
       arr.className = 'h-arrow-right';
       arr.style.alignSelf = 'flex-start';
-      arr.style.marginTop = '30px';
+      arr.style.marginTop = '65px';
       wrap.appendChild(arr);
     }
   });
@@ -1199,16 +1193,20 @@ function buildLSTMUnrolled() {
     tok.textContent = s.token;
     col.appendChild(tok);
 
-    // y_t on last cell
+    // y_t on last cell -- already handled by absolute position within lstm-unroll-inner padding
     if (isLast) {
       const yWrap = document.createElement('div');
-      yWrap.className = 'y-arrow-wrap';
-      yWrap.style.top = '-48px';
+      yWrap.className = 'lstm-highway-label';
+      yWrap.style.top = '-36px';
+      yWrap.style.display = 'flex';
+      yWrap.style.flexDirection = 'column';
+      yWrap.style.alignItems = 'center';
+      yWrap.style.gap = '2px';
+      yWrap.style.color = 'var(--green)';
       yWrap.innerHTML = `
-        <div class="y-label">y<sub style="font-size:7px">t</sub></div>
-        <div class="y-arrow-line"></div>
-        <div class="y-arrow-head" style="transform:rotate(180deg);margin-top:-2px;"></div>`;
-      col.style.position = 'relative';
+        <div class="y-label" style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--green);font-weight:500">y<sub style="font-size:7px">t</sub></div>
+        <div style="width:2px;height:18px;background:var(--green)"></div>
+        <div style="width:0;height:0;border:4px solid transparent;border-bottom:5px solid var(--green);transform:rotate(180deg);margin-top:-2px"></div>`;
       col.insertBefore(yWrap, col.firstChild);
     }
 
@@ -1286,12 +1284,16 @@ function buildGRUUnrolled() {
 
     if (isLast) {
       const yWrap = document.createElement('div');
-      yWrap.className = 'y-arrow-wrap';
-      yWrap.style.top = '-48px';
+      yWrap.className = 'lstm-highway-label';
+      yWrap.style.top = '-36px';
+      yWrap.style.display = 'flex';
+      yWrap.style.flexDirection = 'column';
+      yWrap.style.alignItems = 'center';
+      yWrap.style.gap = '2px';
       yWrap.innerHTML = `
-        <div class="y-label">y<sub style="font-size:7px">t</sub></div>
-        <div class="y-arrow-line"></div>
-        <div class="y-arrow-head" style="transform:rotate(180deg);margin-top:-2px;"></div>`;
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--green);font-weight:500">y<sub style="font-size:7px">t</sub></div>
+        <div style="width:2px;height:18px;background:var(--green)"></div>
+        <div style="width:0;height:0;border:4px solid transparent;border-bottom:5px solid var(--green);transform:rotate(180deg);margin-top:-2px"></div>`;
       col.insertBefore(yWrap, col.firstChild);
     }
 
