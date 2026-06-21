@@ -6,16 +6,16 @@
 <title>Lecture 3 Supplementary: RNN, LSTM &amp; GRU | DATA/MSML 641</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 <style>
 :root {
   --green:  #059669;
   --blue:   #2563eb;
+  --cyan:   #0891b2;
   --red:    #dc2626;
   --amber:  #d97706;
-  --cyan:   #0891b2;
   --purple: #7c3aed;
   --orange: #ea580c;
   --indigo: #4338ca;
@@ -24,931 +24,605 @@
   --border: #e2e8f0;
   --bg:     #f8fafc;
   --card:   #ffffff;
-  --umd-red:#e21833;
+  --umd:    #e21833;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { height: 100%; }
-body {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 15px;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-}
+body { font-family: 'DM Sans', sans-serif; font-size: 15px; background: var(--bg); color: var(--text); }
 
-/* TOP BAR */
-.top-bar { height: 4px; background: var(--umd-red); }
-
-/* HEADER */
+/* ---- CHROME ---- */
+.top-bar { height: 4px; background: var(--umd); }
 .header {
-  height: 56px;
-  background: var(--card);
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  padding: 0 20px;
-  gap: 12px;
+  height: 56px; background: var(--card); border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; padding: 0 24px; gap: 12px;
 }
-.header-logo {
-  font-family: 'Playfair Display', serif;
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--umd-red);
-  letter-spacing: -0.3px;
-}
-.header-logo span { color: var(--text); }
-.header-sep { color: var(--border); font-size: 18px; }
-.header-course {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--muted);
-  letter-spacing: 0.3px;
-}
-.header-badge {
-  margin-left: auto;
-  background: #fef3c7;
-  color: #92400e;
-  font-size: 11px;
-  font-weight: 600;
-  padding: 3px 10px;
-  border-radius: 20px;
-  letter-spacing: 0.3px;
-  text-transform: uppercase;
+.logo { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--umd); }
+.logo span { color: var(--text); }
+.course { font-size: 13px; font-weight: 500; color: var(--muted); }
+.badge {
+  margin-left: auto; background: #fef3c7; color: #92400e;
+  font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px;
+  letter-spacing: 0.3px; text-transform: uppercase;
 }
 
-/* TAB BAR */
+/* ---- TABS ---- */
 .tab-bar {
-  height: 44px;
-  background: var(--card);
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: stretch;
-  padding: 0 20px;
-  gap: 4px;
+  height: 44px; background: var(--card); border-bottom: 1px solid var(--border);
+  display: flex; align-items: stretch; padding: 0 24px; gap: 2px;
 }
 .tab-btn {
-  background: none;
-  border: none;
-  border-bottom: 2px solid transparent;
-  padding: 0 16px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--muted);
-  cursor: pointer;
-  transition: color 0.15s, border-color 0.15s;
-  letter-spacing: 0.2px;
+  background: none; border: none; border-bottom: 3px solid transparent;
+  padding: 0 20px; font-family: 'DM Sans', sans-serif; font-size: 14px;
+  font-weight: 500; color: var(--muted); cursor: pointer;
 }
 .tab-btn:hover { color: var(--text); }
-.tab-btn.active {
-  color: var(--text);
-  border-bottom-color: var(--umd-red);
-  font-weight: 600;
-}
+.tab-btn.active { color: var(--text); border-bottom-color: var(--umd); font-weight: 600; }
 
-/* MAIN CONTENT */
-.main { padding: 16px 20px 0; max-width: 1100px; margin: 0 auto; }
-
-/* TAB PANELS */
+/* ---- LAYOUT ---- */
+.main { padding: 16px 24px; max-width: 1200px; margin: 0 auto; }
 .tab-panel { display: none; }
 .tab-panel.active { display: block; }
 
-/* CONTROLS ROW */
+/* ---- CONTROLS ---- */
 .controls {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  height: 42px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 0 12px;
-  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px; height: 44px;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 8px; padding: 0 14px; margin-bottom: 12px;
 }
-.ctrl-btn {
-  background: none;
-  border: 1px solid var(--border);
-  border-radius: 5px;
-  padding: 4px 10px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text);
-  cursor: pointer;
-  transition: background 0.12s, border-color 0.12s;
-  white-space: nowrap;
+.btn {
+  background: none; border: 1px solid var(--border); border-radius: 6px;
+  padding: 5px 12px; font-family: 'DM Sans', sans-serif; font-size: 13px;
+  font-weight: 500; color: var(--text); cursor: pointer; white-space: nowrap;
 }
-.ctrl-btn:hover { background: var(--bg); border-color: var(--muted); }
-.ctrl-btn.play-btn { border-color: var(--green); color: var(--green); font-weight: 600; }
-.step-dots { display: flex; gap: 5px; align-items: center; }
-.step-dot {
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  background: var(--border);
-  transition: background 0.2s, transform 0.2s;
-  cursor: pointer;
+.btn:hover { background: var(--bg); }
+.btn.play { border-color: var(--green); color: var(--green); font-weight: 600; }
+.csep { color: var(--border); user-select: none; }
+.dots { display: flex; gap: 5px; align-items: center; }
+.dot {
+  width: 7px; height: 7px; border-radius: 50%; background: var(--border);
+  cursor: pointer; transition: background 0.2s, transform 0.2s; flex-shrink: 0;
 }
-.step-dot.done { background: var(--green); }
-.step-dot.current { background: var(--green); transform: scale(1.4); }
-.ctrl-sep { color: var(--border); font-size: 16px; }
-.step-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  color: var(--muted);
-  white-space: nowrap;
-}
-.speed-wrap {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-left: auto;
-  font-size: 11px;
-  color: var(--muted);
-}
-.speed-wrap input[type=range] {
-  width: 70px;
-  accent-color: var(--green);
-  cursor: pointer;
-}
+.dot.done { background: var(--green); }
+.dot.now  { background: var(--green); transform: scale(1.5); }
+.step-lbl { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); white-space: nowrap; }
+.speed { display: flex; align-items: center; gap: 6px; margin-left: auto; font-size: 12px; color: var(--muted); }
+.speed input { width: 72px; accent-color: var(--green); cursor: pointer; }
 
-/* VIEWS ROW */
-.views-row {
-  display: grid;
-  grid-template-columns: 290px 1fr;
-  gap: 12px;
-  margin-bottom: 12px;
+/* ---- TWO-COLUMN VIEW ---- */
+.views { display: grid; grid-template-columns: 300px 1fr; gap: 12px; margin-bottom: 12px; }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 12px; }
+.card-lbl {
+  font-size: 10px; font-weight: 700; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px;
 }
-.view-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 10px;
-}
-.view-label {
-  font-size: 10px;
-  font-weight: 600;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  margin-bottom: 6px;
-}
-.rolled-svg-wrap { display: flex; justify-content: center; }
-.unrolled-wrap {
+.svg-wrap { display: flex; justify-content: center; }
+
+/* ---- UNROLLED CONTAINER ---- */
+.unroll-scroll { overflow-x: auto; overflow-y: visible; }
+.unroll-row {
   display: flex;
-  align-items: flex-start;
+  align-items: flex-start;  /* all columns start at the same top edge */
   gap: 0;
-  overflow-x: auto;
-  padding: 8px 4px 4px;
-}
-
-/* UNROLLED CELLS */
-.unroll-start {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  margin-right: 6px;
-  flex-shrink: 0;
-}
-.h0-circle {
-  width: 28px; height: 28px;
-  border-radius: 50%;
-  border: 2px solid var(--green);
-  background: #ecfdf5;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
-  color: var(--green);
-  font-weight: 500;
-}
-.h-arrow-right {
-  width: 20px; height: 2px;
-  background: var(--green);
-  position: relative;
-  align-self: center;
-  flex-shrink: 0;
-}
-.h-arrow-right::after {
-  content: '';
-  position: absolute;
-  right: -1px; top: -3px;
-  border: 4px solid transparent;
-  border-left: 5px solid var(--green);
-}
-
-/* RNN unrolled cell */
-.rnn-cell-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  flex-shrink: 0;
-}
-.rnn-cell {
-  width: 72px; height: 60px;
-  border: 2px solid var(--border);
-  border-radius: 6px;
-  background: var(--card);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--muted);
-  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s, color 0.25s;
-  position: relative;
-  z-index: 1;
-}
-.rnn-cell.active {
-  border-color: var(--green);
-  box-shadow: 0 0 0 3px rgba(5,150,105,0.15);
-  transform: scale(1.06);
-  color: var(--green);
-  animation: cellpulse 1s ease-in-out infinite alternate;
-}
-.rnn-cell.past { border-color: var(--green); color: var(--green); opacity: 0.6; }
-.rnn-cell.future { opacity: 0.25; }
-@keyframes cellpulse {
-  from { box-shadow: 0 0 0 3px rgba(5,150,105,0.10); }
-  to   { box-shadow: 0 0 0 6px rgba(5,150,105,0.25); }
-}
-.cell-x-arrow {
-  width: 2px; height: 20px;
-  background: var(--blue);
-  position: relative;
-  margin-top: 0;
-}
-.cell-x-arrow::before {
-  content: '';
-  position: absolute;
-  top: -1px; left: -3px;
-  border: 4px solid transparent;
-  border-bottom: 5px solid var(--blue);
-}
-.cell-token {
-  margin-top: 3px;
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--blue);
-  background: #eff6ff;
-  padding: 2px 6px;
-  border-radius: 4px;
-  border: 1px solid #bfdbfe;
-  font-family: 'JetBrains Mono', monospace;
-}
-.cell-token.active-token { background: #dbeafe; border-color: var(--blue); font-weight: 600; }
-.cell-token.past-token { opacity: 0.6; }
-.cell-token.future-token { opacity: 0.25; }
-
-.rnn-cell-top-spacer {
-  height: 36px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 2px;
-}
-.y-arrow-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-}
-.y-arrow-line {
-  width: 2px; height: 24px;
-  background: var(--green);
-}
-.y-arrow-head {
-  width: 0; height: 0;
-  border: 4px solid transparent;
-  border-bottom: 5px solid var(--green);
-  margin-bottom: -2px;
-}
-.y-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
-  color: var(--green);
-  font-weight: 500;
-}
-
-/* LSTM unrolled */
-.lstm-unroll-outer {
-  width: 100%;
-  overflow-x: auto;
-  overflow-y: visible;
-}
-.lstm-unroll-inner {
-  display: flex;
-  align-items: flex-end;
-  gap: 0;
-  padding: 40px 8px 36px;
-  position: relative;
   min-width: max-content;
+  padding: 4px 4px 8px;
 }
-.lstm-cell-col {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex-shrink: 0;
+
+/* ---- CELL COLUMN: fully in-flow, no absolute labels ---- */
+/*
+  Each column stacks these in order:
+    .ucol-top    — 32px — empty OR y_t indicator on last cell
+    .ucol-clabel — 16px — "C_i" for LSTM, invisible spacer for RNN/GRU
+    .box         — 64px (RNN) or 84px (LSTM/GRU)
+    .ucol-hlabel — 16px — "h_i", invisible for RNN
+    .x-arrow     — 18px — vertical blue line
+    .tok         — auto
+*/
+.ucol { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+
+.ucol-top {
+  height: 32px;
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: flex-end; gap: 2px; flex-shrink: 0;
+}
+.ucol-clabel {
+  height: 16px; flex-shrink: 0;
+  font-family: 'JetBrains Mono', monospace; font-size: 9px;
+  font-weight: 600; color: var(--cyan);
+  display: flex; align-items: center; justify-content: center;
+}
+.ucol-hlabel {
+  height: 16px; flex-shrink: 0;
+  font-family: 'JetBrains Mono', monospace; font-size: 9px;
+  font-weight: 500; color: var(--green);
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* y_t indicator (sits in ucol-top on last cell) */
+.yt-wrap { display: flex; flex-direction: column; align-items: center; gap: 1px; }
+.yt-lbl  { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--green); font-weight: 600; }
+.yt-head { width: 0; height: 0; border: 4px solid transparent; border-bottom: 5px solid var(--green); }
+.yt-line { width: 2px; height: 14px; background: var(--green); }
+
+/* ---- CELL BOXES ---- */
+.rnn-box {
+  width: 76px; height: 64px; flex-shrink: 0;
+  border: 2px solid var(--border); border-radius: 6px; background: var(--card);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; color: var(--muted);
+  transition: border-color 0.25s, box-shadow 0.25s, color 0.25s;
+}
+.rnn-box.active {
+  border-color: var(--green); color: var(--green);
+  animation: pulse-g 1s ease-in-out infinite alternate;
+}
+.rnn-box.past   { border-color: var(--green); color: var(--green); opacity: 0.5; }
+.rnn-box.future { opacity: 0.18; }
+
+.lstm-box {
+  width: 84px; height: 84px; flex-shrink: 0;
+  border: 2px solid var(--border); border-radius: 6px; background: var(--card);
+  display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr;
+  align-items: center; justify-items: center; padding: 8px 6px;
   position: relative;
+  transition: border-color 0.25s, box-shadow 0.25s;
 }
-.lstm-cell-box {
-  width: 80px; height: 90px;
-  border: 2px solid var(--border);
-  border-radius: 6px;
-  background: var(--card);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 0;
-  align-items: center;
-  justify-items: center;
-  padding: 8px 6px;
-  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
-  position: relative;
-  z-index: 1;
+/* cell state highway bar across top of LSTM box — key visual marker */
+.lstm-box::before {
+  content: ''; position: absolute; top: 0; left: 6px; right: 6px;
+  height: 4px; background: var(--cyan); border-radius: 2px 2px 0 0; opacity: 0.5;
 }
-.lstm-cell-box.active {
+.lstm-box.active {
   border-color: var(--cyan);
-  box-shadow: 0 0 0 3px rgba(8,145,178,0.15);
-  transform: scale(1.05);
-  animation: cellpulse-cyan 1s ease-in-out infinite alternate;
+  animation: pulse-c 1s ease-in-out infinite alternate;
 }
-.lstm-cell-box.past { border-color: var(--cyan); opacity: 0.65; }
-.lstm-cell-box.future { opacity: 0.22; }
-@keyframes cellpulse-cyan {
-  from { box-shadow: 0 0 0 3px rgba(8,145,178,0.12); }
-  to   { box-shadow: 0 0 0 7px rgba(8,145,178,0.28); }
-}
-.gate-dot {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1px;
-}
-.gate-dot-circle {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-}
-.gate-dot-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
-  font-weight: 500;
-}
-.lstm-highway-bar {
-  position: absolute;
-  top: 0;
-  left: 0; right: 0;
-  height: 10px;
-  background: linear-gradient(90deg, transparent 0, var(--cyan) 5%, var(--cyan) 95%, transparent 100%);
-  opacity: 0.25;
-  border-radius: 3px;
-}
-.lstm-highway-label {
-  position: absolute;
-  top: -18px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
-  color: var(--cyan);
-  font-weight: 500;
-}
-.lstm-h-bar {
-  position: absolute;
-  bottom: -14px;
-  left: 0; right: 0;
-  height: 4px;
-  background: var(--green);
-  opacity: 0.3;
-}
-.lstm-h-label {
-  position: absolute;
-  bottom: -28px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9px;
-  color: var(--green);
-  font-weight: 500;
-}
+.lstm-box.past   { border-color: var(--cyan); opacity: 0.5; }
+.lstm-box.future { opacity: 0.18; }
 
-/* GRU unrolled */
-.gru-cell-box {
-  width: 80px; height: 90px;
-  border: 2px solid var(--border);
-  border-radius: 6px;
-  background: var(--card);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 0;
-  align-items: center;
-  justify-items: center;
-  padding: 8px 6px;
-  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
-  position: relative;
-  z-index: 1;
+.gru-box {
+  width: 84px; height: 84px; flex-shrink: 0;
+  border: 2px solid var(--border); border-radius: 6px; background: var(--card);
+  display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr;
+  align-items: center; justify-items: center; padding: 8px 6px;
+  transition: border-color 0.25s, box-shadow 0.25s;
 }
-.gru-cell-box.active {
+/* GRU: no ::before bar — visually distinct from LSTM */
+.gru-box.active {
   border-color: var(--green);
-  box-shadow: 0 0 0 3px rgba(5,150,105,0.15);
-  transform: scale(1.05);
-  animation: cellpulse 1s ease-in-out infinite alternate;
+  animation: pulse-g 1s ease-in-out infinite alternate;
 }
-.gru-cell-box.past { border-color: var(--green); opacity: 0.65; }
-.gru-cell-box.future { opacity: 0.22; }
+.gru-box.past   { border-color: var(--green); opacity: 0.5; }
+.gru-box.future { opacity: 0.18; }
 
-/* NARRATION */
-.narration-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--green);
-  border-radius: 8px;
-  padding: 10px 14px;
-  margin-bottom: 12px;
-  min-height: 52px;
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
+@keyframes pulse-g { from { box-shadow: 0 0 0 2px rgba(5,150,105,0.10); } to { box-shadow: 0 0 0 7px rgba(5,150,105,0.22); } }
+@keyframes pulse-c { from { box-shadow: 0 0 0 2px rgba(8,145,178,0.10); } to { box-shadow: 0 0 0 7px rgba(8,145,178,0.22); } }
+
+/* Gate dots inside boxes */
+.gdot { display: flex; flex-direction: column; align-items: center; gap: 1px; }
+.gdot-circle { width: 10px; height: 10px; border-radius: 50%; }
+.gdot-lbl { font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 600; }
+
+/* ---- CONNECTORS ---- */
+/* Horizontal h-state arrow between columns */
+.h-arr {
+  width: 22px; height: 2px;
+  background: var(--green);
+  position: relative; flex-shrink: 0;
+  align-self: flex-start; /* margin-top set in JS to align with cell center */
 }
-.narration-step-badge {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  font-weight: 600;
-  color: var(--green);
-  background: #ecfdf5;
-  padding: 2px 7px;
-  border-radius: 4px;
-  border: 1px solid #a7f3d0;
-  white-space: nowrap;
-  margin-top: 1px;
-}
-.narration-text {
-  font-size: 14px;
-  line-height: 1.55;
-  color: var(--text);
-}
-.values-row {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-top: 6px;
-}
-.val-chip {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  padding: 2px 8px;
-  border-radius: 4px;
-  border: 1px solid;
+.h-arr::after {
+  content: ''; position: absolute; right: -1px; top: -3px;
+  border: 4px solid transparent; border-left: 5px solid var(--green);
 }
 
-/* EQUATIONS */
+/* Vertical x_t input arrow (arrowhead at top = enters cell from below) */
+.x-arrow { width: 2px; height: 18px; background: var(--blue); position: relative; flex-shrink: 0; }
+.x-arrow::before {
+  content: ''; position: absolute; top: -1px; left: -3px;
+  border: 4px solid transparent; border-bottom: 5px solid var(--blue);
+}
+
+/* h0 start circle */
+.h0-circle {
+  width: 30px; height: 30px; border-radius: 50%;
+  border: 2px solid var(--green); background: #ecfdf5;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'JetBrains Mono', monospace; font-size: 9px;
+  color: var(--green); font-weight: 600; flex-shrink: 0;
+}
+
+/* Word token badge */
+.tok {
+  margin-top: 3px; font-size: 11px; font-weight: 600;
+  color: var(--blue); background: #eff6ff; padding: 2px 7px;
+  border-radius: 4px; border: 1px solid #bfdbfe;
+  font-family: 'JetBrains Mono', monospace; white-space: nowrap; flex-shrink: 0;
+}
+.tok.active-tok { background: #dbeafe; border-color: var(--blue); }
+.tok.past-tok   { opacity: 0.5; }
+.tok.future-tok { opacity: 0.18; }
+
+/* ---- NARRATION ---- */
+.narration {
+  background: var(--card); border: 1px solid var(--border);
+  border-left: 3px solid var(--green); border-radius: 8px;
+  padding: 12px 16px; margin-bottom: 12px;
+  display: flex; gap: 12px; align-items: flex-start; min-height: 56px;
+}
+.n-badge {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700;
+  color: var(--green); background: #ecfdf5; padding: 3px 8px;
+  border-radius: 4px; border: 1px solid #a7f3d0; white-space: nowrap;
+}
+.n-text { font-size: 14px; line-height: 1.55; color: var(--text); }
+.chips  { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+.chip   { font-family: 'JetBrains Mono', monospace; font-size: 11px; padding: 2px 8px; border-radius: 4px; border: 1px solid; }
+.h-val  { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--green); background: #ecfdf5; padding: 1px 7px; border-radius: 4px; border: 1px solid #a7f3d0; }
+
+/* ---- EQUATIONS ---- */
 .eq-section {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 10px 14px;
-  margin-bottom: 16px;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 8px; padding: 12px 16px; margin-bottom: 16px;
 }
-.eq-label {
-  font-size: 10px;
-  font-weight: 600;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  margin-bottom: 8px;
-}
-.eq-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 24px;
-  align-items: center;
-}
-.eq-item {
-  font-size: 13px;
-  line-height: 1.8;
-}
-.eq-grid-2col {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4px 24px;
-}
+.eq-lbl { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 10px; }
+.eq-row  { display: flex; flex-wrap: wrap; gap: 8px 32px; align-items: center; }
+.eq-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 32px; }
+.eq-item { font-size: 14px; line-height: 2.1; }
 
-/* VALUE DISPLAY */
-.h-value {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  color: var(--green);
-  background: #ecfdf5;
-  padding: 1px 7px;
-  border-radius: 4px;
-  border: 1px solid #a7f3d0;
-}
+/* ---- FOOTER ---- */
+.footer { text-align: center; padding: 14px; font-size: 11px; color: var(--muted); border-top: 1px solid var(--border); margin-top: 8px; background: var(--card); }
 
-/* FOOTER */
-.footer {
-  text-align: center;
-  padding: 14px 20px;
-  font-size: 11px;
-  color: var(--muted);
-  border-top: 1px solid var(--border);
-  margin-top: 8px;
-  background: var(--card);
-}
-
-/* KATEX overrides */
-.katex { font-size: 0.95em; }
-.katex-display { margin: 0; }
-
-/* SVG defaults */
+/* KaTeX */
+.katex { font-size: 1em; }
 svg text { font-family: 'DM Sans', sans-serif; }
-
-/* Disclaimer */
-.disclaimer {
-  font-size: 10px;
-  font-style: italic;
-  color: var(--muted);
-  margin-top: 4px;
-}
 </style>
 </head>
 <body>
 
 <div class="top-bar"></div>
 
-<!-- HEADER -->
 <header class="header">
-  <div class="header-logo">UMD<span> CMNS</span></div>
-  <div class="header-sep">|</div>
-  <div class="header-course">DATA/MSML 641 &middot; Summer 2026</div>
-  <div class="header-badge">Lecture 3 Supplementary</div>
+  <div class="logo">UMD<span> CMNS</span></div>
+  <span style="color:var(--border)">|</span>
+  <div class="course">DATA/MSML 641 &middot; Summer 2026</div>
+  <div class="badge">Lecture 3 Supplementary</div>
 </header>
 
-<!-- TAB BAR -->
 <div class="tab-bar">
-  <button class="tab-btn active" id="tab-rnn" onclick="switchTab('rnn', this)">Vanilla RNN</button>
-  <button class="tab-btn" id="tab-lstm" onclick="switchTab('lstm', this)">LSTM</button>
-  <button class="tab-btn" id="tab-gru" onclick="switchTab('gru', this)">GRU</button>
+  <button class="tab-btn active" onclick="switchTab('rnn',this)">Vanilla RNN</button>
+  <button class="tab-btn" onclick="switchTab('lstm',this)">LSTM</button>
+  <button class="tab-btn" onclick="switchTab('gru',this)">GRU</button>
 </div>
 
-<!-- MAIN -->
 <div class="main">
 
-  <!-- ======================== RNN PANEL ======================== -->
-  <div class="tab-panel active" id="panel-rnn">
+<!-- ==================== RNN ==================== -->
+<div class="tab-panel active" id="panel-rnn">
+  <div class="controls">
+    <button class="btn" onclick="step('rnn',-1)">&#8592; Prev</button>
+    <button class="btn play" id="rnn-play" onclick="play('rnn')">&#9654; Play</button>
+    <button class="btn" onclick="step('rnn',1)">Next &#8594;</button>
+    <button class="btn" onclick="reset('rnn')">&#8635; Reset</button>
+    <span class="csep">|</span>
+    <div class="dots" id="rnn-dots"></div>
+    <span class="csep">|</span>
+    <div class="step-lbl" id="rnn-lbl">Step 0 / 4</div>
+    <div class="speed">Speed <input type="range" min="1" max="5" value="2" id="rnn-spd"></div>
+  </div>
+  <div class="views">
+    <div class="card">
+      <div class="card-lbl">Rolled view</div>
+      <div class="svg-wrap">
+        <!--
+          RNN SVG coordinate plan (260 x 230):
+          Cell box: x=75 y=82 w=110 h=68  center=(130,116)
+          h_{t-1}: enters left  at y=116
+          h_t:     exits  right at y=116
+          x_t:     enters bottom at x=130
+          self-loop arc over the top
+        -->
+        <svg viewBox="0 0 260 230" width="260" height="230">
+          <defs>
+            <marker id="ag" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 Z" fill="#059669"/>
+            </marker>
+            <marker id="ab" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 Z" fill="#2563eb"/>
+            </marker>
+          </defs>
 
-    <!-- Controls -->
-    <div class="controls" id="rnn-controls">
-      <button class="ctrl-btn" onclick="stepModel('rnn',-1)">&#8592; Prev</button>
-      <button class="ctrl-btn play-btn" id="rnn-play-btn" onclick="togglePlay('rnn')">&#9654; Play</button>
-      <button class="ctrl-btn" onclick="stepModel('rnn',1)">Next &#8594;</button>
-      <button class="ctrl-btn" onclick="resetModel('rnn')">&#8635; Reset</button>
-      <div class="ctrl-sep">|</div>
-      <div class="step-dots" id="rnn-dots"></div>
-      <div class="ctrl-sep">|</div>
-      <div class="step-label" id="rnn-step-label">Step 0 / 4</div>
-      <div class="speed-wrap">
-        Speed
-        <input type="range" min="1" max="5" value="2" id="rnn-speed">
+          <!-- Cell box -->
+          <rect id="r-cell" x="75" y="82" width="110" height="68" rx="8"
+            fill="white" stroke="#cbd5e1" stroke-width="2"/>
+          <text id="r-lbl" x="130" y="114" font-size="15" fill="#64748b"
+            font-family="DM Sans,sans-serif" text-anchor="middle" font-weight="700">tanh</text>
+          <text x="130" y="132" font-size="9" fill="#94a3b8"
+            font-family="JetBrains Mono,monospace" text-anchor="middle">f(h, x)</text>
+
+          <!-- h_{t-1} enters left -->
+          <line x1="8" y1="116" x2="72" y2="116" stroke="#059669" stroke-width="2" marker-end="url(#ag)"/>
+          <text x="4" y="111" font-size="11" fill="#059669" font-family="JetBrains Mono,monospace" font-weight="600">h</text>
+          <text x="11" y="115" font-size="8"  fill="#059669" font-family="JetBrains Mono,monospace">t-1</text>
+
+          <!-- h_t exits right -->
+          <line x1="188" y1="116" x2="250" y2="116" stroke="#059669" stroke-width="2" marker-end="url(#ag)"/>
+          <text x="237" y="111" font-size="11" fill="#059669" font-family="JetBrains Mono,monospace" font-weight="600">h</text>
+          <text x="244" y="115" font-size="8"  fill="#059669" font-family="JetBrains Mono,monospace">t</text>
+
+          <!-- self-loop arc: exits right (185,116), arcs over top, enters left (75,116) -->
+          <path d="M185,116 C220,66 220,22 130,22 C40,22 40,66 75,116"
+            stroke="#059669" stroke-width="2" fill="none" marker-end="url(#ag)"/>
+          <text x="130" y="16" font-size="9" fill="#059669"
+            font-family="DM Sans,sans-serif" text-anchor="middle" font-style="italic">h recycled as h</text>
+          <text x="184" y="16" font-size="7" fill="#059669" font-family="JetBrains Mono,monospace">t-1</text>
+
+          <!-- x_t enters from bottom -->
+          <line x1="130" y1="222" x2="130" y2="153" stroke="#2563eb" stroke-width="2" marker-end="url(#ab)"/>
+          <text x="136" y="218" font-size="11" fill="#2563eb" font-family="JetBrains Mono,monospace" font-weight="600">x</text>
+          <text x="143" y="221" font-size="8"  fill="#2563eb" font-family="JetBrains Mono,monospace">t</text>
+
+          <!-- current-token badge -->
+          <rect id="r-tbg" x="90" y="196" width="80" height="22" rx="4"
+            fill="#eff6ff" stroke="#bfdbfe" stroke-width="1"/>
+          <text id="r-tok" x="130" y="211" font-size="11" fill="#2563eb"
+            font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="600">---</text>
+        </svg>
       </div>
     </div>
-
-    <!-- Views -->
-    <div class="views-row">
-      <!-- Rolled -->
-      <div class="view-card">
-        <div class="view-label">Rolled (single cell)</div>
-        <div class="rolled-svg-wrap">
-          <svg viewBox="0 0 260 220" width="260" height="220" id="rnn-rolled-svg">
-            <!-- Self-loop arc: from right side (185,110), over top, back to left (75,110) -->
-            <defs>
-              <marker id="arr-green" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-                <path d="M0,0 L0,6 L8,3 Z" fill="#059669"/>
-              </marker>
-              <marker id="arr-blue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-                <path d="M0,0 L0,6 L8,3 Z" fill="#2563eb"/>
-              </marker>
-              <marker id="arr-gray" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-                <path d="M0,0 L0,6 L8,3 Z" fill="#94a3b8"/>
-              </marker>
-            </defs>
-
-            <!-- h_{t-1} arrow: left to cell -->
-            <line x1="12" y1="110" x2="71" y2="110" stroke="#059669" stroke-width="2" marker-end="url(#arr-green)"/>
-            <text x="8" y="105" font-size="11" fill="#059669" font-family="JetBrains Mono,monospace" font-weight="500">h</text>
-            <text x="15" y="108" font-size="8" fill="#059669" font-family="JetBrains Mono,monospace">t-1</text>
-
-            <!-- h_t arrow: cell to right -->
-            <line x1="189" y1="110" x2="248" y2="110" stroke="#059669" stroke-width="2" marker-end="url(#arr-green)"/>
-            <text x="234" y="105" font-size="11" fill="#059669" font-family="JetBrains Mono,monospace" font-weight="500">h</text>
-            <text x="241" y="108" font-size="8" fill="#059669" font-family="JetBrains Mono,monospace">t</text>
-
-            <!-- x_t arrow: bottom to cell -->
-            <line x1="130" y1="210" x2="130" y2="149" stroke="#2563eb" stroke-width="2" marker-end="url(#arr-blue)"/>
-            <text x="135" y="205" font-size="11" fill="#2563eb" font-family="JetBrains Mono,monospace" font-weight="500">x</text>
-            <text x="142" y="208" font-size="8" fill="#2563eb" font-family="JetBrains Mono,monospace">t</text>
-
-            <!-- Self-loop path (exits right at 185,110, arcs over top, enters left at 75,110) -->
-            <path id="rnn-loop-path" d="M 185,110 C 215,60 215,20 130,20 C 45,20 45,60 75,110"
-              stroke="#059669" stroke-width="2" fill="none" marker-end="url(#arr-green)"/>
-            <text x="95" y="14" font-size="9" fill="#059669" font-family="DM Sans,sans-serif" text-anchor="middle">h recycles as h</text>
-            <text x="146" y="14" font-size="7" fill="#059669" font-family="JetBrains Mono,monospace">t-1</text>
-
-            <!-- Cell box -->
-            <rect id="rnn-rolled-cell" x="75" y="75" width="110" height="70" rx="8"
-              fill="white" stroke="#cbd5e1" stroke-width="2"/>
-            <text x="130" y="108" font-size="14" fill="#64748b" font-family="DM Sans,sans-serif"
-              text-anchor="middle" font-weight="600" id="rnn-cell-label">tanh</text>
-            <text x="130" y="124" font-size="9" fill="#94a3b8" font-family="JetBrains Mono,monospace"
-              text-anchor="middle">f(h, x)</text>
-
-            <!-- Token badge -->
-            <rect id="rnn-token-bg" x="95" y="185" width="70" height="20" rx="4"
-              fill="#eff6ff" stroke="#bfdbfe" stroke-width="1"/>
-            <text id="rnn-token-text" x="130" y="199" font-size="11" fill="#2563eb"
-              font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="500">---</text>
-          </svg>
-        </div>
-      </div>
-
-      <!-- Unrolled -->
-      <div class="view-card">
-        <div class="view-label">Unrolled (4 time steps)</div>
-        <div class="unrolled-wrap" id="rnn-unrolled">
-          <!-- Built by JS -->
-        </div>
+    <div class="card">
+      <div class="card-lbl">Unrolled view (4 steps)</div>
+      <div class="unroll-scroll">
+        <div class="unroll-row" id="rnn-unroll"></div>
       </div>
     </div>
+  </div>
+  <div class="narration">
+    <div class="n-badge" id="rnn-nbadge">Step 0</div>
+    <div class="n-text" id="rnn-ntext">Press Play or Next to step through the sequence.</div>
+  </div>
+  <div class="eq-section">
+    <div class="eq-lbl">Equations</div>
+    <div class="eq-row" id="rnn-eqs"></div>
+  </div>
+</div><!-- /rnn -->
 
-    <!-- Narration -->
-    <div class="narration-card" id="rnn-narration">
-      <div class="narration-step-badge" id="rnn-narration-badge">Step 0</div>
-      <div>
-        <div class="narration-text" id="rnn-narration-text">Press Play or Next to step through the sequence.</div>
+
+<!-- ==================== LSTM ==================== -->
+<div class="tab-panel" id="panel-lstm">
+  <div class="controls">
+    <button class="btn" onclick="step('lstm',-1)">&#8592; Prev</button>
+    <button class="btn play" id="lstm-play" onclick="play('lstm')">&#9654; Play</button>
+    <button class="btn" onclick="step('lstm',1)">Next &#8594;</button>
+    <button class="btn" onclick="reset('lstm')">&#8635; Reset</button>
+    <span class="csep">|</span>
+    <div class="dots" id="lstm-dots"></div>
+    <span class="csep">|</span>
+    <div class="step-lbl" id="lstm-lbl">Step 0 / 5</div>
+    <div class="speed">Speed <input type="range" min="1" max="5" value="2" id="lstm-spd"></div>
+  </div>
+  <div class="views">
+    <div class="card">
+      <div class="card-lbl">Rolled view</div>
+      <div class="svg-wrap">
+        <!--
+          LSTM SVG (300 x 265):
+          Cell state highway: y=32
+          Cell box: x=28 y=46 w=244 h=132  bottom=178
+          Gates (4 in row): y=104, x= 68,118,168,218  radius=16
+          h_{t-1}: enters left  at y=155
+          h_t:     exits  right at y=155
+          x_t:     enters bottom at x=148
+          tanh output box: x=196 y=143 w=46 h=22  (below o gate)
+        -->
+        <svg viewBox="0 0 300 265" width="290" height="265">
+          <defs>
+            <marker id="ag2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 Z" fill="#059669"/>
+            </marker>
+            <marker id="ab2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 Z" fill="#2563eb"/>
+            </marker>
+            <marker id="ac2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 Z" fill="#0891b2"/>
+            </marker>
+          </defs>
+
+          <!-- Cell state highway at y=32 -->
+          <text x="2"  y="28" font-size="11" fill="#0891b2" font-family="JetBrains Mono,monospace" font-weight="600">C</text>
+          <text x="10" y="31" font-size="8"  fill="#0891b2" font-family="JetBrains Mono,monospace">t-1</text>
+          <!-- left segment -->
+          <line x1="22" y1="32" x2="90" y2="32" stroke="#0891b2" stroke-width="2.5"/>
+          <!-- forget multiply node -->
+          <circle cx="92" cy="32" r="9" fill="white" stroke="#dc2626" stroke-width="2"/>
+          <text x="92" y="37" font-size="12" fill="#dc2626" font-family="DM Sans,sans-serif" text-anchor="middle" font-weight="700">&times;</text>
+          <!-- middle segment -->
+          <line x1="101" y1="32" x2="181" y2="32" stroke="#0891b2" stroke-width="2.5"/>
+          <!-- add node -->
+          <circle cx="183" cy="32" r="9" fill="white" stroke="#059669" stroke-width="2"/>
+          <text x="183" y="37" font-size="13" fill="#059669" font-family="DM Sans,sans-serif" text-anchor="middle" font-weight="700">+</text>
+          <!-- right segment -->
+          <line x1="192" y1="32" x2="284" y2="32" stroke="#0891b2" stroke-width="2.5" marker-end="url(#ac2)"/>
+          <text x="272" y="28" font-size="11" fill="#0891b2" font-family="JetBrains Mono,monospace" font-weight="600">C</text>
+          <text x="280" y="31" font-size="8"  fill="#0891b2" font-family="JetBrains Mono,monospace">t</text>
+
+          <!-- Main cell box -->
+          <rect id="l-cell" x="28" y="46" width="244" height="132" rx="8"
+            fill="white" stroke="#cbd5e1" stroke-width="2"/>
+
+          <!-- 4 gates at y=104: x = 68, 118, 168, 218  r=16 -->
+          <!-- f gate -->
+          <circle cx="68"  cy="104" r="16" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+          <text x="68"  y="109" font-size="14" fill="#dc2626" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="700">f</text>
+          <text x="68"  y="132" font-size="8"  fill="#dc2626" font-family="DM Sans,sans-serif"          text-anchor="middle">forget</text>
+          <!-- i gate -->
+          <circle cx="118" cy="104" r="16" fill="#fffbeb" stroke="#d97706" stroke-width="1.5"/>
+          <text x="118" y="109" font-size="14" fill="#d97706" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="700">i</text>
+          <text x="118" y="132" font-size="8"  fill="#d97706" font-family="DM Sans,sans-serif"          text-anchor="middle">input</text>
+          <!-- c~ gate -->
+          <circle cx="168" cy="104" r="16" fill="#ecfeff" stroke="#0891b2" stroke-width="1.5"/>
+          <text x="168" y="108" font-size="12" fill="#0891b2" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="700">c&#771;</text>
+          <text x="168" y="132" font-size="8"  fill="#0891b2" font-family="DM Sans,sans-serif"          text-anchor="middle">cand.</text>
+          <!-- o gate -->
+          <circle cx="218" cy="104" r="16" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.5"/>
+          <text x="218" y="109" font-size="14" fill="#7c3aed" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="700">o</text>
+          <text x="218" y="132" font-size="8"  fill="#7c3aed" font-family="DM Sans,sans-serif"          text-anchor="middle">output</text>
+
+          <!-- Dashed guide lines from gate tops to highway nodes -->
+          <!-- f(68,87) to x-node(92,32+9=41) -->
+          <line x1="68"  y1="87" x2="92"  y2="41" stroke="#dc2626" stroke-width="1" stroke-dasharray="3,2" opacity="0.5"/>
+          <!-- i(118,87) to +(183,41) -->
+          <line x1="118" y1="87" x2="170" y2="41" stroke="#d97706" stroke-width="1" stroke-dasharray="3,2" opacity="0.4"/>
+          <!-- c~(168,87) to +(183,41) -->
+          <line x1="168" y1="87" x2="183" y2="41" stroke="#0891b2" stroke-width="1" stroke-dasharray="3,2" opacity="0.4"/>
+
+          <!-- h_{t-1} enters left at y=155 -->
+          <line x1="2"   y1="155" x2="26"  y2="155" stroke="#059669" stroke-width="2" marker-end="url(#ag2)"/>
+          <text x="0"   y="150" font-size="10" fill="#059669" font-family="JetBrains Mono,monospace" font-weight="600">h</text>
+          <text x="7"   y="153" font-size="7"  fill="#059669" font-family="JetBrains Mono,monospace">t-1</text>
+
+          <!-- h_t exits right at y=155 -->
+          <line x1="274" y1="155" x2="296" y2="155" stroke="#059669" stroke-width="2" marker-end="url(#ag2)"/>
+          <text x="282" y="150" font-size="10" fill="#059669" font-family="JetBrains Mono,monospace" font-weight="600">h</text>
+          <text x="289" y="153" font-size="7"  fill="#059669" font-family="JetBrains Mono,monospace">t</text>
+
+          <!-- o gate vertical drop to tanh box -->
+          <line x1="218" y1="121" x2="218" y2="143" stroke="#7c3aed" stroke-width="1.5" stroke-dasharray="3,2" opacity="0.55"/>
+          <!-- tanh box -->
+          <rect x="196" y="143" width="44" height="22" rx="4" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.5"/>
+          <text x="218" y="158" font-size="9" fill="#7c3aed" font-family="DM Sans,sans-serif" text-anchor="middle" font-weight="700">tanh</text>
+          <!-- tanh output connects to h_t exit -->
+          <line x1="240" y1="154" x2="273" y2="155" stroke="#059669" stroke-width="1.5" opacity="0.65"/>
+
+          <!-- x_t enters from bottom (x=148) -->
+          <line x1="148" y1="254" x2="148" y2="180" stroke="#2563eb" stroke-width="2" marker-end="url(#ab2)"/>
+          <text x="154" y="250" font-size="11" fill="#2563eb" font-family="JetBrains Mono,monospace" font-weight="600">x</text>
+          <text x="161" y="253" font-size="8"  fill="#2563eb" font-family="JetBrains Mono,monospace">t</text>
+
+          <!-- token badge -->
+          <rect id="l-tbg" x="106" y="222" width="84" height="22" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1"/>
+          <text id="l-tok" x="148" y="237" font-size="11" fill="#2563eb" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="600">---</text>
+        </svg>
       </div>
     </div>
-
-    <!-- Equations -->
-    <div class="eq-section">
-      <div class="eq-label">Equations</div>
-      <div class="eq-grid" id="rnn-eqs"></div>
-    </div>
-
-  </div><!-- /panel-rnn -->
-
-
-  <!-- ======================== LSTM PANEL ======================== -->
-  <div class="tab-panel" id="panel-lstm">
-
-    <div class="controls" id="lstm-controls">
-      <button class="ctrl-btn" onclick="stepModel('lstm',-1)">&#8592; Prev</button>
-      <button class="ctrl-btn play-btn" id="lstm-play-btn" onclick="togglePlay('lstm')">&#9654; Play</button>
-      <button class="ctrl-btn" onclick="stepModel('lstm',1)">Next &#8594;</button>
-      <button class="ctrl-btn" onclick="resetModel('lstm')">&#8635; Reset</button>
-      <div class="ctrl-sep">|</div>
-      <div class="step-dots" id="lstm-dots"></div>
-      <div class="ctrl-sep">|</div>
-      <div class="step-label" id="lstm-step-label">Step 0 / 5</div>
-      <div class="speed-wrap">
-        Speed
-        <input type="range" min="1" max="5" value="2" id="lstm-speed">
+    <div class="card">
+      <div class="card-lbl">Unrolled view (5 steps)</div>
+      <div class="unroll-scroll">
+        <div class="unroll-row" id="lstm-unroll"></div>
       </div>
     </div>
+  </div>
+  <div class="narration">
+    <div class="n-badge" id="lstm-nbadge">Step 0</div>
+    <div>
+      <div class="n-text"  id="lstm-ntext">Press Play or Next to step through the sequence.</div>
+      <div class="chips"   id="lstm-chips"></div>
+    </div>
+  </div>
+  <div class="eq-section">
+    <div class="eq-lbl">Equations</div>
+    <div class="eq-2col" id="lstm-eqs"></div>
+  </div>
+</div><!-- /lstm -->
 
-    <div class="views-row">
-      <!-- Rolled -->
-      <div class="view-card">
-        <div class="view-label">Rolled (single cell)</div>
-        <div class="rolled-svg-wrap">
-          <svg viewBox="0 0 320 240" width="290" height="240" id="lstm-rolled-svg">
-            <defs>
-              <marker id="arr-green2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-                <path d="M0,0 L0,6 L8,3 Z" fill="#059669"/>
-              </marker>
-              <marker id="arr-blue2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-                <path d="M0,0 L0,6 L8,3 Z" fill="#2563eb"/>
-              </marker>
-              <marker id="arr-cyan2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-                <path d="M0,0 L0,6 L8,3 Z" fill="#0891b2"/>
-              </marker>
-            </defs>
 
-            <!-- Cell state highway (top line at y=38) -->
-            <!-- C_{t-1} label -->
-            <text x="4" y="34" font-size="10" fill="#0891b2" font-family="JetBrains Mono,monospace" font-weight="500">C</text>
-            <text x="11" y="37" font-size="7" fill="#0891b2" font-family="JetBrains Mono,monospace">t-1</text>
-            <!-- Highway line left segment -->
-            <line x1="22" y1="38" x2="98" y2="38" stroke="#0891b2" stroke-width="2.5"/>
-            <!-- x node (forget x cell) at (100,38) -->
-            <circle cx="100" cy="38" r="9" fill="white" stroke="#dc2626" stroke-width="2"/>
-            <text x="100" y="43" font-size="11" fill="#dc2626" font-family="DM Sans,sans-serif" text-anchor="middle" font-weight="700">&times;</text>
-            <!-- highway middle segment -->
-            <line x1="109" y1="38" x2="196" y2="38" stroke="#0891b2" stroke-width="2.5"/>
-            <!-- + node (add candidate) at (198,38) -->
-            <circle cx="198" cy="38" r="9" fill="white" stroke="#059669" stroke-width="2"/>
-            <text x="198" y="43" font-size="13" fill="#059669" font-family="DM Sans,sans-serif" text-anchor="middle" font-weight="700">+</text>
-            <!-- highway right segment -->
-            <line x1="207" y1="38" x2="298" y2="38" stroke="#0891b2" stroke-width="2.5" marker-end="url(#arr-cyan2)"/>
-            <!-- C_t label -->
-            <text x="285" y="34" font-size="10" fill="#0891b2" font-family="JetBrains Mono,monospace" font-weight="500">C</text>
-            <text x="292" y="37" font-size="7" fill="#0891b2" font-family="JetBrains Mono,monospace">t</text>
+<!-- ==================== GRU ==================== -->
+<div class="tab-panel" id="panel-gru">
+  <div class="controls">
+    <button class="btn" onclick="step('gru',-1)">&#8592; Prev</button>
+    <button class="btn play" id="gru-play" onclick="play('gru')">&#9654; Play</button>
+    <button class="btn" onclick="step('gru',1)">Next &#8594;</button>
+    <button class="btn" onclick="reset('gru')">&#8635; Reset</button>
+    <span class="csep">|</span>
+    <div class="dots" id="gru-dots"></div>
+    <span class="csep">|</span>
+    <div class="step-lbl" id="gru-lbl">Step 0 / 5</div>
+    <div class="speed">Speed <input type="range" min="1" max="5" value="2" id="gru-spd"></div>
+  </div>
+  <div class="views">
+    <div class="card">
+      <div class="card-lbl">Rolled view</div>
+      <div class="svg-wrap">
+        <!--
+          GRU SVG (270 x 232):
+          Cell box: x=72 y=76 w=126 h=74  center=(135,113)
+          3 gates: x=100,135,170  y=113  r=14
+          h_{t-1}: left  at y=113
+          h_t:     right at y=113
+          x_t:     bottom at x=135
+          NO cell state highway (visual distinction from LSTM)
+        -->
+        <svg viewBox="0 0 270 232" width="270" height="232">
+          <defs>
+            <marker id="ag3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 Z" fill="#059669"/>
+            </marker>
+            <marker id="ab3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 Z" fill="#2563eb"/>
+            </marker>
+          </defs>
 
-            <!-- Main cell box -->
-            <rect id="lstm-rolled-cell" x="40" y="52" width="240" height="128" rx="9"
-              fill="white" stroke="#cbd5e1" stroke-width="2"/>
+          <!-- No highway label — key visual difference -->
+          <text x="135" y="18" font-size="9" fill="#94a3b8"
+            font-family="DM Sans,sans-serif" text-anchor="middle" font-style="italic">No separate cell state</text>
 
-            <!-- 4 gates in a row at y=102 -->
-            <!-- f gate -->
-            <circle cx="80" cy="102" r="16" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
-            <text x="80" y="107" font-size="14" fill="#dc2626" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="700">f</text>
-            <!-- i gate -->
-            <circle cx="130" cy="102" r="16" fill="#fffbeb" stroke="#d97706" stroke-width="1.5"/>
-            <text x="130" y="107" font-size="14" fill="#d97706" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="700">i</text>
-            <!-- c~ gate -->
-            <circle cx="180" cy="102" r="16" fill="#ecfeff" stroke="#0891b2" stroke-width="1.5"/>
-            <text x="180" y="106" font-size="14" fill="#0891b2" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="700">c&#771;</text>
-            <!-- o gate -->
-            <circle cx="230" cy="102" r="16" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.5"/>
-            <text x="230" y="107" font-size="14" fill="#7c3aed" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="700">o</text>
+          <!-- Cell box -->
+          <rect id="g-cell" x="72" y="76" width="126" height="74" rx="8"
+            fill="white" stroke="#cbd5e1" stroke-width="2"/>
 
-            <!-- Gate labels below circles -->
-            <text x="80" y="128" font-size="8.5" fill="#dc2626" font-family="DM Sans,sans-serif" text-anchor="middle">forget</text>
-            <text x="130" y="128" font-size="8.5" fill="#d97706" font-family="DM Sans,sans-serif" text-anchor="middle">input</text>
-            <text x="180" y="128" font-size="8.5" fill="#0891b2" font-family="DM Sans,sans-serif" text-anchor="middle">cand.</text>
-            <text x="230" y="128" font-size="8.5" fill="#7c3aed" font-family="DM Sans,sans-serif" text-anchor="middle">output</text>
+          <!-- 3 gates: r(100), z(135), h~(170)  y=113  r=14 -->
+          <circle cx="100" cy="113" r="14" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5"/>
+          <text x="100" y="118" font-size="13" fill="#ea580c" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="700">r</text>
 
-            <!-- Dashed vertical lines from gates to highway nodes -->
-            <!-- f -> x node at (100,38): line from f circle top (80,86) to (100,47) -->
-            <line x1="80" y1="85" x2="100" y2="47" stroke="#dc2626" stroke-width="1" stroke-dasharray="3,2" opacity="0.6"/>
-            <!-- i + c~ -> + node at (198,38): lines from i(130,86) and c~(180,86) -->
-            <line x1="130" y1="85" x2="185" y2="47" stroke="#d97706" stroke-width="1" stroke-dasharray="3,2" opacity="0.5"/>
-            <line x1="180" y1="85" x2="198" y2="47" stroke="#0891b2" stroke-width="1" stroke-dasharray="3,2" opacity="0.5"/>
+          <circle cx="135" cy="113" r="14" fill="#eef2ff" stroke="#4338ca" stroke-width="1.5"/>
+          <text x="135" y="118" font-size="13" fill="#4338ca" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="700">z</text>
 
-            <!-- h_{t-1} arrow: enters left at y=145 (mid-box area) -->
-            <line x1="4" y1="145" x2="38" y2="145" stroke="#059669" stroke-width="2" marker-end="url(#arr-green2)"/>
-            <text x="2" y="140" font-size="10" fill="#059669" font-family="JetBrains Mono,monospace" font-weight="500">h</text>
-            <text x="9" y="143" font-size="7" fill="#059669" font-family="JetBrains Mono,monospace">t-1</text>
+          <circle cx="170" cy="113" r="14" fill="#ecfdf5" stroke="#059669" stroke-width="1.5"/>
+          <text x="170" y="117" font-size="11" fill="#059669" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="700">h&#771;</text>
 
-            <!-- h_t arrow: exits right at y=145 -->
-            <line x1="282" y1="145" x2="314" y2="145" stroke="#059669" stroke-width="2" marker-end="url(#arr-green2)"/>
-            <text x="302" y="140" font-size="10" fill="#059669" font-family="JetBrains Mono,monospace" font-weight="500">h</text>
-            <text x="309" y="143" font-size="7" fill="#059669" font-family="JetBrains Mono,monospace">t</text>
+          <!-- h_{t-1} enters left -->
+          <line x1="8"   y1="113" x2="69"  y2="113" stroke="#059669" stroke-width="2" marker-end="url(#ag3)"/>
+          <text x="4"   y="108" font-size="10" fill="#059669" font-family="JetBrains Mono,monospace" font-weight="600">h</text>
+          <text x="11"  y="111" font-size="7"  fill="#059669" font-family="JetBrains Mono,monospace">t-1</text>
 
-            <!-- o gate -> h_t: tanh box then multiply -->
-            <!-- tanh box inside cell bottom -->
-            <rect x="195" y="140" width="40" height="20" rx="4" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.5"/>
-            <text x="215" y="154" font-size="9" fill="#7c3aed" font-family="DM Sans,sans-serif" text-anchor="middle" font-weight="600">tanh</text>
-            <!-- line from tanh to h_t exit -->
-            <line x1="235" y1="150" x2="281" y2="150" stroke="#059669" stroke-width="1.5" stroke-dasharray="3,2" opacity="0.7"/>
+          <!-- h_t exits right -->
+          <line x1="201" y1="113" x2="260" y2="113" stroke="#059669" stroke-width="2" marker-end="url(#ag3)"/>
+          <text x="248" y="108" font-size="10" fill="#059669" font-family="JetBrains Mono,monospace" font-weight="600">h</text>
+          <text x="255" y="111" font-size="7"  fill="#059669" font-family="JetBrains Mono,monospace">t</text>
 
-            <!-- x_t arrow: bottom center -->
-            <line x1="160" y1="225" x2="160" y2="183" stroke="#2563eb" stroke-width="2" marker-end="url(#arr-blue2)"/>
-            <text x="165" y="222" font-size="10" fill="#2563eb" font-family="JetBrains Mono,monospace" font-weight="500">x</text>
-            <text x="172" y="225" font-size="7" fill="#2563eb" font-family="JetBrains Mono,monospace">t</text>
+          <!-- self-loop arc -->
+          <path d="M201,113 C234,64 234,26 135,26 C36,26 36,64 72,113"
+            stroke="#059669" stroke-width="2" fill="none" marker-end="url(#ag3)"/>
+          <text x="120" y="21" font-size="9" fill="#059669"
+            font-family="DM Sans,sans-serif" text-anchor="middle" font-style="italic">h recycled</text>
 
-            <!-- Token badge -->
-            <rect id="lstm-token-bg" x="118" y="200" width="84" height="20" rx="4"
-              fill="#eff6ff" stroke="#bfdbfe" stroke-width="1"/>
-            <text id="lstm-token-text" x="160" y="214" font-size="11" fill="#2563eb"
-              font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="500">---</text>
-          </svg>
-        </div>
-      </div>
+          <!-- x_t enters from bottom -->
+          <line x1="135" y1="222" x2="135" y2="153" stroke="#2563eb" stroke-width="2" marker-end="url(#ab3)"/>
+          <text x="141" y="218" font-size="11" fill="#2563eb" font-family="JetBrains Mono,monospace" font-weight="600">x</text>
+          <text x="148" y="221" font-size="8"  fill="#2563eb" font-family="JetBrains Mono,monospace">t</text>
 
-      <!-- Unrolled -->
-      <div class="view-card">
-        <div class="view-label">Unrolled (5 time steps)</div>
-        <div class="lstm-unroll-outer">
-          <div class="lstm-unroll-inner" id="lstm-unrolled">
-            <!-- Built by JS -->
-          </div>
-        </div>
+          <!-- token badge -->
+          <rect id="g-tbg" x="97" y="191" width="76" height="22" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1"/>
+          <text id="g-tok" x="135" y="206" font-size="11" fill="#2563eb" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="600">---</text>
+        </svg>
       </div>
     </div>
-
-    <div class="narration-card" id="lstm-narration">
-      <div class="narration-step-badge" id="lstm-narration-badge">Step 0</div>
-      <div>
-        <div class="narration-text" id="lstm-narration-text">Press Play or Next to step through the sequence.</div>
-        <div class="values-row" id="lstm-values-row"></div>
+    <div class="card">
+      <div class="card-lbl">Unrolled view (5 steps)</div>
+      <div class="unroll-scroll">
+        <div class="unroll-row" id="gru-unroll"></div>
       </div>
     </div>
-
-    <div class="eq-section">
-      <div class="eq-label">Equations</div>
-      <div class="eq-grid-2col" id="lstm-eqs"></div>
+  </div>
+  <div class="narration">
+    <div class="n-badge" id="gru-nbadge">Step 0</div>
+    <div>
+      <div class="n-text" id="gru-ntext">Press Play or Next to step through the sequence.</div>
+      <div class="chips"  id="gru-chips"></div>
     </div>
-
-  </div><!-- /panel-lstm -->
-
-
-  <!-- ======================== GRU PANEL ======================== -->
-  <div class="tab-panel" id="panel-gru">
-
-    <div class="controls" id="gru-controls">
-      <button class="ctrl-btn" onclick="stepModel('gru',-1)">&#8592; Prev</button>
-      <button class="ctrl-btn play-btn" id="gru-play-btn" onclick="togglePlay('gru')">&#9654; Play</button>
-      <button class="ctrl-btn" onclick="stepModel('gru',1)">Next &#8594;</button>
-      <button class="ctrl-btn" onclick="resetModel('gru')">&#8635; Reset</button>
-      <div class="ctrl-sep">|</div>
-      <div class="step-dots" id="gru-dots"></div>
-      <div class="ctrl-sep">|</div>
-      <div class="step-label" id="gru-step-label">Step 0 / 5</div>
-      <div class="speed-wrap">
-        Speed
-        <input type="range" min="1" max="5" value="2" id="gru-speed">
-      </div>
-    </div>
-
-    <div class="views-row">
-      <!-- Rolled -->
-      <div class="view-card">
-        <div class="view-label">Rolled (single cell)</div>
-        <div class="rolled-svg-wrap">
-          <svg viewBox="0 0 280 220" width="270" height="220" id="gru-rolled-svg">
-            <defs>
-              <marker id="arr-green3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-                <path d="M0,0 L0,6 L8,3 Z" fill="#059669"/>
-              </marker>
-              <marker id="arr-blue3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-                <path d="M0,0 L0,6 L8,3 Z" fill="#2563eb"/>
-              </marker>
-            </defs>
-
-            <!-- NO cell state highway (key visual difference from LSTM) -->
-            <!-- Label indicating simpler architecture -->
-            <text x="140" y="20" font-size="9" fill="#94a3b8" font-family="DM Sans,sans-serif"
-              text-anchor="middle" font-style="italic">No separate cell state</text>
-
-            <!-- h_{t-1} arrow -->
-            <line x1="10" y1="110" x2="74" y2="110" stroke="#059669" stroke-width="2" marker-end="url(#arr-green3)"/>
-            <text x="6" y="105" font-size="10" fill="#059669" font-family="JetBrains Mono,monospace" font-weight="500">h</text>
-            <text x="13" y="108" font-size="7" fill="#059669" font-family="JetBrains Mono,monospace">t-1</text>
-
-            <!-- h_t arrow -->
-            <line x1="196" y1="110" x2="268" y2="110" stroke="#059669" stroke-width="2" marker-end="url(#arr-green3)"/>
-            <text x="254" y="105" font-size="10" fill="#059669" font-family="JetBrains Mono,monospace" font-weight="500">h</text>
-            <text x="261" y="108" font-size="7" fill="#059669" font-family="JetBrains Mono,monospace">t</text>
-
-            <!-- Self-loop (same style as RNN) -->
-            <path d="M 196,110 C 230,60 230,25 140,25 C 50,25 50,60 75,110"
-              stroke="#059669" stroke-width="2" fill="none" marker-end="url(#arr-green3)"/>
-            <text x="100" y="19" font-size="9" fill="#059669" font-family="DM Sans,sans-serif" text-anchor="middle">h recycles</text>
-
-            <!-- Cell box -->
-            <rect id="gru-rolled-cell" x="75" y="75" width="120" height="70" rx="8"
-              fill="white" stroke="#cbd5e1" stroke-width="2"/>
-
-            <!-- 3 gate labels inside: r, z, h~ -->
-            <!-- r at (100,105) orange, z at (135,105) indigo, h~ at (170,105) green -->
-            <circle cx="98" cy="103" r="13" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5"/>
-            <text x="98" y="107" font-size="14" fill="#ea580c" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="700">r</text>
-
-            <circle cx="135" cy="103" r="13" fill="#eef2ff" stroke="#4338ca" stroke-width="1.5"/>
-            <text x="135" y="107" font-size="14" fill="#4338ca" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="700">z</text>
-
-            <circle cx="172" cy="103" r="13" fill="#ecfdf5" stroke="#059669" stroke-width="1.5"/>
-            <text x="172" y="106" font-size="14" fill="#059669" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="700">h&#771;</text>
-
-            <!-- x_t arrow -->
-            <line x1="135" y1="210" x2="135" y2="148" stroke="#2563eb" stroke-width="2" marker-end="url(#arr-blue3)"/>
-            <text x="140" y="206" font-size="10" fill="#2563eb" font-family="JetBrains Mono,monospace" font-weight="500">x</text>
-            <text x="147" y="209" font-size="7" fill="#2563eb" font-family="JetBrains Mono,monospace">t</text>
-
-            <!-- Token badge -->
-            <rect id="gru-token-bg" x="98" y="185" width="74" height="20" rx="4"
-              fill="#eff6ff" stroke="#bfdbfe" stroke-width="1"/>
-            <text id="gru-token-text" x="135" y="199" font-size="11" fill="#2563eb"
-              font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="500">---</text>
-          </svg>
-        </div>
-      </div>
-
-      <!-- Unrolled -->
-      <div class="view-card">
-        <div class="view-label">Unrolled (5 time steps)</div>
-        <div class="lstm-unroll-outer">
-          <div class="lstm-unroll-inner" id="gru-unrolled">
-            <!-- Built by JS -->
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="narration-card" id="gru-narration">
-      <div class="narration-step-badge" id="gru-narration-badge">Step 0</div>
-      <div>
-        <div class="narration-text" id="gru-narration-text">Press Play or Next to step through the sequence.</div>
-        <div class="values-row" id="gru-values-row"></div>
-      </div>
-    </div>
-
-    <div class="eq-section">
-      <div class="eq-label">Equations</div>
-      <div class="eq-grid" id="gru-eqs"></div>
-    </div>
-
-  </div><!-- /panel-gru -->
+  </div>
+  <div class="eq-section">
+    <div class="eq-lbl">Equations</div>
+    <div class="eq-row" id="gru-eqs"></div>
+  </div>
+</div><!-- /gru -->
 
 </div><!-- /main -->
 
@@ -957,48 +631,48 @@ svg text { font-family: 'DM Sans', sans-serif; }
 </footer>
 
 <script>
-/* =========================================================
+/* ================================================================
    DATA
-   ========================================================= */
-const RNN_STEPS = [
-  { token:'The',  h:'[0.05, -0.02, 0.13]',
-    note:'"The": function word. h₁ barely moves from h₀=[0,0,0].' },
-  { token:'sky',  h:'[0.44, 0.21, 0.37]',
-    note:'"sky": content noun. h₂ shifts to encode sky-context.' },
-  { token:'is',   h:'[0.31, 0.08, 0.24]',
-    note:'"is": linking verb, neutral update.' },
-  { token:'blue', h:'[0.63, 0.40, 0.59]',
-    note:'"blue": strong color signal. h₄ encodes "sky=blue" for classification. In RNNs, gradients vanish over long sequences: h₄ can barely "remember" words from 20 steps ago.' },
+   ================================================================ */
+const RNN = [
+  {tok:'The',  h:'[0.05, -0.02, 0.13]',
+   note:'"The": function word. h₁ barely moves from h₀=[0,0,0].'},
+  {tok:'sky',  h:'[0.44, 0.21, 0.37]',
+   note:'"sky": content noun. h₂ shifts to encode sky-context.'},
+  {tok:'is',   h:'[0.31, 0.08, 0.24]',
+   note:'"is": linking verb, neutral update.'},
+  {tok:'blue', h:'[0.63, 0.40, 0.59]',
+   note:'"blue": strong color signal. h₄ encodes sky=blue. In vanilla RNNs gradients vanish: h₄ can barely remember tokens from 20 steps ago.'},
 ];
 
-const LSTM_STEPS = [
-  { token:'it',   f:0.51, i:0.55, o:0.50, c:0.09,  h:0.04,  note:'"it": all gates neutral. Waiting for meaningful context.' },
-  { token:'was',  f:0.54, i:0.62, o:0.53, c:0.25,  h:0.13,  note:'"was": input gate opens (0.62). Small positive signal written to cell state.' },
-  { token:'not',  f:0.87, i:0.78, o:0.71, c:-0.31, h:-0.22, note:'KEY: "not": forget gate fires hard (0.87). Erases prior context. Input gate writes strong negation. Cell state inverts to negative.' },
-  { token:'that', f:0.48, i:0.24, o:0.44, c:-0.26, h:-0.11, note:'"that": input gate almost closed (0.24). Negative state preserved faithfully.' },
-  { token:'good', f:0.61, i:0.69, o:0.76, c:-0.08, h:-0.06, note:'"good": positive word, but cell state was already negative. Final h encodes negative sentiment.' },
+const LSTM = [
+  {tok:'it',   f:0.51, i:0.55, o:0.50, c: 0.09, h: 0.04, note:'"it": all gates near 0.5 (neutral). Waiting for meaningful content.'},
+  {tok:'was',  f:0.54, i:0.62, o:0.53, c: 0.25, h: 0.13, note:'"was": input gate opens slightly (0.62). Small positive signal written to cell state C.'},
+  {tok:'not',  f:0.87, i:0.78, o:0.71, c:-0.31, h:-0.22, note:'KEY: "not": forget gate fires (0.87). Erases prior context. Input gate writes strong negation. C inverts to negative.'},
+  {tok:'that', f:0.48, i:0.24, o:0.44, c:-0.26, h:-0.11, note:'"that": input gate almost closed (0.24). Negative cell state preserved faithfully via the highway.'},
+  {tok:'good', f:0.61, i:0.69, o:0.76, c:-0.08, h:-0.06, note:'"good": positive word, but C was already negative. Final h encodes negative sentiment overall.'},
 ];
 
-const GRU_STEPS = [
-  { token:'it',   r:0.52, z:0.38, hc:0.06,  h:0.02,  note:'"it": update gate low (0.38). GRU mostly keeps h₀.' },
-  { token:'was',  r:0.60, z:0.58, hc:0.34,  h:0.19,  note:'"was": update gate 0.58. z acts as combined forget+input.' },
-  { token:'not',  r:0.71, z:0.82, hc:-0.44, h:-0.20, note:'KEY: "not": update gate high (0.82), candidate strongly negative. h inverts. Same result as LSTM with 2 gates instead of 4.' },
-  { token:'that', r:0.38, z:0.22, hc:-0.18, h:-0.17, note:'"that": update gate low (0.22). Prior negative state preserved.' },
-  { token:'good', r:0.65, z:0.73, hc:0.28,  h:-0.04, note:'"good": positive candidate blends with negative prior. Final h slightly negative.' },
+const GRU = [
+  {tok:'it',   r:0.52, z:0.38, hc: 0.06, h: 0.02, note:'"it": update gate low (0.38). GRU mostly retains h₀.'},
+  {tok:'was',  r:0.60, z:0.58, hc: 0.34, h: 0.19, note:'"was": update gate 0.58. z acts as a combined forget+input gate.'},
+  {tok:'not',  r:0.71, z:0.82, hc:-0.44, h:-0.20, note:'KEY: "not": update gate high (0.82), candidate strongly negative. h inverts. Same result as LSTM but with 2 gates instead of 4.'},
+  {tok:'that', r:0.38, z:0.22, hc:-0.18, h:-0.17, note:'"that": update gate low (0.22). Prior negative state preserved.'},
+  {tok:'good', r:0.65, z:0.73, hc: 0.28, h:-0.04, note:'"good": positive candidate blends with negative prior. Final h slightly negative.'},
 ];
 
-/* =========================================================
+/* ================================================================
    STATE
-   ========================================================= */
-const state = {
-  rnn:  { step: 0, total: RNN_STEPS.length,  playing: false, timer: null },
-  lstm: { step: 0, total: LSTM_STEPS.length, playing: false, timer: null },
-  gru:  { step: 0, total: GRU_STEPS.length,  playing: false, timer: null },
+   ================================================================ */
+const S = {
+  rnn:  {step:0, data:RNN,  total:RNN.length,  playing:false, timer:null},
+  lstm: {step:0, data:LSTM, total:LSTM.length, playing:false, timer:null},
+  gru:  {step:0, data:GRU,  total:GRU.length,  playing:false, timer:null},
 };
 
-/* =========================================================
-   TAB SWITCHING
-   ========================================================= */
+/* ================================================================
+   TAB SWITCH
+   ================================================================ */
 function switchTab(name, btn) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
@@ -1006,583 +680,474 @@ function switchTab(name, btn) {
   document.getElementById('panel-' + name).classList.add('active');
 }
 
-/* =========================================================
-   SPEED helper
-   ========================================================= */
-function getDelay(model) {
-  const val = parseInt(document.getElementById(model + '-speed').value, 10);
-  return Math.round(2000 - (val - 1) * 400); // 5->400, 1->2000
+/* ================================================================
+   DELAY
+   ================================================================ */
+function delay(m) {
+  return 2000 - (+document.getElementById(m + '-spd').value - 1) * 400;
 }
 
-/* =========================================================
-   STEP DOTS
-   ========================================================= */
-function buildDots(model, total) {
-  const el = document.getElementById(model + '-dots');
+/* ================================================================
+   DOTS
+   ================================================================ */
+function buildDots(m) {
+  const el = document.getElementById(m + '-dots');
   el.innerHTML = '';
-  for (let i = 0; i < total; i++) {
+  for (let i = 0; i < S[m].total; i++) {
     const d = document.createElement('div');
-    d.className = 'step-dot';
-    d.dataset.idx = i;
-    d.onclick = () => goToStep(model, i + 1);
+    d.className = 'dot';
+    d.onclick = () => go(m, i + 1);
     el.appendChild(d);
   }
 }
-
-function updateDots(model, step) {
-  const dots = document.querySelectorAll('#' + model + '-dots .step-dot');
-  dots.forEach((d, i) => {
-    d.className = 'step-dot';
-    if (i < step) d.classList.add(i === step - 1 ? 'current' : 'done');
+function refreshDots(m) {
+  const s = S[m].step;
+  document.querySelectorAll('#' + m + '-dots .dot').forEach((d, i) => {
+    d.className = 'dot' + (i < s ? (i === s - 1 ? ' now' : ' done') : '');
   });
 }
 
-/* =========================================================
-   RNN UNROLLED BUILD
-   ========================================================= */
-function buildRNNUnrolled() {
-  const wrap = document.getElementById('rnn-unrolled');
-  wrap.innerHTML = '';
+/* ================================================================
+   BUILD UNROLLED — RNN
+   Column anatomy (top to bottom, all in normal flow):
+     ucol-top  : 32px  (y_t on last, else empty)
+     rnn-box   : 64px
+     x-arrow   : 18px
+     tok       : ~20px
+   h-arr alignment: top_of_col + 32 + 32 = 64px from row top
+   h-arr margin-top = 63px  (64 - 1 for line center)
+   h0 circle center at 64px: margin-top = 64 - 15 = 49px
+   ================================================================ */
+function buildRNN() {
+  const row = document.getElementById('rnn-unroll');
+  row.innerHTML = '';
 
-  // h0 start
-  const startEl = document.createElement('div');
-  startEl.className = 'unroll-start';
-  startEl.style.marginTop = '51px'; // 65px center - 14px (half circle height)
-  startEl.innerHTML = `<div class="h0-circle">h<sub style="font-size:7px">0</sub></div>`;
-  wrap.appendChild(startEl);
+  /* h0 start circle */
+  const h0 = document.createElement('div');
+  h0.style.cssText = 'display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:49px;margin-right:2px';
+  h0.innerHTML = '<div class="h0-circle">h<sub style="font-size:7px">0</sub></div>';
+  row.appendChild(h0);
 
-  // arrow from h0
-  const a0 = document.createElement('div');
-  a0.className = 'h-arrow-right';
-  a0.style.alignSelf = 'flex-start';
-  a0.style.marginTop = '65px';
-  wrap.appendChild(a0);
+  RNN.forEach((d, i) => {
+    const isLast = i === RNN.length - 1;
 
-  RNN_STEPS.forEach((s, i) => {
-    const isLast = i === RNN_STEPS.length - 1;
-
-    const col = document.createElement('div');
-    col.className = 'rnn-cell-wrap';
-
-    // 36px top spacer: empty for non-last, y_t label+arrow for last
-    const topSpacer = document.createElement('div');
-    topSpacer.className = 'rnn-cell-top-spacer';
-    if (isLast) {
-      topSpacer.innerHTML = `
-        <div class="y-arrow-wrap">
-          <div class="y-label">y<sub style="font-size:7px">t</sub></div>
-          <div class="y-arrow-line"></div>
-          <div class="y-arrow-head" style="transform:rotate(180deg); margin-top:-2px;"></div>
-        </div>`;
-    }
-    col.appendChild(topSpacer);
-
-    const cell = document.createElement('div');
-    cell.className = 'rnn-cell future';
-    cell.id = 'rnn-ucell-' + i;
-    cell.textContent = 'tanh';
-    col.appendChild(cell);
-
-    const xArr = document.createElement('div');
-    xArr.className = 'cell-x-arrow';
-    col.appendChild(xArr);
-
-    const tok = document.createElement('div');
-    tok.className = 'cell-token future-token';
-    tok.id = 'rnn-utok-' + i;
-    tok.textContent = s.token;
-    col.appendChild(tok);
-
-    wrap.appendChild(col);
-
-    // arrow between cells (not after last)
-    if (!isLast) {
-      const arr = document.createElement('div');
-      arr.className = 'h-arrow-right';
-      arr.style.alignSelf = 'flex-start';
-      arr.style.marginTop = '65px';
-      wrap.appendChild(arr);
-    }
-  });
-}
-
-/* =========================================================
-   LSTM UNROLLED BUILD
-   ========================================================= */
-function buildLSTMUnrolled() {
-  const wrap = document.getElementById('lstm-unrolled');
-  wrap.innerHTML = '';
-
-  // h0 + C0 start col
-  const startCol = document.createElement('div');
-  startCol.className = 'lstm-cell-col';
-  startCol.style.marginRight = '8px';
-  startCol.innerHTML = `
-    <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#0891b2;margin-bottom:32px;font-weight:500">C<sub>0</sub></div>
-    <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
-      <div style="width:28px;height:28px;border-radius:50%;border:2px solid #059669;background:#ecfdf5;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:9px;color:#059669;font-weight:500">h<sub style="font-size:6px">0</sub></div>
-    </div>`;
-  wrap.appendChild(startCol);
-
-  LSTM_STEPS.forEach((s, i) => {
-    const isLast = i === LSTM_STEPS.length - 1;
-
-    // h-arrow between cells
-    if (i > 0 || true) {
-      const arr = document.createElement('div');
-      arr.className = 'h-arrow-right';
-      arr.style.alignSelf = 'center';
-      arr.style.marginTop = '20px';
-      arr.style.flexShrink = '0';
-      wrap.appendChild(arr);
-    }
-
-    const col = document.createElement('div');
-    col.className = 'lstm-cell-col';
-    col.style.position = 'relative';
-
-    // C label on top
-    const cLabel = document.createElement('div');
-    cLabel.className = 'lstm-highway-label';
-    cLabel.innerHTML = `C<sub style="font-size:6px">${i+1}</sub>`;
-    col.appendChild(cLabel);
-
-    // cell box
-    const box = document.createElement('div');
-    box.className = 'lstm-cell-box future';
-    box.id = 'lstm-ucell-' + i;
-
-    // cell state highway bar on top of box
-    const hw = document.createElement('div');
-    hw.className = 'lstm-highway-bar';
-    box.appendChild(hw);
-
-    // 4 gate dots
-    const gates = [
-      { label: 'f', color: '#dc2626', bg: '#fef2f2' },
-      { label: 'i', color: '#d97706', bg: '#fffbeb' },
-      { label: 'c̃', color: '#0891b2', bg: '#ecfeff' },
-      { label: 'o', color: '#7c3aed', bg: '#f5f3ff' },
-    ];
-    gates.forEach(g => {
-      const dot = document.createElement('div');
-      dot.className = 'gate-dot';
-      dot.innerHTML = `
-        <div class="gate-dot-circle" style="background:${g.bg};border:1.5px solid ${g.color}"></div>
-        <div class="gate-dot-label" style="color:${g.color}">${g.label}</div>`;
-      box.appendChild(dot);
-    });
-
-    // h label bottom
-    const hLabel = document.createElement('div');
-    hLabel.className = 'lstm-h-label';
-    hLabel.innerHTML = `h<sub style="font-size:6px">${i+1}</sub>`;
-    box.appendChild(hLabel);
-
-    col.appendChild(box);
-
-    // x arrow + token
-    const xArr = document.createElement('div');
-    xArr.className = 'cell-x-arrow';
-    xArr.style.marginTop = '20px';
-    col.appendChild(xArr);
-
-    const tok = document.createElement('div');
-    tok.className = 'cell-token future-token';
-    tok.id = 'lstm-utok-' + i;
-    tok.textContent = s.token;
-    col.appendChild(tok);
-
-    // y_t on last cell -- already handled by absolute position within lstm-unroll-inner padding
-    if (isLast) {
-      const yWrap = document.createElement('div');
-      yWrap.className = 'lstm-highway-label';
-      yWrap.style.top = '-36px';
-      yWrap.style.display = 'flex';
-      yWrap.style.flexDirection = 'column';
-      yWrap.style.alignItems = 'center';
-      yWrap.style.gap = '2px';
-      yWrap.style.color = 'var(--green)';
-      yWrap.innerHTML = `
-        <div class="y-label" style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--green);font-weight:500">y<sub style="font-size:7px">t</sub></div>
-        <div style="width:2px;height:18px;background:var(--green)"></div>
-        <div style="width:0;height:0;border:4px solid transparent;border-bottom:5px solid var(--green);transform:rotate(180deg);margin-top:-2px"></div>`;
-      col.insertBefore(yWrap, col.firstChild);
-    }
-
-    wrap.appendChild(col);
-  });
-}
-
-/* =========================================================
-   GRU UNROLLED BUILD
-   ========================================================= */
-function buildGRUUnrolled() {
-  const wrap = document.getElementById('gru-unrolled');
-  wrap.innerHTML = '';
-
-  const startCol = document.createElement('div');
-  startCol.className = 'lstm-cell-col';
-  startCol.style.marginRight = '8px';
-  startCol.innerHTML = `
-    <div style="display:flex;flex-direction:column;align-items:center;gap:4px;margin-top:28px">
-      <div style="width:28px;height:28px;border-radius:50%;border:2px solid #059669;background:#ecfdf5;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:9px;color:#059669;font-weight:500">h<sub style="font-size:6px">0</sub></div>
-    </div>`;
-  wrap.appendChild(startCol);
-
-  GRU_STEPS.forEach((s, i) => {
-    const isLast = i === GRU_STEPS.length - 1;
-
+    /* h-arrow connector */
     const arr = document.createElement('div');
-    arr.className = 'h-arrow-right';
-    arr.style.alignSelf = 'center';
-    arr.style.marginTop = '20px';
-    arr.style.flexShrink = '0';
-    wrap.appendChild(arr);
+    arr.className = 'h-arr';
+    arr.style.marginTop = '63px';
+    row.appendChild(arr);
 
+    /* cell column */
     const col = document.createElement('div');
-    col.className = 'lstm-cell-col';
-    col.style.position = 'relative';
+    col.className = 'ucol';
 
+    /* top spacer (32px) — y_t indicator on last cell only */
+    const top = document.createElement('div');
+    top.className = 'ucol-top';
+    if (isLast) {
+      top.innerHTML =
+        '<div class="yt-wrap">' +
+          '<div class="yt-lbl">y<sub style="font-size:7px">t</sub></div>' +
+          '<div class="yt-head"></div>' +
+          '<div class="yt-line"></div>' +
+        '</div>';
+    }
+    col.appendChild(top);
+
+    /* cell box */
     const box = document.createElement('div');
-    box.className = 'gru-cell-box future';
-    box.id = 'gru-ucell-' + i;
-
-    const gates = [
-      { label: 'r', color: '#ea580c', bg: '#fff7ed' },
-      { label: 'z', color: '#4338ca', bg: '#eef2ff' },
-      { label: 'h̃', color: '#059669', bg: '#ecfdf5' },
-      { label: '', color: '#94a3b8', bg: '#f8fafc' }, // placeholder 4th for grid
-    ];
-    gates.forEach((g, gi) => {
-      if (gi === 3) {
-        // empty placeholder
-        const ph = document.createElement('div');
-        box.appendChild(ph);
-        return;
-      }
-      const dot = document.createElement('div');
-      dot.className = 'gate-dot';
-      dot.innerHTML = `
-        <div class="gate-dot-circle" style="background:${g.bg};border:1.5px solid ${g.color}"></div>
-        <div class="gate-dot-label" style="color:${g.color}">${g.label}</div>`;
-      box.appendChild(dot);
-    });
-
+    box.className = 'rnn-box future';
+    box.id = 'ru-' + i;
+    box.textContent = 'tanh';
     col.appendChild(box);
 
-    const xArr = document.createElement('div');
-    xArr.className = 'cell-x-arrow';
-    xArr.style.marginTop = '20px';
-    col.appendChild(xArr);
+    /* x input arrow */
+    const xa = document.createElement('div');
+    xa.className = 'x-arrow';
+    col.appendChild(xa);
 
+    /* word token */
     const tok = document.createElement('div');
-    tok.className = 'cell-token future-token';
-    tok.id = 'gru-utok-' + i;
-    tok.textContent = s.token;
+    tok.className = 'tok future-tok';
+    tok.id = 'rt-' + i;
+    tok.textContent = d.tok;
     col.appendChild(tok);
 
+    row.appendChild(col);
+  });
+}
+
+/* ================================================================
+   BUILD UNROLLED — LSTM
+   Column anatomy (top to bottom, all in normal flow):
+     ucol-top    : 32px  (y_t on last, else empty)
+     ucol-clabel : 16px  (C_i label, cyan)
+     lstm-box    : 84px
+     ucol-hlabel : 16px  (h_i label, green)
+     x-arrow     : 18px
+     tok         : ~20px
+   h-arr alignment: 32 + 16 + 42 = 90px
+   h-arr margin-top = 89px
+   Start div: C0 label (16px) + h0 circle (30px)
+     h0 center target = 90px
+     h0 top = 90 - 15 = 75px
+     C0 label above h0: start margin-top = 75 - 16 = 59px
+   ================================================================ */
+function buildLSTM() {
+  const row = document.getElementById('lstm-unroll');
+  row.innerHTML = '';
+
+  /* C0 + h0 start */
+  const start = document.createElement('div');
+  start.style.cssText = 'display:flex;flex-direction:column;align-items:center;flex-shrink:0;margin-top:59px;margin-right:2px;gap:4px';
+  start.innerHTML =
+    '<div style="font-family:\'JetBrains Mono\',monospace;font-size:9px;color:#0891b2;font-weight:600">C<sub style="font-size:7px">0</sub></div>' +
+    '<div class="h0-circle">h<sub style="font-size:7px">0</sub></div>';
+  row.appendChild(start);
+
+  LSTM.forEach((d, i) => {
+    const isLast = i === LSTM.length - 1;
+
+    /* h-arrow connector */
+    const arr = document.createElement('div');
+    arr.className = 'h-arr';
+    arr.style.marginTop = '89px';
+    row.appendChild(arr);
+
+    /* cell column */
+    const col = document.createElement('div');
+    col.className = 'ucol';
+
+    /* top spacer */
+    const top = document.createElement('div');
+    top.className = 'ucol-top';
     if (isLast) {
-      const yWrap = document.createElement('div');
-      yWrap.className = 'lstm-highway-label';
-      yWrap.style.top = '-36px';
-      yWrap.style.display = 'flex';
-      yWrap.style.flexDirection = 'column';
-      yWrap.style.alignItems = 'center';
-      yWrap.style.gap = '2px';
-      yWrap.innerHTML = `
-        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--green);font-weight:500">y<sub style="font-size:7px">t</sub></div>
-        <div style="width:2px;height:18px;background:var(--green)"></div>
-        <div style="width:0;height:0;border:4px solid transparent;border-bottom:5px solid var(--green);transform:rotate(180deg);margin-top:-2px"></div>`;
-      col.insertBefore(yWrap, col.firstChild);
+      top.innerHTML =
+        '<div class="yt-wrap">' +
+          '<div class="yt-lbl">y<sub style="font-size:7px">t</sub></div>' +
+          '<div class="yt-head"></div>' +
+          '<div class="yt-line"></div>' +
+        '</div>';
     }
+    col.appendChild(top);
 
-    wrap.appendChild(col);
+    /* C_i label (16px) */
+    const cl = document.createElement('div');
+    cl.className = 'ucol-clabel';
+    cl.innerHTML = 'C<sub style="font-size:6px">' + (i + 1) + '</sub>';
+    col.appendChild(cl);
+
+    /* cell box with gate dots */
+    const box = document.createElement('div');
+    box.className = 'lstm-box future';
+    box.id = 'lu-' + i;
+    [
+      {l:'f',   c:'#dc2626', bg:'#fef2f2'},
+      {l:'i',   c:'#d97706', bg:'#fffbeb'},
+      {l:'c̃', c:'#0891b2', bg:'#ecfeff'},
+      {l:'o',   c:'#7c3aed', bg:'#f5f3ff'},
+    ].forEach(g => {
+      const gd = document.createElement('div');
+      gd.className = 'gdot';
+      gd.innerHTML =
+        '<div class="gdot-circle" style="background:' + g.bg + ';border:1.5px solid ' + g.c + '"></div>' +
+        '<div class="gdot-lbl" style="color:' + g.c + '">' + g.l + '</div>';
+      box.appendChild(gd);
+    });
+    col.appendChild(box);
+
+    /* h_i label (16px) */
+    const hl = document.createElement('div');
+    hl.className = 'ucol-hlabel';
+    hl.innerHTML = 'h<sub style="font-size:6px">' + (i + 1) + '</sub>';
+    col.appendChild(hl);
+
+    /* x arrow + token */
+    col.appendChild(Object.assign(document.createElement('div'), {className: 'x-arrow'}));
+    const tok = document.createElement('div');
+    tok.className = 'tok future-tok';
+    tok.id = 'lt-' + i;
+    tok.textContent = d.tok;
+    col.appendChild(tok);
+
+    row.appendChild(col);
   });
 }
 
-/* =========================================================
-   UPDATE RNN DISPLAY
-   ========================================================= */
-function updateRNN(step) {
-  // rolled SVG
-  const cell = document.getElementById('rnn-rolled-cell');
-  const label = document.getElementById('rnn-cell-label');
-  const tokenTxt = document.getElementById('rnn-token-text');
+/* ================================================================
+   BUILD UNROLLED — GRU
+   Same column structure as LSTM (ucol-clabel is empty spacer,
+   gru-box has no ::before highway bar — the visual distinction).
+   h-arr margin-top = 89px
+   Start: no C0 label, h0 center at 90px: margin-top = 75px
+   ================================================================ */
+function buildGRU() {
+  const row = document.getElementById('gru-unroll');
+  row.innerHTML = '';
 
-  if (step === 0) {
+  /* h0 start */
+  const start = document.createElement('div');
+  start.style.cssText = 'display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:75px;margin-right:2px';
+  start.innerHTML = '<div class="h0-circle">h<sub style="font-size:7px">0</sub></div>';
+  row.appendChild(start);
+
+  GRU.forEach((d, i) => {
+    const isLast = i === GRU.length - 1;
+
+    /* h-arrow connector */
+    const arr = document.createElement('div');
+    arr.className = 'h-arr';
+    arr.style.marginTop = '89px';
+    row.appendChild(arr);
+
+    /* cell column */
+    const col = document.createElement('div');
+    col.className = 'ucol';
+
+    /* top spacer */
+    const top = document.createElement('div');
+    top.className = 'ucol-top';
+    if (isLast) {
+      top.innerHTML =
+        '<div class="yt-wrap">' +
+          '<div class="yt-lbl">y<sub style="font-size:7px">t</sub></div>' +
+          '<div class="yt-head"></div>' +
+          '<div class="yt-line"></div>' +
+        '</div>';
+    }
+    col.appendChild(top);
+
+    /* empty clabel spacer (keeps box aligned with LSTM tab) */
+    col.appendChild(Object.assign(document.createElement('div'), {className: 'ucol-clabel'}));
+
+    /* cell box with gate dots */
+    const box = document.createElement('div');
+    box.className = 'gru-box future';
+    box.id = 'gu-' + i;
+    [
+      {l:'r',   c:'#ea580c', bg:'#fff7ed'},
+      {l:'z',   c:'#4338ca', bg:'#eef2ff'},
+      {l:'h̃', c:'#059669', bg:'#ecfdf5'},
+    ].forEach(g => {
+      const gd = document.createElement('div');
+      gd.className = 'gdot';
+      gd.innerHTML =
+        '<div class="gdot-circle" style="background:' + g.bg + ';border:1.5px solid ' + g.c + '"></div>' +
+        '<div class="gdot-lbl" style="color:' + g.c + '">' + g.l + '</div>';
+      box.appendChild(gd);
+    });
+    /* 4th grid cell placeholder */
+    box.appendChild(document.createElement('div'));
+    col.appendChild(box);
+
+    /* empty hlabel spacer */
+    col.appendChild(Object.assign(document.createElement('div'), {className: 'ucol-hlabel'}));
+
+    /* x arrow + token */
+    col.appendChild(Object.assign(document.createElement('div'), {className: 'x-arrow'}));
+    const tok = document.createElement('div');
+    tok.className = 'tok future-tok';
+    tok.id = 'gt-' + i;
+    tok.textContent = d.tok;
+    col.appendChild(tok);
+
+    row.appendChild(col);
+  });
+}
+
+/* ================================================================
+   UPDATE DISPLAYS
+   ================================================================ */
+function updateRNN() {
+  const s = S.rnn.step;
+  /* rolled SVG */
+  const cell = document.getElementById('r-cell');
+  const lbl  = document.getElementById('r-lbl');
+  const tok  = document.getElementById('r-tok');
+  if (s === 0) {
     cell.setAttribute('stroke', '#cbd5e1');
-    label.setAttribute('fill', '#64748b');
-    tokenTxt.textContent = '---';
+    lbl.setAttribute('fill', '#64748b');
+    tok.textContent = '---';
   } else {
-    const d = RNN_STEPS[step - 1];
+    const d = RNN[s - 1];
     cell.setAttribute('stroke', '#059669');
-    label.setAttribute('fill', '#059669');
-    tokenTxt.textContent = d.token;
+    lbl.setAttribute('fill', '#059669');
+    tok.textContent = d.tok;
   }
-
-  // unrolled
-  RNN_STEPS.forEach((s, i) => {
-    const cell = document.getElementById('rnn-ucell-' + i);
-    const tok = document.getElementById('rnn-utok-' + i);
-    cell.className = 'rnn-cell';
-    tok.className = 'cell-token';
-    if (i < step - 1) {
-      cell.classList.add('past');
-      tok.classList.add('past-token');
-    } else if (i === step - 1) {
-      cell.classList.add('active');
-      tok.classList.add('active-token');
-    } else {
-      cell.classList.add('future');
-      tok.classList.add('future-token');
-    }
+  /* unrolled */
+  RNN.forEach((d, i) => {
+    const box = document.getElementById('ru-' + i);
+    const t   = document.getElementById('rt-' + i);
+    if      (i < s - 1) { box.className = 'rnn-box past';   t.className = 'tok past-tok'; }
+    else if (i === s-1)  { box.className = 'rnn-box active'; t.className = 'tok active-tok'; }
+    else                 { box.className = 'rnn-box future'; t.className = 'tok future-tok'; }
   });
-
-  // narration
-  const badge = document.getElementById('rnn-narration-badge');
-  const text = document.getElementById('rnn-narration-text');
-  if (step === 0) {
-    badge.textContent = 'Step 0';
-    text.textContent = 'Press Play or Next to step through the sequence.';
+  /* narration */
+  document.getElementById('rnn-nbadge').textContent = 'Step ' + s;
+  const nt = document.getElementById('rnn-ntext');
+  if (s === 0) {
+    nt.innerHTML = 'Press Play or Next to step through the sequence.';
   } else {
-    const d = RNN_STEPS[step - 1];
-    badge.textContent = 'Step ' + step;
-    text.innerHTML = d.note + '<br><span class="h-value">h = ' + d.h + '</span>';
+    const d = RNN[s - 1];
+    nt.innerHTML = d.note + ' <span class="h-val">h = ' + d.h + '</span>';
   }
-
-  // step label
-  document.getElementById('rnn-step-label').textContent = 'Step ' + step + ' / ' + RNN_STEPS.length;
-  updateDots('rnn', step);
+  document.getElementById('rnn-lbl').textContent = 'Step ' + s + ' / ' + RNN.length;
+  refreshDots('rnn');
 }
 
-/* =========================================================
-   UPDATE LSTM DISPLAY
-   ========================================================= */
-function updateLSTM(step) {
-  const tokenTxt = document.getElementById('lstm-token-text');
-  const cell = document.getElementById('lstm-rolled-cell');
-
-  if (step === 0) {
-    tokenTxt.textContent = '---';
+function updateLSTM() {
+  const s = S.lstm.step;
+  /* rolled SVG */
+  const cell = document.getElementById('l-cell');
+  const tok  = document.getElementById('l-tok');
+  if (s === 0) {
     cell.setAttribute('stroke', '#cbd5e1');
+    tok.textContent = '---';
   } else {
-    const d = LSTM_STEPS[step - 1];
-    tokenTxt.textContent = d.token;
+    const d = LSTM[s - 1];
     cell.setAttribute('stroke', '#0891b2');
+    tok.textContent = d.tok;
   }
-
-  LSTM_STEPS.forEach((s, i) => {
-    const box = document.getElementById('lstm-ucell-' + i);
-    const tok = document.getElementById('lstm-utok-' + i);
-    box.className = 'lstm-cell-box';
-    tok.className = 'cell-token';
-    if (i < step - 1) {
-      box.classList.add('past');
-      tok.classList.add('past-token');
-    } else if (i === step - 1) {
-      box.classList.add('active');
-      tok.classList.add('active-token');
-    } else {
-      box.classList.add('future');
-      tok.classList.add('future-token');
-    }
+  /* unrolled */
+  LSTM.forEach((d, i) => {
+    const box = document.getElementById('lu-' + i);
+    const t   = document.getElementById('lt-' + i);
+    if      (i < s - 1) { box.className = 'lstm-box past';   t.className = 'tok past-tok'; }
+    else if (i === s-1)  { box.className = 'lstm-box active'; t.className = 'tok active-tok'; }
+    else                 { box.className = 'lstm-box future'; t.className = 'tok future-tok'; }
   });
-
-  const badge = document.getElementById('lstm-narration-badge');
-  const text = document.getElementById('lstm-narration-text');
-  const vrow = document.getElementById('lstm-values-row');
-
-  if (step === 0) {
-    badge.textContent = 'Step 0';
-    text.textContent = 'Press Play or Next to step through the sequence.';
-    vrow.innerHTML = '';
+  /* narration */
+  document.getElementById('lstm-nbadge').textContent = 'Step ' + s;
+  const nt     = document.getElementById('lstm-ntext');
+  const chips  = document.getElementById('lstm-chips');
+  if (s === 0) {
+    nt.textContent = 'Press Play or Next to step through the sequence.';
+    chips.innerHTML = '';
   } else {
-    const d = LSTM_STEPS[step - 1];
-    badge.textContent = 'Step ' + step;
-    text.textContent = d.note;
-    vrow.innerHTML = `
-      <span class="val-chip" style="color:#dc2626;border-color:#fca5a5;background:#fef2f2">f=${d.f}</span>
-      <span class="val-chip" style="color:#d97706;border-color:#fcd34d;background:#fffbeb">i=${d.i}</span>
-      <span class="val-chip" style="color:#0891b2;border-color:#a5f3fc;background:#ecfeff">c&#771;=${d.c}</span>
-      <span class="val-chip" style="color:#7c3aed;border-color:#c4b5fd;background:#f5f3ff">o=${d.o}</span>
-      <span class="val-chip" style="color:#059669;border-color:#a7f3d0;background:#ecfdf5">h=${d.h}</span>
-    `;
+    const d = LSTM[s - 1];
+    nt.textContent = d.note;
+    chips.innerHTML =
+      '<span class="chip" style="color:#dc2626;border-color:#fca5a5;background:#fef2f2">f = ' + d.f + '</span>' +
+      '<span class="chip" style="color:#d97706;border-color:#fcd34d;background:#fffbeb">i = ' + d.i + '</span>' +
+      '<span class="chip" style="color:#0891b2;border-color:#a5f3fc;background:#ecfeff">c̃ = ' + d.c + '</span>' +
+      '<span class="chip" style="color:#7c3aed;border-color:#c4b5fd;background:#f5f3ff">o = ' + d.o + '</span>' +
+      '<span class="chip" style="color:#059669;border-color:#a7f3d0;background:#ecfdf5">h = ' + d.h + '</span>';
   }
-
-  document.getElementById('lstm-step-label').textContent = 'Step ' + step + ' / ' + LSTM_STEPS.length;
-  updateDots('lstm', step);
+  document.getElementById('lstm-lbl').textContent = 'Step ' + s + ' / ' + LSTM.length;
+  refreshDots('lstm');
 }
 
-/* =========================================================
-   UPDATE GRU DISPLAY
-   ========================================================= */
-function updateGRU(step) {
-  const tokenTxt = document.getElementById('gru-token-text');
-  const cell = document.getElementById('gru-rolled-cell');
-
-  if (step === 0) {
-    tokenTxt.textContent = '---';
+function updateGRU() {
+  const s = S.gru.step;
+  /* rolled SVG */
+  const cell = document.getElementById('g-cell');
+  const tok  = document.getElementById('g-tok');
+  if (s === 0) {
     cell.setAttribute('stroke', '#cbd5e1');
+    tok.textContent = '---';
   } else {
-    const d = GRU_STEPS[step - 1];
-    tokenTxt.textContent = d.token;
+    const d = GRU[s - 1];
     cell.setAttribute('stroke', '#059669');
+    tok.textContent = d.tok;
   }
-
-  GRU_STEPS.forEach((s, i) => {
-    const box = document.getElementById('gru-ucell-' + i);
-    const tok = document.getElementById('gru-utok-' + i);
-    box.className = 'gru-cell-box';
-    tok.className = 'cell-token';
-    if (i < step - 1) {
-      box.classList.add('past');
-      tok.classList.add('past-token');
-    } else if (i === step - 1) {
-      box.classList.add('active');
-      tok.classList.add('active-token');
-    } else {
-      box.classList.add('future');
-      tok.classList.add('future-token');
-    }
+  /* unrolled */
+  GRU.forEach((d, i) => {
+    const box = document.getElementById('gu-' + i);
+    const t   = document.getElementById('gt-' + i);
+    if      (i < s - 1) { box.className = 'gru-box past';   t.className = 'tok past-tok'; }
+    else if (i === s-1)  { box.className = 'gru-box active'; t.className = 'tok active-tok'; }
+    else                 { box.className = 'gru-box future'; t.className = 'tok future-tok'; }
   });
-
-  const badge = document.getElementById('gru-narration-badge');
-  const text = document.getElementById('gru-narration-text');
-  const vrow = document.getElementById('gru-values-row');
-
-  if (step === 0) {
-    badge.textContent = 'Step 0';
-    text.textContent = 'Press Play or Next to step through the sequence.';
-    vrow.innerHTML = '';
+  /* narration */
+  document.getElementById('gru-nbadge').textContent = 'Step ' + s;
+  const nt    = document.getElementById('gru-ntext');
+  const chips = document.getElementById('gru-chips');
+  if (s === 0) {
+    nt.textContent = 'Press Play or Next to step through the sequence.';
+    chips.innerHTML = '';
   } else {
-    const d = GRU_STEPS[step - 1];
-    badge.textContent = 'Step ' + step;
-    text.textContent = d.note;
-    vrow.innerHTML = `
-      <span class="val-chip" style="color:#ea580c;border-color:#fdba74;background:#fff7ed">r=${d.r}</span>
-      <span class="val-chip" style="color:#4338ca;border-color:#a5b4fc;background:#eef2ff">z=${d.z}</span>
-      <span class="val-chip" style="color:#0891b2;border-color:#a5f3fc;background:#ecfeff">h&#771;=${d.hc}</span>
-      <span class="val-chip" style="color:#059669;border-color:#a7f3d0;background:#ecfdf5">h=${d.h}</span>
-    `;
+    const d = GRU[s - 1];
+    nt.textContent = d.note;
+    chips.innerHTML =
+      '<span class="chip" style="color:#ea580c;border-color:#fdba74;background:#fff7ed">r = ' + d.r + '</span>' +
+      '<span class="chip" style="color:#4338ca;border-color:#a5b4fc;background:#eef2ff">z = ' + d.z + '</span>' +
+      '<span class="chip" style="color:#0891b2;border-color:#a5f3fc;background:#ecfeff">h̃ = ' + d.hc + '</span>' +
+      '<span class="chip" style="color:#059669;border-color:#a7f3d0;background:#ecfdf5">h = ' + d.h + '</span>';
   }
-
-  document.getElementById('gru-step-label').textContent = 'Step ' + step + ' / ' + GRU_STEPS.length;
-  updateDots('gru', step);
+  document.getElementById('gru-lbl').textContent = 'Step ' + s + ' / ' + GRU.length;
+  refreshDots('gru');
 }
 
-/* =========================================================
+const UPD = {rnn: updateRNN, lstm: updateLSTM, gru: updateGRU};
+
+/* ================================================================
    CONTROLS
-   ========================================================= */
-const updaters = { rnn: updateRNN, lstm: updateLSTM, gru: updateGRU };
+   ================================================================ */
+function go(m, s) {
+  S[m].step = Math.max(0, Math.min(s, S[m].total));
+  UPD[m]();
+}
+function step(m, d) { go(m, S[m].step + d); }
+function reset(m) { stopPlay(m); go(m, 0); }
 
-function goToStep(model, step) {
-  const s = state[model];
-  s.step = Math.max(0, Math.min(step, s.total));
-  updaters[model](s.step);
+function stopPlay(m) {
+  if (S[m].timer) { clearTimeout(S[m].timer); S[m].timer = null; }
+  S[m].playing = false;
+  document.getElementById(m + '-play').innerHTML = '&#9654; Play';
+}
+function play(m) {
+  if (S[m].playing) { stopPlay(m); return; }
+  S[m].playing = true;
+  document.getElementById(m + '-play').innerHTML = '&#9646;&#9646; Pause';
+  if (S[m].step >= S[m].total) go(m, 0);
+  tick(m);
+}
+function tick(m) {
+  if (!S[m].playing) return;
+  if (S[m].step >= S[m].total) { stopPlay(m); return; }
+  S[m].timer = setTimeout(() => { go(m, S[m].step + 1); tick(m); }, delay(m));
 }
 
-function stepModel(model, dir) {
-  goToStep(model, state[model].step + dir);
-}
-
-function resetModel(model) {
-  stopPlay(model);
-  goToStep(model, 0);
-}
-
-function stopPlay(model) {
-  const s = state[model];
-  if (s.timer) { clearTimeout(s.timer); s.timer = null; }
-  s.playing = false;
-  const btn = document.getElementById(model + '-play-btn');
-  btn.innerHTML = '&#9654; Play';
-}
-
-function togglePlay(model) {
-  const s = state[model];
-  if (s.playing) {
-    stopPlay(model);
-  } else {
-    s.playing = true;
-    document.getElementById(model + '-play-btn').innerHTML = '&#9646;&#9646; Pause';
-    if (s.step >= s.total) goToStep(model, 0);
-    scheduleNext(model);
-  }
-}
-
-function scheduleNext(model) {
-  const s = state[model];
-  if (!s.playing) return;
-  if (s.step >= s.total) {
-    stopPlay(model);
-    return;
-  }
-  s.timer = setTimeout(() => {
-    goToStep(model, s.step + 1);
-    scheduleNext(model);
-  }, getDelay(model));
-}
-
-/* =========================================================
+/* ================================================================
    EQUATIONS (KaTeX)
-   ========================================================= */
-function renderEq(latex) {
-  return katex.renderToString(latex, { throwOnError: false, displayMode: false });
-}
+   ================================================================ */
+function eq(l) { return katex.renderToString(l, {throwOnError: false, displayMode: false}); }
 
-function buildEquations() {
-  // RNN
-  const rnnEqs = document.getElementById('rnn-eqs');
-  rnnEqs.innerHTML = `
-    <div class="eq-item">${renderEq('h_t = \\tanh(W_h h_{t-1} + W_x x_t + b)')}</div>
-    <div class="eq-item">${renderEq('y_t = \\text{softmax}(W_y h_t + b_y)')}</div>
-  `;
+function buildEqs() {
+  document.getElementById('rnn-eqs').innerHTML = [
+    'h_t = \\tanh(W_h h_{t-1} + W_x x_t + b)',
+    'y_t = \\text{softmax}(W_y h_t + b_y)',
+  ].map(l => '<div class="eq-item">' + eq(l) + '</div>').join('');
 
-  // LSTM
-  const lstmEqs = document.getElementById('lstm-eqs');
-  const lstmLatex = [
+  document.getElementById('lstm-eqs').innerHTML = [
     'f_t = \\sigma(W_f [h_{t-1}, x_t] + b_f)',
     'i_t = \\sigma(W_i [h_{t-1}, x_t] + b_i)',
     '\\tilde{c}_t = \\tanh(W_c [h_{t-1}, x_t] + b_c)',
     'C_t = f_t \\odot C_{t-1} + i_t \\odot \\tilde{c}_t',
     'o_t = \\sigma(W_o [h_{t-1}, x_t] + b_o)',
     'h_t = o_t \\odot \\tanh(C_t)',
-  ];
-  lstmEqs.innerHTML = lstmLatex.map(l =>
-    `<div class="eq-item">${renderEq(l)}</div>`
-  ).join('');
+  ].map(l => '<div class="eq-item">' + eq(l) + '</div>').join('');
 
-  // GRU
-  const gruEqs = document.getElementById('gru-eqs');
-  const gruLatex = [
+  document.getElementById('gru-eqs').innerHTML = [
     'r_t = \\sigma(W_r [h_{t-1}, x_t] + b_r)',
     'z_t = \\sigma(W_z [h_{t-1}, x_t] + b_z)',
-    '\\tilde{h}_t = \\tanh(W_h [r_t \\odot h_{t-1}, x_t] + b_h)',
+    '\\tilde{h}_t = \\tanh(W_h [r_t \\odot h_{t-1},\\, x_t] + b_h)',
     'h_t = (1 - z_t) \\odot h_{t-1} + z_t \\odot \\tilde{h}_t',
-  ];
-  gruEqs.innerHTML = gruLatex.map(l =>
-    `<div class="eq-item">${renderEq(l)}</div>`
-  ).join('');
+  ].map(l => '<div class="eq-item">' + eq(l) + '</div>').join('');
 }
 
-/* =========================================================
+/* ================================================================
    INIT
-   ========================================================= */
+   ================================================================ */
 document.addEventListener('DOMContentLoaded', () => {
-  buildDots('rnn',  RNN_STEPS.length);
-  buildDots('lstm', LSTM_STEPS.length);
-  buildDots('gru',  GRU_STEPS.length);
-
-  buildRNNUnrolled();
-  buildLSTMUnrolled();
-  buildGRUUnrolled();
-
-  updateRNN(0);
-  updateLSTM(0);
-  updateGRU(0);
-
-  buildEquations();
+  ['rnn', 'lstm', 'gru'].forEach(m => buildDots(m));
+  buildRNN();
+  buildLSTM();
+  buildGRU();
+  updateRNN();
+  updateLSTM();
+  updateGRU();
+  buildEqs();
 });
 </script>
 </body>
