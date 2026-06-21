@@ -109,7 +109,7 @@ body { font-family: 'DM Sans', sans-serif; font-size: 15px; background: var(--bg
 /* ---- CELL COLUMN: fully in-flow, no absolute labels ---- */
 /*
   Each column stacks these in order:
-    .ucol-top    — 32px — empty OR y_t indicator on last cell
+    .ucol-top    — 44px — empty OR y_t indicator on last cell
     .ucol-clabel — 16px — "C_i" for LSTM, invisible spacer for RNN/GRU
     .box         — 64px (RNN) or 84px (LSTM/GRU)
     .ucol-hlabel — 16px — "h_i", invisible for RNN
@@ -119,7 +119,7 @@ body { font-family: 'DM Sans', sans-serif; font-size: 15px; background: var(--bg
 .ucol { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
 
 .ucol-top {
-  height: 32px;
+  height: 44px;
   display: flex; flex-direction: column; align-items: center;
   justify-content: flex-end; gap: 2px; flex-shrink: 0;
 }
@@ -710,13 +710,13 @@ function refreshDots(m) {
 /* ================================================================
    BUILD UNROLLED — RNN
    Column anatomy (top to bottom, all in normal flow):
-     ucol-top  : 32px  (y_t on last, else empty)
+     ucol-top  : 44px  (y_t on last, else empty)
      rnn-box   : 64px
      x-arrow   : 18px
      tok       : ~20px
-   h-arr alignment: top_of_col + 32 + 32 = 64px from row top
-   h-arr margin-top = 63px  (64 - 1 for line center)
-   h0 circle center at 64px: margin-top = 64 - 15 = 49px
+   h-arr alignment: top_of_col + 44 + 32 = 76px from row top
+   h-arr margin-top = 75px  (76 - 1 for line center)
+   h0 circle center at 76px: margin-top = 76 - 15 = 61px  → use 60px
    ================================================================ */
 function buildRNN() {
   const row = document.getElementById('rnn-unroll');
@@ -724,7 +724,7 @@ function buildRNN() {
 
   /* h0 start circle */
   const h0 = document.createElement('div');
-  h0.style.cssText = 'display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:49px;margin-right:2px';
+  h0.style.cssText = 'display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:60px;margin-right:2px';
   h0.innerHTML = '<div class="h0-circle">h<sub style="font-size:7px">0</sub></div>';
   row.appendChild(h0);
 
@@ -734,7 +734,7 @@ function buildRNN() {
     /* h-arrow connector */
     const arr = document.createElement('div');
     arr.className = 'h-arr';
-    arr.style.marginTop = '63px';
+    arr.style.marginTop = '75px';
     row.appendChild(arr);
 
     /* cell column */
@@ -775,23 +775,29 @@ function buildRNN() {
 
     row.appendChild(col);
   });
+
+  /* trailing h_T exit arrow */
+  const tail = document.createElement('div');
+  tail.className = 'h-arr';
+  tail.style.marginTop = '75px';
+  row.appendChild(tail);
 }
 
 /* ================================================================
    BUILD UNROLLED — LSTM
    Column anatomy (top to bottom, all in normal flow):
-     ucol-top    : 32px  (y_t on last, else empty)
+     ucol-top    : 44px  (y_t on last, else empty)
      ucol-clabel : 16px  (C_i label, cyan)
      lstm-box    : 84px
      ucol-hlabel : 16px  (h_i label, green)
      x-arrow     : 18px
      tok         : ~20px
-   h-arr alignment: 32 + 16 + 42 = 90px
-   h-arr margin-top = 89px
-   Start div: C0 label (16px) + h0 circle (30px)
-     h0 center target = 90px
-     h0 top = 90 - 15 = 75px
-     C0 label above h0: start margin-top = 75 - 16 = 59px
+   h-arr alignment: 44 + 16 + 42 = 102px
+   h-arr margin-top = 101px
+   Start div: C0 label (16px) + h0 circle (30px, gap 4px)
+     h0 center target = 102px
+     h0 top = 102 - 15 = 87px
+     gap = 4px → C0 top = 87 - 4 - 16 = 67px  → start margin-top = 67px
    ================================================================ */
 function buildLSTM() {
   const row = document.getElementById('lstm-unroll');
@@ -799,7 +805,7 @@ function buildLSTM() {
 
   /* C0 + h0 start */
   const start = document.createElement('div');
-  start.style.cssText = 'display:flex;flex-direction:column;align-items:center;flex-shrink:0;margin-top:59px;margin-right:2px;gap:4px';
+  start.style.cssText = 'display:flex;flex-direction:column;align-items:center;flex-shrink:0;margin-top:67px;margin-right:2px;gap:4px';
   start.innerHTML =
     '<div style="font-family:\'JetBrains Mono\',monospace;font-size:9px;color:#0891b2;font-weight:600">C<sub style="font-size:7px">0</sub></div>' +
     '<div class="h0-circle">h<sub style="font-size:7px">0</sub></div>';
@@ -811,7 +817,7 @@ function buildLSTM() {
     /* h-arrow connector */
     const arr = document.createElement('div');
     arr.className = 'h-arr';
-    arr.style.marginTop = '89px';
+    arr.style.marginTop = '101px';
     row.appendChild(arr);
 
     /* cell column */
@@ -872,14 +878,20 @@ function buildLSTM() {
 
     row.appendChild(col);
   });
+
+  /* trailing h_T exit arrow */
+  const tail = document.createElement('div');
+  tail.className = 'h-arr';
+  tail.style.marginTop = '101px';
+  row.appendChild(tail);
 }
 
 /* ================================================================
    BUILD UNROLLED — GRU
    Same column structure as LSTM (ucol-clabel is empty spacer,
    gru-box has no ::before highway bar — the visual distinction).
-   h-arr margin-top = 89px
-   Start: no C0 label, h0 center at 90px: margin-top = 75px
+   h-arr margin-top = 101px
+   Start: no C0 label, h0 center at 102px: margin-top = 102 - 15 = 87px
    ================================================================ */
 function buildGRU() {
   const row = document.getElementById('gru-unroll');
@@ -887,7 +899,7 @@ function buildGRU() {
 
   /* h0 start */
   const start = document.createElement('div');
-  start.style.cssText = 'display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:75px;margin-right:2px';
+  start.style.cssText = 'display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:87px;margin-right:2px';
   start.innerHTML = '<div class="h0-circle">h<sub style="font-size:7px">0</sub></div>';
   row.appendChild(start);
 
@@ -897,7 +909,7 @@ function buildGRU() {
     /* h-arrow connector */
     const arr = document.createElement('div');
     arr.className = 'h-arr';
-    arr.style.marginTop = '89px';
+    arr.style.marginTop = '101px';
     row.appendChild(arr);
 
     /* cell column */
@@ -953,6 +965,12 @@ function buildGRU() {
 
     row.appendChild(col);
   });
+
+  /* trailing h_T exit arrow */
+  const tail = document.createElement('div');
+  tail.className = 'h-arr';
+  tail.style.marginTop = '101px';
+  row.appendChild(tail);
 }
 
 /* ================================================================
