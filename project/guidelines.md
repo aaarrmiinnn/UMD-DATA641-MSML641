@@ -61,6 +61,68 @@ Every week: build, put it in front of a user, learn, report.
 - **Standup** (last 30 to 40 minutes of lecture): 2 to 5 minutes per team. Demo over slides. Four beats: what we shipped, what we learned from users, our biggest blocker, next week's goal. Rotate the presenter.
 - **Written report**: commit `reports/weekNN.md` before each session using [`reports/_TEMPLATE.md`](../reports/_TEMPLATE.md). Every claim links to the issue, pull request, or commit that backs it. A claim with no evidence does not count.
 
+## First two weeks in detail
+
+### Week 1: Define what you are building
+
+Before writing any code, your team needs to agree on what you are building and for whom. Two tools that force that clarity:
+
+**One-sentence pitch**
+
+> [Company] helps [user] [do job] by [how], unlike [alternative].
+
+Example: "LexiCheck helps legal associates review contracts for risk clauses using NLP, unlike manual review or generic search."
+
+If your team cannot fill this in cleanly, your scope is not tight enough yet. Keep rewriting it until every word is defensible.
+
+**Three-line version** (for your pitch and lean canvas)
+
+> **Problem**: [one sentence — the pain and who feels it]
+> **Solution**: [one sentence — what you built and how it works]
+> **Why us**: [one sentence — your data advantage, domain insight, or technical approach]
+
+Commit both to your repo in `reports/week01.md` before the Week 1 session.
+
+---
+
+### Week 2: Validate before you build
+
+You have one day. Do exactly these two things, nothing more.
+
+**Three problem interviews (qualitative)**
+
+Find three people who match your target user. Each conversation is 15 minutes. Do not pitch your solution. Ask only:
+
+1. "How do you currently handle [the problem]?"
+2. "How painful is it, on a scale of 1 to 10, and why?"
+
+If the average score is below 7 and people describe it as something they just live with, the problem is not painful enough. Revisit your pitch.
+
+**One short survey (quantitative)**
+
+Five questions maximum. Send to 20 or more people via group chats or email. Measure: does the problem exist, how often does it occur, how unsatisfied are they with current solutions. A Google Form takes 30 minutes to build and can have responses within hours.
+
+**Making the call**
+
+Combine both. Qualitative tells you why; quantitative tells you how many and how much. By end of Week 2 your team commits to one of:
+
+- **Persevere**: the problem is real and painful, proceed to MVP scoping.
+- **Pivot**: the problem or user is wrong; rewrite the one-sentence pitch and revalidate.
+
+**MVP scoping**
+
+Once you persevere, write one sentence:
+
+> A user can [core action] and get [core value].
+
+Everything outside that sentence is cut. This is your Week 3 pitch target.
+
+**Technical spike**
+
+Spend a few hours building the riskiest part of your NLP system first. Not polished, just enough to answer: does this approach work on real data? Commit the result (works / does not work / needs a different approach) to the repo before the Week 3 session.
+
+---
+
 ## Key dates
 
 | When | What |
