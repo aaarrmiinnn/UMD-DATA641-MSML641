@@ -61,9 +61,9 @@ Every week: build, put it in front of a user, learn, report.
 - **Standup** (last 30 to 40 minutes of lecture): 2 to 5 minutes per team. Demo over slides. Four beats: what we shipped, what we learned from users, our biggest blocker, next week's goal. Rotate the presenter.
 - **Written report**: commit `reports/weekNN.md` before each session using [`reports/_TEMPLATE.md`](../reports/_TEMPLATE.md). Every claim links to the issue, pull request, or commit that backs it. A claim with no evidence does not count.
 
-## First two weeks in detail
+## Weeks 2 and 3 in detail
 
-### Week 1: Define what you are building
+### Week 2: Define what you are building
 
 Before writing any code, your team needs to agree on what you are building and for whom. Two tools that force that clarity:
 
@@ -81,11 +81,11 @@ If your team cannot fill this in cleanly, your scope is not tight enough yet. Ke
 > **Solution**: [one sentence — what you built and how it works]
 > **Why us**: [one sentence — your data advantage, domain insight, or technical approach]
 
-Commit both to your repo in `reports/week01.md` before the Week 1 session.
+Commit both to your repo in `reports/week02.md` before the Week 2 session.
 
 ---
 
-### Week 2: Validate before you build
+### Week 3: Validate before you build
 
 You have one day. Do exactly these two things, nothing more.
 
