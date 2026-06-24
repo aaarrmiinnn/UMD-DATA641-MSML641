@@ -17,6 +17,12 @@ spacy>=3.7.0
 beautifulsoup4>=4.13.0
 requests>=2.32.0
 tokenizers>=0.15.0
+transformers>=4.40.0
+datasets>=2.19.0
+evaluate>=0.4.0
+sacremoses>=0.0.53
+bert-score>=0.3.13
+sentencepiece>=0.1.99
 
 # Knowledge Graph & Semantic Web
 SPARQLWrapper>=2.0.0
