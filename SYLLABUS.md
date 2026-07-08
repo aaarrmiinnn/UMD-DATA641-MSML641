@@ -80,15 +80,15 @@ Online sessions each Wednesday, 5:00pm - 8:30pm.
 
 Each week includes **asynchronous content** (videos, readings, quizzes — complete before the live session) and a **synchronous live session** (lecture, discussion, demos).
 
-### Week 1 — Word Meaning (June 3)
+### Week 1 - Word Meaning (June 3)
 - **Asynchronous Videos**: V1 *Words, Words, Words! An Introduction*; V2 *Multi-Word Units and Collocations*; V3 *Introduction to Hypothesis Testing*; V4 *Introduction to Word Meaning and Lexicography*; V5 *Historical Approaches to Understanding Word Meaning*
 - **Readings**: SLP Ch 1, 2 (through 2.4); Pinker pp. 83-89
 - **Supplementary**:
   - Jay Alammar, [The Illustrated Word2Vec](https://jalammar.github.io/illustrated-word2vec/)
-  - Ruder, [On Word Embeddings — Part 1](https://www.ruder.io/word-embeddings-1/)
+  - Ruder, [On Word Embeddings - Part 1](https://www.ruder.io/word-embeddings-1/)
 - **Synchronous**: `lectures/week01_meaning.ipynb`
 
-### Week 2 — Sequence Models (June 10)
+### Week 2 - Sequence Models (June 10)
 - **Asynchronous Videos**: V1 *Introduction to Sequence Models*; V2 *Evaluation of Language Models*
 - **Readings**: SLP Ch 3, 8 (through 8.4), 9, Appendix A, B
 - **Supplementary**:
@@ -97,38 +97,43 @@ Each week includes **asynchronous content** (videos, readings, quizzes — compl
 - **Synchronous**: `lectures/week02_sequence_models.ipynb`
 - **Assignment**: Assignment_1 Posted
 
-### Week 3 — Evaluation in NLP (June 17)
+### Week 3 - Sequence Models (continued) (June 17)
+- Continuation of Week 2 (see Week 2 async videos and readings).
+- **Synchronous**: `lectures/week02_sequence_models.ipynb` (continued)
+
+### Week 4 - Evaluation I (continued) (June 24)
 - **Asynchronous Videos**: V1 *Evaluation in NLP*
 - **Readings**: Resnik and Lin (2010), *Evaluation of NLP Systems*
 - **Supplementary**:
   - Ruder, [Challenges and Opportunities in NLP Benchmarking](https://www.ruder.io/nlp-benchmarking/)
-  - Ruder, [The Evolving Landscape of LLM Evaluation](https://newsletter.ruder.io/p/the-evolving-landscape-of-llm-evaluation)
-- **Synchronous**: `lectures/week05_evaluation.ipynb`
+- **Synchronous**: `lectures/week04_evaluation.ipynb`
+- **Note**: Part 1 of 2 (foundations and the benchmarking/leaderboard ecosystem). The LLM-era material continues in **Week 10 - Evaluation II**, after the Language Models lecture.
+- **Assignment**: Project Proposal Due
 
-### Week 4 — Vector Semantics and Embeddings (June 24)
+### Week 5 - Vector Semantics and Embeddings (July 1)
 - **Asynchronous Videos**: V1 *Introduction to Lexical Semantics*
 - **Readings**: SLP Ch 6
 - **Supplementary**:
   - Ruder, [Word Embeddings in 2017: Trends and Future Directions](https://www.ruder.io/word-embeddings-2017/)
   - Jay Alammar, [The Illustrated BERT, ELMo, and Co.](https://jalammar.github.io/illustrated-bert/)
-- **Synchronous**: `lectures/week06_vector_semantics.ipynb`
-- **Assignment**: Project Proposal Due
+- **Synchronous**: `lectures/week05_vector_semantics.ipynb`
 
-### Week 5 — Neural Networks in NLP (July 1)
+### Week 6 - Vector Semantics and Embeddings (continued) (July 8)
+- Continuation of Week 5 (see Week 5 async videos and readings).
+- **Synchronous**: `lectures/week05_vector_semantics.ipynb` (continued)
+- **Assignment**: Assignment_2 Posted, Work on project
+
+### Week 7 - Neural Networks in NLP + Mid-Semester Presentations (July 15)
 - **Asynchronous Videos**: V1 *Introduction to Neural Networks in NLP*
 - **Readings**: SLP Ch 7 & 8
 - **Supplementary**:
   - 3Blue1Brown, [Neural Networks](https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi) (Ch 1-4)
   - Olah, [Understanding LSTM Networks](https://colah.github.io/posts/2015-08-Understanding-LSTMs/)
   - Stanford CS224N, [Language Models, RNNs, GRUs, and LSTMs](https://web.stanford.edu/class/cs224n/readings/cs224n-2019-notes05-LM_RNN.pdf)
-- **Synchronous**: `lectures/week07_neural_networks_in_nlp.ipynb`
-- **Assignment**: Work on project
+- **Synchronous**: `lectures/week06_neural_networks_in_nlp.ipynb`. Mid-semester project presentations run in the first part of the session (see standup format in [project/guidelines.md](project/guidelines.md)).
+- **Assignment**: Mid-semester project presentation, Work on project
 
-### Week 6 — Mid-Semester Project Presentations (July 8)
-- **Synchronous**: Student project presentations
-- **Assignment**: Mid-semester project presentation, Assignment_2 Posted
-
-### Week 7 — Transformers (July 15)
+### Week 8 - Transformers (July 22)
 - **Asynchronous Videos**: V1 *Introduction to Transformers*
 - **Readings**: SLP Ch 9
 - **Supplementary**:
@@ -136,56 +141,42 @@ Each week includes **asynchronous content** (videos, readings, quizzes — compl
   - 3Blue1Brown, [How might LLMs store facts](https://www.youtube.com/watch?v=9-Jl0dxWQs8)
   - Jay Alammar, [The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/)
   - Olah & Carter, [Attention and Augmented Recurrent Neural Networks](https://distill.pub/2016/augmented-rnns/) (interactive)
-- **Synchronous**: `lectures/week08_transformers.ipynb`
+- **Synchronous**: `lectures/week07_transformers.ipynb`
 - **Assignment**: Work on project
 
-### Week 8 — Language Models, Fine-tuning and Post-Training (July 22)
+### Week 9 - Language Models, Fine-tuning and Post-Training (July 29)
 - **Asynchronous Videos**: V1 *Large Language Models with Transformer Architecture*; V2 *Bidirectional Transformer Encoder and Masked Language Models*
 - **Readings**: SLP Ch 10, 11, 12 ([Model Alignment, Prompting, and In-Context Learning](https://web.stanford.edu/~jurafsky/slp3/12.pdf))
 - **Supplementary**:
   - Jay Alammar, [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/)
   - Lilian Weng, [Prompt Engineering](https://lilianweng.github.io/posts/2023-03-15-prompt-engineering/) (covers RLHF, instruction tuning, chain-of-thought)
-- **Synchronous**: `lectures/week09_mlm.ipynb`
+- **Synchronous**: `lectures/week08_mlm.ipynb`
+- **Assignment**: Assignment_3 Posted, Work on project
+
+### Week 10 - Evaluation II: LLM Benchmarks and LLM-as-a-Judge (August 5)
+- **Asynchronous Videos**: Continues *Evaluation in NLP* from Week 4 (no new async video)
+- **Readings**: Resnik and Lin (2010), *Evaluation of NLP Systems* (review)
+- **Supplementary**:
+  - Ruder, [The Evolving Landscape of LLM Evaluation](https://newsletter.ruder.io/p/the-evolving-landscape-of-llm-evaluation)
+- **Synchronous**: `lectures/week08b_evaluation_llm.ipynb`
+- **Note**: Part 2 of 2. Builds on the Language Models lecture (e.g., BERTScore uses BERT); covers standard LLM benchmarks, learned metrics, contamination, human evaluation, and LLM-as-a-judge.
 - **Assignment**: Work on project
 
-### Week 9 — Retrieval Augmented Generation (July 29)
+### Week 11 - Retrieval Augmented Generation (RAG) (August 12)
 - **Asynchronous Videos**: V1 *Retrieval Augmented Generation (RAG)*
 - **Readings**: SLP Ch 11
 - **Supplementary**:
   - Lewis et al., [Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://arxiv.org/abs/2005.11401)
   - NVIDIA, [What Is Retrieval-Augmented Generation?](https://blogs.nvidia.com/blog/what-is-retrieval-augmented-generation/)
   - Pinecone, [Retrieval-Augmented Generation Guide](https://www.pinecone.io/learn/retrieval-augmented-generation/)
-- **Synchronous**: `lectures/week11_rag.ipynb`
-- **Assignment**: Assignment_3 Posted, Work on project
-
-### Week 10 — Graphs in NLP (August 5)
-- **Asynchronous Videos**: V1 *Graph in NLP*; V2 *NLP Applications*; V3 *NLP and the Use Case in Social Science*
-- **Readings**: SLP Ch 13, 14, 15
-- **Supplementary**:
-  - Sanchez-Lengeling et al., [A Gentle Introduction to Graph Neural Networks](https://distill.pub/2021/gnn-intro/) (interactive)
-  - Stanford CS224W, [Machine Learning with Graphs](https://cs224w.stanford.edu/) (lecture videos)
-- **Synchronous**: `lectures/week10_graphs.ipynb`
+- **Synchronous**: `lectures/week10_rag.ipynb`
 - **Assignment**: Work on project
 
-### Week 11 — Frontier NLP: Agents, Multimodal and Beyond (August 12)
-- **Asynchronous Videos**: V1 *Social Biases in AI*; V2 *Ethical Considerations in NLP and AI*
-- **Readings**:
-  - Anthropic, [Building Effective Agents](https://www.anthropic.com/research/building-effective-agents)
-  - Yao et al., [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629)
-  - Wei et al., [Chain-of-Thought Prompting Elicits Reasoning in Large Language Models](https://arxiv.org/abs/2201.11903)
-- **Supplementary**:
-  - Lilian Weng, [LLM Powered Autonomous Agents](https://lilianweng.github.io/posts/2023-06-23-agent/)
-  - Radford et al., [CLIP: Learning Transferable Visual Models From Natural Language Supervision](https://arxiv.org/abs/2103.00020)
-  - HuggingFace, [Vision Language Models Explained](https://huggingface.co/blog/vlms)
-  - Anthropic, [Introducing the Model Context Protocol](https://www.anthropic.com/news/model-context-protocol)
-  - Andrew Ng, [What's Next for AI Agentic Workflows](https://www.youtube.com/watch?v=sal78ACtGTc) (video)
-  - DeepSeek AI, [DeepSeek-R1: Incentivizing Reasoning via RL](https://arxiv.org/abs/2501.12948)
-- **Synchronous**: _TBD (notebook in development)_
-- **Assignment**: Work on project
-
-### Week 12 — Final Project Presentations (August 19)
+### Week 12 - Final Project Presentations (August 19)
 - **Synchronous**: Student project presentations
 - **Assignment**: Final Project Due
+
+> **Dropped this term:** Graphs in NLP (`lectures/week09_graphs.ipynb`) is not on the live schedule due to the schedule slip, but remains available as optional material.
 
 *Schedule subject to change - monitor ELMS for updates*
 
@@ -232,8 +223,8 @@ Each week includes **asynchronous content** (videos, readings, quizzes — compl
 ### Final Project (45%)
 - **Structure**: Build a startup. Teams of 3 form a named company and ship a working NLP product (groups of 2 or 4 by special permission)
 - **How it works**: A weekly build, measure, learn loop with a short standup and a written report each week
-- **Grading**: Weekly reports 30%, mid-semester checkpoint in Week 6 5%, final product and demo day in Week 12 10%
-- **Timeline**: Full semester. Mid-semester demo in Week 6, demo day in Week 12
+- **Grading**: Weekly reports 30%, mid-semester checkpoint in Week 7 5%, final product and demo day in Week 12 10%
+- **Timeline**: Full semester. Mid-semester demo in Week 7, demo day in Week 12
 - **See**: [project/guidelines.md](project/guidelines.md) for the full description, timeline, and rubrics
 
 ## AI Policy
