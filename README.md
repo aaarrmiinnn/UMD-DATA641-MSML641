@@ -95,16 +95,18 @@ Online sessions each Wednesday, 5:00pm - 8:30pm. See `SYLLABUS.md` for full asyn
 |------|------------|-------|-------------------|
 | 1 | June 3, 2026 | Word Meaning | `lectures/week01_meaning.ipynb` |
 | 2 | June 10, 2026 | Sequence Models | `lectures/week02_sequence_models.ipynb` |
-| 3 | June 17, 2026 | Evaluation in NLP | `lectures/week05_evaluation.ipynb` |
-| 4 | June 24, 2026 | Vector Semantics and Embeddings | `lectures/week06_vector_semantics.ipynb` |
-| 5 | July 1, 2026 | Neural Networks in NLP | `lectures/week07_neural_networks_in_nlp.ipynb` |
-| 6 | July 8, 2026 | Mid-Semester Project Presentations | Mid-semester project presentation |
-| 7 | July 15, 2026 | Transformers | `lectures/week08_transformers.ipynb` |
-| 8 | July 22, 2026 | Language Models, Fine-tuning and Post-Training | `lectures/week09_mlm.ipynb` |
-| 9 | July 29, 2026 | Retrieval Augmented Generation (RAG) | `lectures/week11_rag.ipynb` |
-| 10 | August 5, 2026 | Graphs in NLP | `lectures/week10_graphs.ipynb` |
-| 11 | August 12, 2026 | Frontier NLP: Agents, Multimodal and Beyond | _TBD (notebook in development)_ |
+| 3 | June 17, 2026 | Sequence Models (continued) | `lectures/week02_sequence_models.ipynb` |
+| 4 | June 24, 2026 | Evaluation I (continued) | `lectures/week04_evaluation.ipynb` |
+| 5 | July 1, 2026 | Vector Semantics and Embeddings | `lectures/week05_vector_semantics.ipynb` |
+| 6 | July 8, 2026 | Vector Semantics and Embeddings (continued) | `lectures/week05_vector_semantics.ipynb` |
+| 7 | July 15, 2026 | Neural Networks in NLP + Mid-Semester Presentations | `lectures/week06_neural_networks_in_nlp.ipynb` |
+| 8 | July 22, 2026 | Transformers | `lectures/week07_transformers.ipynb` |
+| 9 | July 29, 2026 | Language Models, Fine-tuning and Post-Training | `lectures/week08_mlm.ipynb` |
+| 10 | August 5, 2026 | Evaluation II: LLM Benchmarks and LLM-as-a-Judge | `lectures/week08b_evaluation_llm.ipynb` |
+| 11 | August 12, 2026 | Retrieval Augmented Generation (RAG) | `lectures/week10_rag.ipynb` |
 | 12 | August 19, 2026 | Final Project Presentations | Final project due |
+
+> **Note:** Running slightly behind the original plan - Sequence Models and Evaluation I each ran into a second session, so Vector Semantics spans July 1-8. Mid-semester presentations run within the July 15 session. Graphs in NLP (`lectures/week09_graphs.ipynb`) is dropped from the live schedule this term but remains available as optional material.
 
 ## Course Components
 

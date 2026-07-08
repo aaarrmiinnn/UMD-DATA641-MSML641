@@ -67,7 +67,7 @@ Every week: build, put it in front of a user, learn, report.
 |---|---|
 | Week 1 (June 3) | Form your startup: team, company name, repo, roles |
 | Week 3 (June 17) | Project pitch: 5 minutes per team on what you are building and for whom |
-| Week 6 (July 8) | Mid-semester presentation: working MVP and what users told you |
+| Week 7 (July 15) | Mid-semester presentation: working MVP and what users told you |
 | Week 12 (August 19) | Demo day: live product, final pitch, technical appendix |
 
 Every other week runs the standup and report rhythm above.
@@ -77,7 +77,7 @@ Every other week runs the standup and report rhythm above.
 | Component | Share | Based on |
 |---|---|---|
 | Weekly reports | 30% | What you shipped, validated, and measured, with balanced contribution, all backed by evidence in your repo |
-| Mid-semester presentation (Week 6) | 5% | A working MVP, real user evidence, and a clear pivot or persevere decision |
+| Mid-semester presentation (Week 7) | 5% | A working MVP, real user evidence, and a clear pivot or persevere decision |
 | Final product and demo day (Week 12) | 10% | A working product, real NLP depth, and a clear pitch |
 
 Weekly reports are graded on the evidence in your repository (merged pull requests, issues, commits, deployed product), not on writing. A polished report with nothing behind it scores low.
