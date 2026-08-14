@@ -10,7 +10,7 @@
 
 ## The idea
 
-This summer your team will operate like a startup. You will form a company, find a real problem, and ship a working NLP product that real people can use by demo day.
+This summer your team will operate like a startup. You will form a company, find a real problem, and ship a working NLP product that real people can use by demo day (final presentations).
 
 The company is pretend. You will not incorporate, raise money, or own equity, and there are no real customers or revenue. Everything else is real: the problem you pick should be real, the users you talk to should be real, and the product you ship should actually work. You are practicing the way a small team builds and ships, applied to a real NLP system.
 
@@ -68,7 +68,7 @@ Every week: build, put it in front of a user, learn, report.
 | Week 1 (June 3) | Form your startup: team, company name, repo, roles |
 | Week 3 (June 17) | Project pitch: 5 minutes per team on what you are building and for whom |
 | Week 7 (July 15) | Mid-semester presentation: working MVP and what users told you |
-| Week 12 (August 19) | Demo day: live product, final pitch, technical appendix |
+| Week 12 (August 19) | Demo day (final presentations): live product, final pitch, technical appendix. See [`final-presentation.md`](final-presentation.md) |
 
 Every other week runs the standup and report rhythm above.
 
@@ -78,13 +78,13 @@ Every other week runs the standup and report rhythm above.
 |---|---|---|
 | Weekly reports | 30% | What you shipped, validated, and measured, with balanced contribution, all backed by evidence in your repo |
 | Mid-semester presentation (Week 7) | 5% | A working MVP, real user evidence, and a clear pivot or persevere decision |
-| Final product and demo day (Week 12) | 10% | A working product, real NLP depth, and a clear pitch |
+| Final product and demo day (final presentations), Week 12 | 10% | A working product, real NLP depth, and a clear pitch |
 
 Weekly reports are graded on the evidence in your repository (merged pull requests, issues, commits, deployed product), not on writing. A polished report with nothing behind it scores low.
 
 **Weekly report criteria**: shipped something real, validated with users, tracked your metric, repo matches the report, balanced contribution, clear and honest communication.
 
-**Final criteria**: the product works for a stranger; your own model or pipeline with a held-out evaluation and error analysis; evidence of how the product changed in response to users; a clear demo-day pitch; a short technical appendix covering architecture, data, evaluation, and ethics.
+**Final criteria**: the product works for a stranger; your own model or pipeline with a held-out evaluation and error analysis; evidence of how the product changed in response to users; a clear demo day pitch; a short technical appendix covering architecture, data, evaluation, and ethics.
 
 ## Definitions
 
