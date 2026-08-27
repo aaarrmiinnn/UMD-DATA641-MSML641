@@ -26,8 +26,8 @@ It always matches a date.
 |---|---|---|
 | `reports/session04.md` | 4 | Tuesday September 22 |
 | `reports/session05.md` | 5 | Tuesday September 29 |
-| `reports/session06.md` | 6 | Tuesday October 6 |
-| no report | 7 | Mid-semester presentation replaces it |
+| no report | 6 | Mid-semester presentation replaces it |
+| `reports/session07.md` | 7 | Tuesday October 20 |
 | `reports/session08.md` | 8 | Tuesday October 27 |
 | `reports/session09.md` | 9 | Tuesday November 3 |
 | `reports/session10.md` | 10 | Tuesday November 10 |
@@ -35,7 +35,7 @@ It always matches a date.
 | `reports/session12.md` | 12 | Tuesday November 24 |
 
 Eight reports.
-There is no `session07.md`, and there are no reports for Sessions 1, 2, or 3.
+There is no `session06.md`, and there are no reports for Sessions 1, 2, or 3.
 
 ## How to use the template
 

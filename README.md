@@ -97,9 +97,9 @@ See `SYLLABUS.md` for the full asynchronous content (videos, readings, supplemen
 | 3 | Tuesday, September 15, 2026 | Evaluation in NLP | `lectures/session03_evaluation.ipynb` |
 | 4 | Tuesday, September 22, 2026 | Vector Semantics and Embeddings | `lectures/session04_vector_semantics.ipynb` |
 | 5 | Tuesday, September 29, 2026 | Neural Networks in NLP | `lectures/session05_neural_networks.ipynb` |
-| 6 | Tuesday, October 6, 2026 | Transformers | `lectures/session06_transformers.ipynb` |
+| 6 | Tuesday, October 6, 2026 | Mid-Semester Project Presentations | No notebook. [project/guidelines.md](project/guidelines.md) |
 | - | Tuesday, October 13, 2026 | **Fall Break, no class** | |
-| 7 | Tuesday, October 20, 2026 | Mid-Semester Project Presentations | No notebook. [project/guidelines.md](project/guidelines.md) |
+| 7 | Tuesday, October 20, 2026 | Transformers | `lectures/session07_transformers.ipynb` |
 | 8 | Tuesday, October 27, 2026 | Language Models, Fine-tuning and Post-Training | `lectures/session08_language_models.ipynb` |
 | 9 | Tuesday, November 3, 2026 | Evaluation II: LLM Benchmarks and LLM-as-a-Judge | `lectures/session09_evaluation_llm.ipynb` |
 | 10 | Tuesday, November 10, 2026 | Retrieval Augmented Generation (RAG) | `lectures/session10_rag.ipynb` |

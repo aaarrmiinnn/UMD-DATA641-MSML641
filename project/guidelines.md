@@ -103,15 +103,15 @@ This is the whole schedule:
 |---|---|---|
 | `reports/session04.md` | 4 | Tuesday September 22 |
 | `reports/session05.md` | 5 | Tuesday September 29 |
-| `reports/session06.md` | 6 | Tuesday October 6 |
-| no report | 7 | Mid-semester presentation replaces it |
+| no report | 6 | Mid-semester presentation replaces it |
+| `reports/session07.md` | 7 | Tuesday October 20 |
 | `reports/session08.md` | 8 | Tuesday October 27 |
 | `reports/session09.md` | 9 | Tuesday November 3 |
 | `reports/session10.md` | 10 | Tuesday November 10 |
 | `reports/session11.md` | 11 | Tuesday November 17 |
 | `reports/session12.md` | 12 | Tuesday November 24 |
 
-Eight reports. There is no `session07.md`, and there are no reports for Sessions 1, 2, or 3.
+Eight reports. There is no `session06.md`, and there are no reports for Sessions 1, 2, or 3.
 
 **Grading is taken from the commit on `main` at 5:00pm Tuesday.**
 Work pushed after that time is not counted for that week.
@@ -126,7 +126,7 @@ A claim with no evidence does not count.
 |---|---|
 | Session 3, September 15 | Form your startup: team, company name, repo URL, roles |
 | Session 4, September 22 | First weekly report. Branch protection checked |
-| Session 7, October 20 | Mid-semester presentation: working MVP and what users told you |
+| Session 6, October 6 | Mid-semester presentation: working MVP and what users told you |
 | Session 12, November 24 | Final weekly report |
 | Session 13, December 1 | **Final project due, 5:00pm, for every team.** Demo day part 1 |
 | Session 14, December 8 | Demo day part 2 |
@@ -141,7 +141,7 @@ Your presentation slot will be assigned in Session 11.
 | Component | Share | Based on |
 |---|---|---|
 | Weekly reports | 30% | What you shipped, validated, and measured, with balanced contribution, all backed by evidence in your repo |
-| Mid-semester presentation (Session 7) | 5% | A working MVP, real user evidence, and a clear pivot or persevere decision |
+| Mid-semester presentation (Session 6) | 5% | A working MVP, real user evidence, and a clear pivot or persevere decision |
 | Final product and demo day | 10% | A working product, real NLP depth, and a clear pitch |
 
 Weekly reports are graded on the evidence in your repository (merged pull requests, issues, commits, deployed product), not on writing.

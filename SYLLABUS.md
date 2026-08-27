@@ -129,7 +129,17 @@ Each week has **asynchronous content** (videos, readings, quizzes) due by **4:00
 - **Project**: `reports/session05.md` due by 5:00pm
 - **Assignment**: Assignment 1 due by 5:00pm
 
-### Session 6 - Transformers (October 6)
+### Session 6 - Mid-Semester Project Presentations (October 6)
+- **Asynchronous Content**: None
+- **Synchronous**: Mid-semester presentations. Every team presents for 5 minutes plus 2 for questions. No notebook, see [project/guidelines.md](project/guidelines.md)
+- **Project**: Mid-semester presentation. No written report is due this week, the presentation replaces it
+
+### Fall Break - No Class (October 13)
+
+No live session and no asynchronous content this week.
+Fall Break runs Monday October 12 to Tuesday October 13.
+
+### Session 7 - Transformers (October 20)
 - **Asynchronous Videos**: V1 *Introduction to Transformers*
 - **Readings**: SLP Ch 9
 - **Supplementary**:
@@ -137,18 +147,8 @@ Each week has **asynchronous content** (videos, readings, quizzes) due by **4:00
   - 3Blue1Brown, [How might LLMs store facts](https://www.youtube.com/watch?v=9-Jl0dxWQs8)
   - Jay Alammar, [The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/)
   - Olah & Carter, [Attention and Augmented Recurrent Neural Networks](https://distill.pub/2016/augmented-rnns/) (interactive)
-- **Synchronous**: `lectures/session06_transformers.ipynb`
-- **Project**: `reports/session06.md` due by 5:00pm
-
-### Fall Break - No Class (October 13)
-
-No live session and no asynchronous content this week.
-Fall Break runs Monday October 12 to Tuesday October 13.
-
-### Session 7 - Mid-Semester Project Presentations (October 20)
-- **Asynchronous Content**: None
-- **Synchronous**: Mid-semester presentations. Every team presents for 5 minutes plus 2 for questions. No notebook, see [project/guidelines.md](project/guidelines.md) a working MVP, the user evidence behind it, and a pivot or persevere decision. See [project/guidelines.md](project/guidelines.md)
-- **Project**: Mid-semester presentation. No written report is due this week, the presentation replaces it
+- **Synchronous**: `lectures/session07_transformers.ipynb`
+- **Project**: `reports/session07.md` due by 5:00pm
 - **Assignment**: Assignment 2 posted
 
 ### Session 8 - Language Models, Fine-tuning and Post-Training (October 27)
