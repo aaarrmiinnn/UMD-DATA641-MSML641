@@ -147,7 +147,7 @@ Fall Break runs Monday October 12 to Tuesday October 13.
 
 ### Session 7 - Mid-Semester Project Presentations (October 20)
 - **Asynchronous Content**: None
-- **Synchronous**: Every team presents a working MVP, the user evidence behind it, and a pivot or persevere decision. See [project/guidelines.md](project/guidelines.md)
+- **Synchronous**: `lectures/session07_midsemester_presentations.ipynb`. Every team presents for 5 minutes plus 2 for questions a working MVP, the user evidence behind it, and a pivot or persevere decision. See [project/guidelines.md](project/guidelines.md)
 - **Project**: Mid-semester presentation. No written report is due this week, the presentation replaces it
 - **Assignment**: Assignment 2 posted
 
@@ -203,12 +203,12 @@ Fall Break runs Monday October 12 to Tuesday October 13.
 
 ### Session 13 - Demo Day, Part 1 (December 1)
 - **Asynchronous Content**: None
-- **Synchronous**: Final project presentations, first group of teams
+- **Synchronous**: `lectures/session13_demo_day_part1.ipynb`. Final project presentations, first group of teams, 12 minutes each plus 3 for questions
 - **Project**: Final project is due by 5:00pm today for **every** team, whether presenting today or on December 8. See [project/final-presentation.md](project/final-presentation.md)
 
 ### Session 14 - Demo Day, Part 2 (December 8)
 - **Asynchronous Content**: None
-- **Synchronous**: Final project presentations, second group of teams
+- **Synchronous**: `lectures/session14_demo_day_part2.ipynb`. Final project presentations, second group of teams, 12 minutes each plus 3 for questions
 - **Note**: Last session of the term. The last day of classes is Friday December 11
 
 *Schedule subject to change. Monitor ELMS for updates.*
