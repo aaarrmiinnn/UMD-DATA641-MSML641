@@ -8,7 +8,7 @@
 
 ## Course Schedule
 
-**Time**: Tuesdays 5:00pm - 7:45pm
+**Time**: Tuesdays 5:00pm - 7:00pm
 
 **Format**: Online (asynchronous video content + live online sessions)
 
@@ -60,12 +60,12 @@ By the end of this course, you will be able to:
 
 **Online Format**:
 - **Asynchronous Content** (~1.5 hours/week): Video lectures, readings, review questions, and supplementary materials, completed before the live session
-- **Synchronous Live Sessions** (2 hours 45 minutes/week): Tuesdays via Zoom, interactive lecture with in-class exercises, polls, demos, and Q&A
+- **Synchronous Live Sessions** (2 hours/week): Tuesdays via Zoom, interactive lecture with in-class exercises, polls, demos, and Q&A
 - **Hands-on Learning**: Code examples, exercises, and real-time problem solving
 
 Each week includes:
 - Asynchronous video content, readings, and review questions, all due by 4:00pm Tuesday
-- Live online session, 5:00pm to 7:45pm Tuesday
+- Live online session, 5:00pm to 7:00pm Tuesday
 
 ## Course Resources
 
@@ -80,7 +80,7 @@ Each week includes:
 
 ## Course Outline
 
-Live sessions run Tuesdays, 5:00pm to 7:45pm, on Zoom.
+Live sessions run Tuesdays, 5:00pm to 7:00pm, on Zoom.
 
 Each week has **asynchronous content** (videos, readings, quizzes) due by **4:00pm on the Tuesday of that week**, before the live session.
 

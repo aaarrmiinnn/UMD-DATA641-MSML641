@@ -1,7 +1,7 @@
 # Demo Day: Final Project Presentations
 
 **DATA/MSML 641: Natural Language Processing**
-**Tuesday December 1 and Tuesday December 8, 5:00pm, Zoom**
+**Tuesday December 1 and Tuesday December 8, 5:00pm to 7:00pm, Zoom**
 
 Demo day runs across two sessions so every team gets a real slot.
 Your slot will be assigned in Session 11 (November 17).
@@ -31,7 +31,7 @@ Cover them in your talk, and use them as the sections of your report.
 
 ## Presentation
 
-- **15 minutes**, followed by 3 minutes for questions. The 15-minute limit is firm.
+- **12 minutes**, followed by 3 minutes for questions. The 12-minute limit is firm.
 - **Include a demo, either live or recorded.** Show the product working rather than describing it. If you demo live, a recorded backup is a sensible precaution.
 - Cover the five areas above.
 

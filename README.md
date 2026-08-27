@@ -7,7 +7,7 @@ This repository contains course materials for DATA/MSML 641: Natural Language Pr
 ## Course Overview
 
 This course focuses on **interactive lecture-based learning**:
-- **Live sessions**: Tuesdays 5:00pm - 7:45pm (Online, Zoom)
+- **Live sessions**: Tuesdays 5:00pm - 7:00pm (Online, Zoom)
 - **Asynchronous content**: Video lectures, readings, and review questions, due 4:00pm Tuesday
 - **Hands-on components**: Interactive Jupyter notebooks and coding exercises
 
@@ -87,7 +87,7 @@ Open and run `resources/setup_test.ipynb` to verify your environment is configur
 
 ## Course Outline
 
-Live sessions run Tuesdays, 5:00pm to 7:45pm.
+Live sessions run Tuesdays, 5:00pm to 7:00pm.
 See `SYLLABUS.md` for the full asynchronous content (videos, readings, supplementary materials) for each session.
 
 | Session | Date | Topic | Lecture Materials |
