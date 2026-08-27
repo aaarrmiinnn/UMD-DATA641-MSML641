@@ -27,7 +27,9 @@
 - Important announcements sent via ELMS messaging
 - Enable email and announcement notifications in ELMS
 
-**Teaching Assistant**: TBD
+**Teaching Assistant**: Aadesh Kabra
+- **Email**: akabra19@umd.edu
+- **Office Hours**: TBD
 
 ## Course Description
 

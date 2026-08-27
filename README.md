@@ -138,7 +138,7 @@ See `SYLLABUS.md` for the full asynchronous content (videos, readings, supplemen
 ## Getting Help
 
 - **Instructor**: Armin Mehrabian (arminm@umd.edu)
-- **TA**: TBD
+- **TA**: Aadesh Kabra (akabra19@umd.edu)
 - **Technical Issues**: Check `docs/troubleshooting.md`
 - **Course Policies**: See `SYLLABUS.md`
 
