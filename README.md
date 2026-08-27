@@ -99,14 +99,14 @@ See `SYLLABUS.md` for the full asynchronous content (videos, readings, supplemen
 | 5 | Tuesday, September 29, 2026 | Neural Networks in NLP | `lectures/session05_neural_networks.ipynb` |
 | 6 | Tuesday, October 6, 2026 | Transformers | `lectures/session06_transformers.ipynb` |
 | - | Tuesday, October 13, 2026 | **Fall Break, no class** | |
-| 7 | Tuesday, October 20, 2026 | Mid-Semester Project Presentations | `lectures/session07_midsemester_presentations.ipynb` |
+| 7 | Tuesday, October 20, 2026 | Mid-Semester Project Presentations | No notebook. [project/guidelines.md](project/guidelines.md) |
 | 8 | Tuesday, October 27, 2026 | Language Models, Fine-tuning and Post-Training | `lectures/session08_language_models.ipynb` |
 | 9 | Tuesday, November 3, 2026 | Evaluation II: LLM Benchmarks and LLM-as-a-Judge | `lectures/session09_evaluation_llm.ipynb` |
 | 10 | Tuesday, November 10, 2026 | Retrieval Augmented Generation (RAG) | `lectures/session10_rag.ipynb` |
 | 11 | Tuesday, November 17, 2026 | Graphs in NLP | `lectures/session11_graphs.ipynb` |
 | 12 | Tuesday, November 24, 2026 | Frontier NLP: Agents, Multimodal and Beyond | `lectures/session12_frontier_nlp.ipynb` |
-| 13 | Tuesday, December 1, 2026 | Demo Day, Part 1 | `lectures/session13_demo_day_part1.ipynb` |
-| 14 | Tuesday, December 8, 2026 | Demo Day, Part 2 | `lectures/session14_demo_day_part2.ipynb` |
+| 13 | Tuesday, December 1, 2026 | Demo Day, Part 1 | No notebook. [project/final-presentation.md](project/final-presentation.md) |
+| 14 | Tuesday, December 8, 2026 | Demo Day, Part 2 | No notebook. [project/final-presentation.md](project/final-presentation.md) |
 
 > **Note:** Notebook filenames match the session number, so `session03_evaluation.ipynb` is the Session 3 lecture on September 15.
 > The same number is used in the syllabus, in ELMS, and in your weekly report filenames.
