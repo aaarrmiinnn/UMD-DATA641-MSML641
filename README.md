@@ -1,14 +1,14 @@
-# UMD DATA/MSAI/MSML 641: Natural Language Processing
+# UMD DATA/MSML 641: Natural Language Processing
 
-**Summer 2026 - University of Maryland**
+**Fall 2026 - University of Maryland**
 
-This repository contains course materials for DATA/MSAI/MSML 641: Natural Language Processing (cross-listed as DATA641 / MSAI641 / MSML641), a graduate-level course focusing on fundamental concepts and techniques for getting computers to deal intelligently with human language.
+This repository contains course materials for DATA/MSML 641: Natural Language Processing (cross-listed as DATA641 / MSML641), a graduate-level course focusing on fundamental concepts and techniques for getting computers to deal intelligently with human language.
 
 ## Course Overview
 
 This course focuses on **interactive lecture-based learning**:
-- **Online sessions**: Wednesdays 5:00pm - 8:30pm (Online)
-- **Asynchronous content**: Video lectures, readings, and review questions
+- **Live sessions**: Tuesdays 5:00pm - 7:45pm (Online, Zoom)
+- **Asynchronous content**: Video lectures, readings, and review questions, due 4:00pm Tuesday
 - **Hands-on components**: Interactive Jupyter notebooks and coding exercises
 
 ### Course Objectives
@@ -31,12 +31,10 @@ By the end of this course, you will be able to:
 │   └── ...
 ├── project/                 # Final project materials
 │   ├── guidelines.md
-│   └── templates/
+│   └── final-presentation.md
+├── reports/                 # Weekly report template and instructions
 ├── resources/               # Additional resources
-│   ├── datasets/
-│   ├── models/
-│   ├── setup_test.ipynb     # Environment verification
-│   └── utils/
+│   └── setup_test.ipynb     # Environment verification
 ├── docs/                    # Additional documentation
 └── img/                     # Images and figures
 ```
@@ -45,8 +43,8 @@ By the end of this course, you will be able to:
 
 ### 1. Clone the Repository
 ```bash
-git clone <repository-url>
-cd umd-nlp-641
+git clone https://github.com/aaarrmiinnn/UMD-DATA641-MSML641.git
+cd UMD-DATA641-MSML641
 ```
 
 ### 2. Set Up Python Environment
@@ -89,30 +87,35 @@ Open and run `resources/setup_test.ipynb` to verify your environment is configur
 
 ## Course Outline
 
-Online sessions each Wednesday, 5:00pm - 8:30pm. See `SYLLABUS.md` for full async content (videos, readings, supplementary materials) for each week.
+Live sessions run Tuesdays, 5:00pm to 7:45pm.
+See `SYLLABUS.md` for the full asynchronous content (videos, readings, supplementary materials) for each session.
 
-| Week | Class Date | Topic | Lecture Materials |
-|------|------------|-------|-------------------|
-| 1 | June 3, 2026 | Word Meaning | `lectures/week01_meaning.ipynb` |
-| 2 | June 10, 2026 | Sequence Models | `lectures/week02_sequence_models.ipynb` |
-| 3 | June 17, 2026 | Sequence Models (continued) | `lectures/week02_sequence_models.ipynb` |
-| 4 | June 24, 2026 | Evaluation I (continued) | `lectures/week04_evaluation.ipynb` |
-| 5 | July 1, 2026 | Vector Semantics and Embeddings | `lectures/week05_vector_semantics.ipynb` |
-| 6 | July 8, 2026 | Vector Semantics and Embeddings (continued) | `lectures/week05_vector_semantics.ipynb` |
-| 7 | July 15, 2026 | Neural Networks in NLP + Mid-Semester Presentations | `lectures/week06_neural_networks_in_nlp.ipynb` |
-| 8 | July 22, 2026 | Transformers | `lectures/week07_transformers.ipynb` |
-| 9 | July 29, 2026 | Language Models, Fine-tuning and Post-Training | `lectures/week08_mlm.ipynb` |
-| 10 | August 5, 2026 | Evaluation II: LLM Benchmarks and LLM-as-a-Judge | `lectures/week08b_evaluation_llm.ipynb` |
-| 11 | August 12, 2026 | Retrieval Augmented Generation (RAG) | `lectures/week10_rag.ipynb` |
-| 12 | August 19, 2026 | Final Project Presentations | Final project due |
+| Session | Date | Topic | Lecture Materials |
+|---------|------|-------|-------------------|
+| 1 | September 1, 2026 | Word Meaning | `lectures/week01_meaning.ipynb` |
+| 2 | September 8, 2026 | Sequence Models | `lectures/week02_sequence_models.ipynb` |
+| 3 | September 15, 2026 | Evaluation in NLP | `lectures/week04_evaluation.ipynb` |
+| 4 | September 22, 2026 | Vector Semantics and Embeddings | `lectures/week05_vector_semantics.ipynb` |
+| 5 | September 29, 2026 | Neural Networks in NLP | `lectures/week06_neural_networks_in_nlp.ipynb` |
+| 6 | October 6, 2026 | Transformers | `lectures/week07_transformers.ipynb` |
+| - | October 13, 2026 | **Fall Break, no class** | |
+| 7 | October 20, 2026 | Mid-Semester Project Presentations | |
+| 8 | October 27, 2026 | Language Models, Fine-tuning and Post-Training | `lectures/week08_mlm.ipynb` |
+| 9 | November 3, 2026 | Evaluation II: LLM Benchmarks and LLM-as-a-Judge | `lectures/week08b_evaluation_llm.ipynb` |
+| 10 | November 10, 2026 | Retrieval Augmented Generation (RAG) | `lectures/week10_rag.ipynb` |
+| 11 | November 17, 2026 | Graphs in NLP | `lectures/week09_graphs.ipynb` |
+| 12 | November 24, 2026 | Frontier NLP: Agents, Multimodal and Beyond | `lectures/week11_frontier_nlp.ipynb` |
+| 13 | December 1, 2026 | Demo Day, Part 1 | Final project due for all teams |
+| 14 | December 8, 2026 | Demo Day, Part 2 | |
 
-> **Note:** Running slightly behind the original plan - Sequence Models and Evaluation I each ran into a second session, so Vector Semantics spans July 1-8. Mid-semester presentations run within the July 15 session. Graphs in NLP (`lectures/week09_graphs.ipynb`) is dropped from the live schedule this term but remains available as optional material.
+> **Note:** Notebook filenames keep their original lecture numbering and do not match the session number.
+> `lectures/week03_sentence_meaning.ipynb` is not on the live schedule this term but remains available as optional material.
 
 ## Course Components
 
 - **Online Lectures**: Asynchronous video content with live online sessions
 - **Hands-on Components**: Interactive Jupyter notebooks and coding exercises
-- **Final Project**: Build a startup. Teams of 3 ship a working NLP product over the full semester with weekly progress reports. See [project/guidelines.md](project/guidelines.md)
+- **Final Project**: Build a startup. Teams of 4 or 5 ship a working NLP product with weekly progress reports. See [project/guidelines.md](project/guidelines.md)
 - **Setup Verification**: Use `resources/setup_test.ipynb` to verify your environment
 
 ## Tools & Libraries Used
@@ -125,7 +128,7 @@ Online sessions each Wednesday, 5:00pm - 8:30pm. See `SYLLABUS.md` for full asyn
 
 ## Tips for Success
 
-1. **Come Prepared**: Review readings before lectures for better engagement
+1. **Come Prepared**: Complete the asynchronous content before the live session
 2. **Participate**: Engage in discussions and ask questions during interactive sessions
 3. **Practice**: Work through code examples and modify them to deepen understanding
 4. **Collaborate**: Form study groups and work together on understanding concepts
@@ -140,7 +143,9 @@ Online sessions each Wednesday, 5:00pm - 8:30pm. See `SYLLABUS.md` for full asyn
 
 ## Acknowledgments
 
-The asynchronous video lectures for this course were created by **Dr. Shabnam Tafreshi**, an expert in natural language processing and machine learning. Dr. Tafreshi passed away in October 2025. We honor her memory by continuing to share and learn from her work through these course videos.
+The asynchronous video lectures for this course were created by **Dr. Shabnam Tafreshi**, an expert in natural language processing and machine learning.
+Dr. Tafreshi passed away in October 2025.
+We honor her memory by continuing to share and learn from her work through these course videos.
 
 ## License & Usage
 
@@ -148,10 +153,10 @@ The asynchronous video lectures for this course were created by **Dr. Shabnam Ta
 
 These course materials are released under the [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/) license.
 
-You are free to **use, share, and adapt** these materials for any purpose — including commercially — as long as you give appropriate credit:
+You are free to **use, share, and adapt** these materials for any purpose, including commercially, as long as you give appropriate credit:
 
-> *Armin Mehrabian, DATA/MSAI/MSML 641: Natural Language Processing, University of Maryland, Summer 2026. Available at: https://github.com/aaarrmiinnn/UMD-DATA641-MSML641*
+> *Armin Mehrabian, DATA/MSML 641: Natural Language Processing, University of Maryland, Fall 2026. Available at: https://github.com/aaarrmiinnn/UMD-DATA641-MSML641*
 
 ---
 
-*Last updated: Summer 2026*
+*Last updated: Fall 2026*

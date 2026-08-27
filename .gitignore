@@ -183,6 +183,23 @@ temp/
 submissions/
 student_work/
 
-# AI Assistant Configuration (never commit)
+# AI Assistant Configuration and course-development artifacts (never commit)
 .claude/
 CLAUDE.md
+CLAUDE.local.md
+AGENTS.md
+AGENT.md
+.agents/
+.agent*/
+.cursor/
+.cursorrules
+.cursorignore
+.windsurfrules
+.aider*
+.continue/
+.codeium/
+.github/copilot-instructions.md
+.mcp.json
+.scratch/
+.wayfinder/
+*.prompt.md
