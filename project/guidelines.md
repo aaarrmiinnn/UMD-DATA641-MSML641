@@ -87,13 +87,13 @@ This is the single most-weighted part of your project grade, so the mechanics ar
 |---|---|
 | Branch | `main` |
 | Directory | `reports/` at the root of your repository |
-| Filename | `weekNN.md`, always two digits |
+| Filename | `sessionNN.md`, always two digits |
 | Template | Copy [`reports/_TEMPLATE.md`](../reports/_TEMPLATE.md) from this course repo |
 | Deadline | 5:00pm Tuesday, the start of the live session |
 
-**Correct**: `reports/week04.md`
+**Correct**: `reports/session04.md`
 
-**Wrong, and will not be found**: `reports/week4.md`, `weekly_reports/week04.md`, `Weekly Reports/Week 04.md`, `reports/Week04.md`, `docs/reports/week04.md`, a report left on a feature branch and never merged to `main`.
+**Wrong, and will not be found**: `reports/session4.md`, `weekly_reports/session04.md`, `Weekly Reports/Session 04.md`, `reports/Session04.md`, `docs/reports/session04.md`, a report left on a feature branch and never merged to `main`.
 
 **The number is the session number, not a count of your own project weeks.**
 It always matches the session number in the syllabus, so it always matches a date.
@@ -101,17 +101,17 @@ This is the whole schedule:
 
 | Report file | Due at Session | Date |
 |---|---|---|
-| `reports/week04.md` | 4 | Tuesday September 22 |
-| `reports/week05.md` | 5 | Tuesday September 29 |
-| `reports/week06.md` | 6 | Tuesday October 6 |
+| `reports/session04.md` | 4 | Tuesday September 22 |
+| `reports/session05.md` | 5 | Tuesday September 29 |
+| `reports/session06.md` | 6 | Tuesday October 6 |
 | no report | 7 | Mid-semester presentation replaces it |
-| `reports/week08.md` | 8 | Tuesday October 27 |
-| `reports/week09.md` | 9 | Tuesday November 3 |
-| `reports/week10.md` | 10 | Tuesday November 10 |
-| `reports/week11.md` | 11 | Tuesday November 17 |
-| `reports/week12.md` | 12 | Tuesday November 24 |
+| `reports/session08.md` | 8 | Tuesday October 27 |
+| `reports/session09.md` | 9 | Tuesday November 3 |
+| `reports/session10.md` | 10 | Tuesday November 10 |
+| `reports/session11.md` | 11 | Tuesday November 17 |
+| `reports/session12.md` | 12 | Tuesday November 24 |
 
-Eight reports. There is no `week07.md`, and there are no reports for Sessions 1, 2, or 3.
+Eight reports. There is no `session07.md`, and there are no reports for Sessions 1, 2, or 3.
 
 **Grading is taken from the commit on `main` at 5:00pm Tuesday.**
 Work pushed after that time is not counted for that week.

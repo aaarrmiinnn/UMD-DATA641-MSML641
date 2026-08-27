@@ -90,7 +90,7 @@ Each week has **asynchronous content** (videos, readings, quizzes) due by **4:00
 - **Supplementary**:
   - Jay Alammar, [The Illustrated Word2Vec](https://jalammar.github.io/illustrated-word2vec/)
   - Ruder, [On Word Embeddings - Part 1](https://www.ruder.io/word-embeddings-1/)
-- **Synchronous**: Course introduction and `lectures/week01_meaning.ipynb`
+- **Synchronous**: Course introduction and `lectures/session01_word_meaning.ipynb`
 
 ### Session 2 - Sequence Models (September 8)
 - **Asynchronous Videos**: V1 *Introduction to Sequence Models*; V2 *Evaluation of Language Models*
@@ -98,14 +98,14 @@ Each week has **asynchronous content** (videos, readings, quizzes) due by **4:00
 - **Supplementary**:
   - McCallum, [An Introduction to Conditional Random Fields](https://people.cs.umass.edu/~mccallum/papers/crf-tutorial.pdf)
   - Collins, [Tagging Problems and Hidden Markov Models](https://www.cs.columbia.edu/~mcollins/hmms-spring2013.pdf)
-- **Synchronous**: `lectures/week02_sequence_models.ipynb`
+- **Synchronous**: `lectures/session02_sequence_models.ipynb`
 
 ### Session 3 - Evaluation in NLP (September 15)
 - **Asynchronous Videos**: V1 *Evaluation in NLP*
 - **Readings**: Resnik and Lin (2010), *Evaluation of NLP Systems*
 - **Supplementary**:
   - Ruder, [Challenges and Opportunities in NLP Benchmarking](https://www.ruder.io/nlp-benchmarking/)
-- **Synchronous**: `lectures/week04_evaluation.ipynb`
+- **Synchronous**: `lectures/session03_evaluation.ipynb`
 - **Project**: Project kickoff. Teams, company name, and repository URL are due today. See [project/guidelines.md](project/guidelines.md)
 - **Assignment**: Assignment 1 posted
 
@@ -115,8 +115,8 @@ Each week has **asynchronous content** (videos, readings, quizzes) due by **4:00
 - **Supplementary**:
   - Ruder, [Word Embeddings in 2017: Trends and Future Directions](https://www.ruder.io/word-embeddings-2017/)
   - Jay Alammar, [The Illustrated BERT, ELMo, and Co.](https://jalammar.github.io/illustrated-bert/)
-- **Synchronous**: `lectures/week05_vector_semantics.ipynb`
-- **Project**: `reports/week04.md` due by 5:00pm
+- **Synchronous**: `lectures/session04_vector_semantics.ipynb`
+- **Project**: `reports/session04.md` due by 5:00pm
 
 ### Session 5 - Neural Networks in NLP (September 29)
 - **Asynchronous Videos**: V1 *Introduction to Neural Networks in NLP*
@@ -125,8 +125,8 @@ Each week has **asynchronous content** (videos, readings, quizzes) due by **4:00
   - 3Blue1Brown, [Neural Networks](https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi) (Ch 1-4)
   - Olah, [Understanding LSTM Networks](https://colah.github.io/posts/2015-08-Understanding-LSTMs/)
   - Stanford CS224N, [Language Models, RNNs, GRUs, and LSTMs](https://web.stanford.edu/class/cs224n/readings/cs224n-2019-notes05-LM_RNN.pdf)
-- **Synchronous**: `lectures/week06_neural_networks_in_nlp.ipynb`
-- **Project**: `reports/week05.md` due by 5:00pm
+- **Synchronous**: `lectures/session05_neural_networks.ipynb`
+- **Project**: `reports/session05.md` due by 5:00pm
 - **Assignment**: Assignment 1 due by 5:00pm
 
 ### Session 6 - Transformers (October 6)
@@ -137,8 +137,8 @@ Each week has **asynchronous content** (videos, readings, quizzes) due by **4:00
   - 3Blue1Brown, [How might LLMs store facts](https://www.youtube.com/watch?v=9-Jl0dxWQs8)
   - Jay Alammar, [The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/)
   - Olah & Carter, [Attention and Augmented Recurrent Neural Networks](https://distill.pub/2016/augmented-rnns/) (interactive)
-- **Synchronous**: `lectures/week07_transformers.ipynb`
-- **Project**: `reports/week06.md` due by 5:00pm
+- **Synchronous**: `lectures/session06_transformers.ipynb`
+- **Project**: `reports/session06.md` due by 5:00pm
 
 ### Fall Break - No Class (October 13)
 
@@ -157,17 +157,17 @@ Fall Break runs Monday October 12 to Tuesday October 13.
 - **Supplementary**:
   - Jay Alammar, [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/)
   - Lilian Weng, [Prompt Engineering](https://lilianweng.github.io/posts/2023-03-15-prompt-engineering/) (covers RLHF, instruction tuning, chain-of-thought)
-- **Synchronous**: `lectures/week08_mlm.ipynb`
-- **Project**: `reports/week08.md` due by 5:00pm
+- **Synchronous**: `lectures/session08_language_models.ipynb`
+- **Project**: `reports/session08.md` due by 5:00pm
 
 ### Session 9 - Evaluation II: LLM Benchmarks and LLM-as-a-Judge (November 3)
 - **Asynchronous Videos**: None. This session continues *Evaluation in NLP* from Session 3
 - **Readings**: Resnik and Lin (2010), *Evaluation of NLP Systems* (review)
 - **Supplementary**:
   - Ruder, [The Evolving Landscape of LLM Evaluation](https://newsletter.ruder.io/p/the-evolving-landscape-of-llm-evaluation)
-- **Synchronous**: `lectures/week08b_evaluation_llm.ipynb`
+- **Synchronous**: `lectures/session09_evaluation_llm.ipynb`
 - **Note**: Part 2 of 2. Builds on Session 8, since learned metrics such as BERTScore depend on the models covered there. Covers standard LLM benchmarks, learned metrics, contamination, human evaluation, and LLM-as-a-judge
-- **Project**: `reports/week09.md` due by 5:00pm
+- **Project**: `reports/session09.md` due by 5:00pm
 - **Assignment**: Assignment 2 due by 5:00pm
 
 ### Session 10 - Retrieval Augmented Generation (RAG) (November 10)
@@ -177,8 +177,8 @@ Fall Break runs Monday October 12 to Tuesday October 13.
   - Lewis et al., [Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://arxiv.org/abs/2005.11401)
   - NVIDIA, [What Is Retrieval-Augmented Generation?](https://blogs.nvidia.com/blog/what-is-retrieval-augmented-generation/)
   - Pinecone, [Retrieval-Augmented Generation Guide](https://www.pinecone.io/learn/retrieval-augmented-generation/)
-- **Synchronous**: `lectures/week10_rag.ipynb`
-- **Project**: `reports/week10.md` due by 5:00pm
+- **Synchronous**: `lectures/session10_rag.ipynb`
+- **Project**: `reports/session10.md` due by 5:00pm
 - **Assignment**: Assignment 3 posted
 
 ### Session 11 - Graphs in NLP (November 17)
@@ -186,8 +186,8 @@ Fall Break runs Monday October 12 to Tuesday October 13.
 - **Readings**: SLP Ch 13, 14, 15
 - **Supplementary**:
   - Sanchez-Lengeling et al., [A Gentle Introduction to Graph Neural Networks](https://distill.pub/2021/gnn-intro/) (Distill.pub)
-- **Synchronous**: `lectures/week09_graphs.ipynb`
-- **Project**: `reports/week11.md` due by 5:00pm
+- **Synchronous**: `lectures/session11_graphs.ipynb`
+- **Project**: `reports/session11.md` due by 5:00pm
 
 ### Session 12 - Frontier NLP: Agents, Multimodal and Beyond (November 24)
 - **Asynchronous Videos**: V1 *Social Biases in AI*; V2 *Ethical Considerations in NLP and AI*
@@ -196,8 +196,8 @@ Fall Break runs Monday October 12 to Tuesday October 13.
   - Lilian Weng, [LLM Powered Autonomous Agents](https://lilianweng.github.io/posts/2023-06-23-agent/)
   - HuggingFace, [Vision Language Models Explained](https://huggingface.co/blog/vlms)
   - Anthropic, [Introducing the Model Context Protocol](https://www.anthropic.com/news/model-context-protocol)
-- **Synchronous**: `lectures/week11_frontier_nlp.ipynb`
-- **Project**: `reports/week12.md` due by 5:00pm. This is the final weekly report
+- **Synchronous**: `lectures/session12_frontier_nlp.ipynb`
+- **Project**: `reports/session12.md` due by 5:00pm. This is the final weekly report
 - **Assignment**: Assignment 3 due by 5:00pm
 - **Note**: Thanksgiving Recess begins the following day, Wednesday November 25
 

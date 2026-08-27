@@ -26,8 +26,8 @@ By the end of this course, you will be able to:
 ├── requirements.txt          # Python dependencies
 ├── environment.yml          # Conda environment file
 ├── lectures/                # Interactive lecture notebooks
-│   ├── week01_meaning.ipynb
-│   ├── week02_sequence_models.ipynb
+│   ├── session01_word_meaning.ipynb
+│   ├── session02_sequence_models.ipynb
 │   └── ...
 ├── project/                 # Final project materials
 │   ├── guidelines.md
@@ -92,24 +92,25 @@ See `SYLLABUS.md` for the full asynchronous content (videos, readings, supplemen
 
 | Session | Date | Topic | Lecture Materials |
 |---------|------|-------|-------------------|
-| 1 | September 1, 2026 | Word Meaning | `lectures/week01_meaning.ipynb` |
-| 2 | September 8, 2026 | Sequence Models | `lectures/week02_sequence_models.ipynb` |
-| 3 | September 15, 2026 | Evaluation in NLP | `lectures/week04_evaluation.ipynb` |
-| 4 | September 22, 2026 | Vector Semantics and Embeddings | `lectures/week05_vector_semantics.ipynb` |
-| 5 | September 29, 2026 | Neural Networks in NLP | `lectures/week06_neural_networks_in_nlp.ipynb` |
-| 6 | October 6, 2026 | Transformers | `lectures/week07_transformers.ipynb` |
+| 1 | September 1, 2026 | Word Meaning | `lectures/session01_word_meaning.ipynb` |
+| 2 | September 8, 2026 | Sequence Models | `lectures/session02_sequence_models.ipynb` |
+| 3 | September 15, 2026 | Evaluation in NLP | `lectures/session03_evaluation.ipynb` |
+| 4 | September 22, 2026 | Vector Semantics and Embeddings | `lectures/session04_vector_semantics.ipynb` |
+| 5 | September 29, 2026 | Neural Networks in NLP | `lectures/session05_neural_networks.ipynb` |
+| 6 | October 6, 2026 | Transformers | `lectures/session06_transformers.ipynb` |
 | - | October 13, 2026 | **Fall Break, no class** | |
 | 7 | October 20, 2026 | Mid-Semester Project Presentations | |
-| 8 | October 27, 2026 | Language Models, Fine-tuning and Post-Training | `lectures/week08_mlm.ipynb` |
-| 9 | November 3, 2026 | Evaluation II: LLM Benchmarks and LLM-as-a-Judge | `lectures/week08b_evaluation_llm.ipynb` |
-| 10 | November 10, 2026 | Retrieval Augmented Generation (RAG) | `lectures/week10_rag.ipynb` |
-| 11 | November 17, 2026 | Graphs in NLP | `lectures/week09_graphs.ipynb` |
-| 12 | November 24, 2026 | Frontier NLP: Agents, Multimodal and Beyond | `lectures/week11_frontier_nlp.ipynb` |
+| 8 | October 27, 2026 | Language Models, Fine-tuning and Post-Training | `lectures/session08_language_models.ipynb` |
+| 9 | November 3, 2026 | Evaluation II: LLM Benchmarks and LLM-as-a-Judge | `lectures/session09_evaluation_llm.ipynb` |
+| 10 | November 10, 2026 | Retrieval Augmented Generation (RAG) | `lectures/session10_rag.ipynb` |
+| 11 | November 17, 2026 | Graphs in NLP | `lectures/session11_graphs.ipynb` |
+| 12 | November 24, 2026 | Frontier NLP: Agents, Multimodal and Beyond | `lectures/session12_frontier_nlp.ipynb` |
 | 13 | December 1, 2026 | Demo Day, Part 1 | Final project due for all teams |
 | 14 | December 8, 2026 | Demo Day, Part 2 | |
 
-> **Note:** Notebook filenames keep their original lecture numbering and do not match the session number.
-> `lectures/week03_sentence_meaning.ipynb` is not on the live schedule this term but remains available as optional material.
+> **Note:** Notebook filenames match the session number, so `session03_evaluation.ipynb` is the Session 3 lecture on September 15.
+> The same number is used in the syllabus, in ELMS, and in your weekly report filenames.
+> `lectures/optional_sentence_meaning.ipynb` is not on the live schedule this term but remains available as optional material.
 
 ## Course Components
 
