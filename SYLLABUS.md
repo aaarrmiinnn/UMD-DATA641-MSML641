@@ -16,6 +16,19 @@
 
 **No class**: Tuesday October 13, 2026 (Fall Break)
 
+## Quick Links
+
+| Go to | For |
+|---|---|
+| [Course outline](#course-outline) | Session by session: videos, readings, what is due |
+| [Grading](#grading-structure) | Weights and the grade scale |
+| [Component details](#course-component-details) | Assignments, quizzes, participation |
+| [Final project](project/guidelines.md) | The one project document. 45% of your grade |
+| [Project checklist](project/guidelines.md#checklist-week-by-week) | What your team owes, week by week |
+| [Weekly report template](reports/_TEMPLATE.md) | Copy this into your team repository |
+| [Lecture notebooks](lectures/) | Every session notebook |
+| [Policies](#ai-policy) | AI use, collaboration, academic integrity |
+
 ## Contact Information
 
 **Instructor**: Armin Mehrabian
@@ -108,7 +121,7 @@ Each week has **asynchronous content** (videos, readings, quizzes) due by **4:00
 - **Supplementary**:
   - Ruder, [Challenges and Opportunities in NLP Benchmarking](https://www.ruder.io/nlp-benchmarking/)
 - **Synchronous**: `lectures/session03_evaluation.ipynb`
-- **Project**: Project kickoff. Teams, company name, and repository URL are due today. See [project/guidelines.md](project/guidelines.md)
+- **Project**: Project kickoff. Teams, company name, and repository URL are due today. See the [checklist](project/guidelines.md#checklist-week-by-week)
 - **Assignment**: Assignment 1 posted
 
 ### Session 4 - Vector Semantics and Embeddings (September 22)
@@ -118,7 +131,7 @@ Each week has **asynchronous content** (videos, readings, quizzes) due by **4:00
   - Ruder, [Word Embeddings in 2017: Trends and Future Directions](https://www.ruder.io/word-embeddings-2017/)
   - Jay Alammar, [The Illustrated BERT, ELMo, and Co.](https://jalammar.github.io/illustrated-bert/)
 - **Synchronous**: `lectures/session04_vector_semantics.ipynb`
-- **Project**: `reports/session04.md` due by 5:00pm
+- **Project**: [`reports/session04.md`](project/guidelines.md#weekly-reports) due by 5:00pm
 
 ### Session 5 - Neural Networks in NLP (September 29)
 - **Asynchronous Videos**: V1 *Introduction to Neural Networks in NLP*
@@ -128,13 +141,13 @@ Each week has **asynchronous content** (videos, readings, quizzes) due by **4:00
   - Olah, [Understanding LSTM Networks](https://colah.github.io/posts/2015-08-Understanding-LSTMs/)
   - Stanford CS224N, [Language Models, RNNs, GRUs, and LSTMs](https://web.stanford.edu/class/cs224n/readings/cs224n-2019-notes05-LM_RNN.pdf)
 - **Synchronous**: `lectures/session05_neural_networks.ipynb`
-- **Project**: `reports/session05.md` due by 5:00pm
+- **Project**: [`reports/session05.md`](project/guidelines.md#weekly-reports) due by 5:00pm
 - **Assignment**: Assignment 1 due by 5:00pm
 
 ### Session 6 - Mid-Semester Project Presentations (October 6)
 - **Asynchronous Content**: None
-- **Synchronous**: Mid-semester presentations. Every team presents for 5 minutes plus 2 for questions. No notebook, see [project/guidelines.md](project/guidelines.md)
-- **Project**: Mid-semester presentation. No written report is due this week, the presentation replaces it
+- **Synchronous**: Mid-semester presentations. Every team presents for 5 minutes plus 2 for questions. No notebook, see [Mid-semester presentation](project/guidelines.md#mid-semester-presentation-session-6)
+- **Project**: [Mid-semester presentation](project/guidelines.md#mid-semester-presentation-session-6). No written report is due this week, the presentation replaces it
 
 ### Fall Break - No Class (October 13)
 
@@ -150,7 +163,7 @@ Fall Break runs Monday October 12 to Tuesday October 13.
   - Jay Alammar, [The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/)
   - Olah & Carter, [Attention and Augmented Recurrent Neural Networks](https://distill.pub/2016/augmented-rnns/) (interactive)
 - **Synchronous**: `lectures/session07_transformers.ipynb`
-- **Project**: `reports/session07.md` due by 5:00pm
+- **Project**: [`reports/session07.md`](project/guidelines.md#weekly-reports) due by 5:00pm
 - **Assignment**: Assignment 2 posted
 
 ### Session 8 - Language Models, Fine-tuning and Post-Training (October 27)
@@ -160,7 +173,7 @@ Fall Break runs Monday October 12 to Tuesday October 13.
   - Jay Alammar, [The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/)
   - Lilian Weng, [Prompt Engineering](https://lilianweng.github.io/posts/2023-03-15-prompt-engineering/) (covers RLHF, instruction tuning, chain-of-thought)
 - **Synchronous**: `lectures/session08_language_models.ipynb`
-- **Project**: `reports/session08.md` due by 5:00pm
+- **Project**: [`reports/session08.md`](project/guidelines.md#weekly-reports) due by 5:00pm
 
 ### Session 9 - Evaluation II: LLM Benchmarks and LLM-as-a-Judge (November 3)
 - **Asynchronous Videos**: None. This session continues *Evaluation in NLP* from Session 3
@@ -169,7 +182,7 @@ Fall Break runs Monday October 12 to Tuesday October 13.
   - Ruder, [The Evolving Landscape of LLM Evaluation](https://newsletter.ruder.io/p/the-evolving-landscape-of-llm-evaluation)
 - **Synchronous**: `lectures/session09_evaluation_llm.ipynb`
 - **Note**: Part 2 of 2. Builds on Session 8, since learned metrics such as BERTScore depend on the models covered there. Covers standard LLM benchmarks, learned metrics, contamination, human evaluation, and LLM-as-a-judge
-- **Project**: `reports/session09.md` due by 5:00pm
+- **Project**: [`reports/session09.md`](project/guidelines.md#weekly-reports) due by 5:00pm
 - **Assignment**: Assignment 2 due by 5:00pm
 
 ### Session 10 - Retrieval Augmented Generation (RAG) (November 10)
@@ -180,7 +193,7 @@ Fall Break runs Monday October 12 to Tuesday October 13.
   - NVIDIA, [What Is Retrieval-Augmented Generation?](https://blogs.nvidia.com/blog/what-is-retrieval-augmented-generation/)
   - Pinecone, [Retrieval-Augmented Generation Guide](https://www.pinecone.io/learn/retrieval-augmented-generation/)
 - **Synchronous**: `lectures/session10_rag.ipynb`
-- **Project**: `reports/session10.md` due by 5:00pm
+- **Project**: [`reports/session10.md`](project/guidelines.md#weekly-reports) due by 5:00pm
 - **Assignment**: Assignment 3 posted
 
 ### Session 11 - Graphs in NLP (November 17)
@@ -189,7 +202,7 @@ Fall Break runs Monday October 12 to Tuesday October 13.
 - **Supplementary**:
   - Sanchez-Lengeling et al., [A Gentle Introduction to Graph Neural Networks](https://distill.pub/2021/gnn-intro/) (Distill.pub)
 - **Synchronous**: `lectures/session11_graphs.ipynb`
-- **Project**: `reports/session11.md` due by 5:00pm
+- **Project**: [`reports/session11.md`](project/guidelines.md#weekly-reports) due by 5:00pm
 
 ### Session 12 - Frontier NLP: Agents, Multimodal and Beyond (November 24)
 - **Asynchronous Videos**: V1 *Social Biases in AI*; V2 *Ethical Considerations in NLP and AI*
@@ -199,18 +212,18 @@ Fall Break runs Monday October 12 to Tuesday October 13.
   - HuggingFace, [Vision Language Models Explained](https://huggingface.co/blog/vlms)
   - Anthropic, [Introducing the Model Context Protocol](https://www.anthropic.com/news/model-context-protocol)
 - **Synchronous**: `lectures/session12_frontier_nlp.ipynb`
-- **Project**: `reports/session12.md` due by 5:00pm. This is the final weekly report
+- **Project**: [`reports/session12.md`](project/guidelines.md#weekly-reports) due by 5:00pm. This is the final weekly report
 - **Assignment**: Assignment 3 due by 5:00pm
 - **Note**: Thanksgiving Recess begins the following day, Wednesday November 25
 
 ### Session 13 - Demo Day, Part 1 (December 1)
 - **Asynchronous Content**: None
-- **Synchronous**: Final project presentations, first group of teams, 12 minutes each plus 3 for questions. No notebook, see [project/final-presentation.md](project/final-presentation.md)
-- **Project**: Final project is due by 5:00pm today for **every** team, whether presenting today or on December 8. See [project/final-presentation.md](project/final-presentation.md)
+- **Synchronous**: Final project presentations, first group of teams, 12 minutes each plus 3 for questions. No notebook, see [Demo day](project/guidelines.md#demo-day-sessions-13-and-14)
+- **Project**: Final project is due by 5:00pm today for **every** team, whether presenting today or on December 8. See [Demo day](project/guidelines.md#demo-day-sessions-13-and-14)
 
 ### Session 14 - Demo Day, Part 2 (December 8)
 - **Asynchronous Content**: None
-- **Synchronous**: Final project presentations, second group of teams, 12 minutes each plus 3 for questions. No notebook, see [project/final-presentation.md](project/final-presentation.md)
+- **Synchronous**: Final project presentations, second group of teams, 12 minutes each plus 3 for questions. No notebook, see [Demo day](project/guidelines.md#demo-day-sessions-13-and-14)
 - **Note**: Last session of the term. The last day of classes is Friday December 11
 
 *Schedule subject to change. Monitor ELMS for updates.*
@@ -259,7 +272,7 @@ Fall Break runs Monday October 12 to Tuesday October 13.
 - **How it works**: A weekly build, measure, learn loop with a written report committed to your team repository each week
 - **Grading**: Weekly reports 30%, mid-semester presentation 5%, final product and demo day 10%
 - **Timeline**: Starts Session 3 (September 15). Mid-semester presentation Session 7 (October 20). Demo day Sessions 13 and 14 (December 1 and 8)
-- **See**: [project/guidelines.md](project/guidelines.md) for the full description, timeline, and rubrics
+- **See**: [project/guidelines.md](project/guidelines.md) for the full description, the [week-by-week checklist](project/guidelines.md#checklist-week-by-week), [report mechanics](project/guidelines.md#weekly-reports), and [every rubric](project/guidelines.md#grading)
 
 ## AI Policy
 

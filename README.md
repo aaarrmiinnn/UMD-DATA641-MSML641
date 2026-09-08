@@ -30,9 +30,8 @@ By the end of this course, you will be able to:
 │   ├── session02_sequence_models.ipynb
 │   └── ...
 ├── project/                 # Final project materials
-│   ├── guidelines.md
-│   └── final-presentation.md
-├── reports/                 # Weekly report template and instructions
+│   └── guidelines.md
+├── reports/                 # Weekly report template
 ├── resources/               # Additional resources
 │   └── setup_test.ipynb     # Environment verification
 ├── docs/                    # Additional documentation
@@ -105,8 +104,8 @@ See `SYLLABUS.md` for the full asynchronous content (videos, readings, supplemen
 | 10 | Tuesday, November 10, 2026 | Retrieval Augmented Generation (RAG) | `lectures/session10_rag.ipynb` |
 | 11 | Tuesday, November 17, 2026 | Graphs in NLP | `lectures/session11_graphs.ipynb` |
 | 12 | Tuesday, November 24, 2026 | Frontier NLP: Agents, Multimodal and Beyond | `lectures/session12_frontier_nlp.ipynb` |
-| 13 | Tuesday, December 1, 2026 | Demo Day, Part 1 | No notebook. [project/final-presentation.md](project/final-presentation.md) |
-| 14 | Tuesday, December 8, 2026 | Demo Day, Part 2 | No notebook. [project/final-presentation.md](project/final-presentation.md) |
+| 13 | Tuesday, December 1, 2026 | Demo Day, Part 1 | No notebook. [project/guidelines.md](project/guidelines.md#demo-day-sessions-13-and-14) |
+| 14 | Tuesday, December 8, 2026 | Demo Day, Part 2 | No notebook. [project/guidelines.md](project/guidelines.md#demo-day-sessions-13-and-14) |
 
 > **Note:** Notebook filenames match the session number, so `session03_evaluation.ipynb` is the Session 3 lecture on September 15.
 > The same number is used in the syllabus, in ELMS, and in your weekly report filenames.
