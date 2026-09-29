@@ -146,7 +146,7 @@ Each week has **asynchronous content** (videos, readings, quizzes) due by **4:00
 
 ### Session 6 - Mid-Semester Project Presentations (October 6)
 - **Asynchronous Content**: None
-- **Synchronous**: Mid-semester presentations. Every team presents for 5 to 10 minutes, questions included. No notebook, see [Mid-semester presentation](project/guidelines.md#mid-semester-presentation-session-6)
+- **Synchronous**: Mid-semester presentations. Every team presents for 5 to 10 minutes, questions included, with either a demo or 5 to 10 slides. No notebook, see [Mid-semester presentation](project/guidelines.md#mid-semester-presentation-session-6)
 - **Project**: [Mid-semester presentation](project/guidelines.md#mid-semester-presentation-session-6). No written report is due this week, the presentation replaces it
 
 ### Fall Break - No Class (October 13)

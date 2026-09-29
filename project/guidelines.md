@@ -196,7 +196,7 @@ No written report is due this week.
 - [ ] **The problem.** What you are solving and who has it
 - [ ] **What you have done so far.** What you built, what you learned, and what did not work
 - [ ] **Your plan.** What you will do between now and demo day, and what could change it
-- [ ] **A demo is optional.** If you have something running, show it. It is not required
+- [ ] **Show it either way.** Give a demo, or use 5 to 10 slides. Your choice
 - [ ] If you have a metric or user evidence, include it
 
 An honest "this did not work, and here is what we learned" scores better than a claim you cannot show.
