@@ -146,7 +146,7 @@ Each week has **asynchronous content** (videos, readings, quizzes) due by **4:00
 
 ### Session 6 - Mid-Semester Project Presentations (October 6)
 - **Asynchronous Content**: None
-- **Synchronous**: Mid-semester presentations. Every team presents for 5 minutes plus 2 for questions. No notebook, see [Mid-semester presentation](project/guidelines.md#mid-semester-presentation-session-6)
+- **Synchronous**: Mid-semester presentations. Every team presents for 5 to 10 minutes, questions included. No notebook, see [Mid-semester presentation](project/guidelines.md#mid-semester-presentation-session-6)
 - **Project**: [Mid-semester presentation](project/guidelines.md#mid-semester-presentation-session-6). No written report is due this week, the presentation replaces it
 
 ### Fall Break - No Class (October 13)
@@ -271,7 +271,7 @@ Fall Break runs Monday October 12 to Tuesday October 13.
 - **Structure**: Build a startup. Teams of 4 or 5 form a named company and ship a working NLP product
 - **How it works**: A weekly build, measure, learn loop with a written report committed to your team repository each week
 - **Grading**: Weekly reports 30%, mid-semester presentation 5%, final product and demo day 10%
-- **Timeline**: Starts Session 3 (September 15). Mid-semester presentation Session 7 (October 20). Demo day Sessions 13 and 14 (December 1 and 8)
+- **Timeline**: Starts Session 3 (September 15). Mid-semester presentation Session 6 (October 6). Demo day Sessions 13 and 14 (December 1 and 8)
 - **See**: [project/guidelines.md](project/guidelines.md) for the full description, the [week-by-week checklist](project/guidelines.md#checklist-week-by-week), [report mechanics](project/guidelines.md#weekly-reports), and [every rubric](project/guidelines.md#grading)
 
 ## AI Policy

@@ -190,14 +190,14 @@ Every claim links to the issue, pull request, or commit that backs it.
 ## Mid-semester presentation (Session 6)
 
 **Tuesday October 6.** Worth **5%** of your course grade.
-Five minutes per team, plus two for questions.
+Five to ten minutes per team, questions included.
 No written report is due this week.
 
-- [ ] **Demo the MVP.** Show it running. Not slides about it running
-- [ ] **Show what a real user did with it**, and the evidence you captured
-- [ ] **Report your metric** against your baseline
-- [ ] **State a decision:** pivot or persevere, and why
-- [ ] Rotate your presenter, so it is not the same person on demo day
+- [ ] **The problem.** What you are solving and who has it
+- [ ] **What you have done so far.** What you built, what you learned, and what did not work
+- [ ] **Your plan.** What you will do between now and demo day, and what could change it
+- [ ] **A demo is optional.** If you have something running, show it. It is not required
+- [ ] If you have a metric or user evidence, include it
 
 An honest "this did not work, and here is what we learned" scores better than a claim you cannot show.
 
@@ -270,7 +270,7 @@ The project is 45% of your course grade, split like this:
 | Component | Share | Based on |
 |---|---|---|
 | Weekly reports | 30% | What you shipped, validated, and measured, with balanced contribution, all backed by evidence in your repo |
-| Mid-semester presentation (Session 6) | 5% | A working MVP, real user evidence, and a clear pivot or persevere decision |
+| Mid-semester presentation (Session 6) | 5% | A clear problem, honest progress so far, and a realistic plan |
 | Final product and demo day | 10% | A working product, real NLP depth, and a clear pitch |
 
 ### Demo day, out of 100
