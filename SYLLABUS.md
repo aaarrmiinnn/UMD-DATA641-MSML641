@@ -185,23 +185,23 @@ Fall Break runs Monday October 12 to Tuesday October 13.
 - **Project**: [`reports/session09.md`](project/guidelines.md#weekly-reports) due by 5:00pm
 - **Assignment**: Assignment 2 due by 5:00pm
 
-### Session 10 - Retrieval Augmented Generation (RAG) (November 10)
+### Session 10 - Graphs in NLP (November 10)
+- **Asynchronous Videos**: V1 *Graphs in NLP*; V2 *NLP Applications*; V3 *NLP and the Use Case in Social Science*
+- **Readings**: SLP Ch 13, 14, 15
+- **Supplementary**:
+  - Sanchez-Lengeling et al., [A Gentle Introduction to Graph Neural Networks](https://distill.pub/2021/gnn-intro/) (Distill.pub)
+- **Synchronous**: `lectures/session10_graphs.ipynb`
+- **Project**: [`reports/session10.md`](project/guidelines.md#weekly-reports) due by 5:00pm
+- **Assignment**: Assignment 3 posted
+
+### Session 11 - Retrieval Augmented Generation (RAG) (November 17)
 - **Asynchronous Videos**: V1 *Retrieval Augmented Generation (RAG)*
 - **Readings**: SLP Ch 11
 - **Supplementary**:
   - Lewis et al., [Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://arxiv.org/abs/2005.11401)
   - NVIDIA, [What Is Retrieval-Augmented Generation?](https://blogs.nvidia.com/blog/what-is-retrieval-augmented-generation/)
   - Pinecone, [Retrieval-Augmented Generation Guide](https://www.pinecone.io/learn/retrieval-augmented-generation/)
-- **Synchronous**: `lectures/session10_rag.ipynb`
-- **Project**: [`reports/session10.md`](project/guidelines.md#weekly-reports) due by 5:00pm
-- **Assignment**: Assignment 3 posted
-
-### Session 11 - Graphs in NLP (November 17)
-- **Asynchronous Videos**: V1 *Graphs in NLP*; V2 *NLP Applications*; V3 *NLP and the Use Case in Social Science*
-- **Readings**: SLP Ch 13, 14, 15
-- **Supplementary**:
-  - Sanchez-Lengeling et al., [A Gentle Introduction to Graph Neural Networks](https://distill.pub/2021/gnn-intro/) (Distill.pub)
-- **Synchronous**: `lectures/session11_graphs.ipynb`
+- **Synchronous**: `lectures/session11_rag.ipynb`
 - **Project**: [`reports/session11.md`](project/guidelines.md#weekly-reports) due by 5:00pm
 
 ### Session 12 - Frontier NLP: Agents, Multimodal and Beyond (November 24)
