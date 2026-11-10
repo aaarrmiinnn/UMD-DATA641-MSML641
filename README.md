@@ -101,8 +101,8 @@ See `SYLLABUS.md` for the full asynchronous content (videos, readings, supplemen
 | 7 | Tuesday, October 20, 2026 | Transformers | `lectures/session07_transformers.ipynb` |
 | 8 | Tuesday, October 27, 2026 | Language Models, Fine-tuning and Post-Training | `lectures/session08_language_models.ipynb` |
 | 9 | Tuesday, November 3, 2026 | Evaluation II: LLM Benchmarks and LLM-as-a-Judge | `lectures/session09_evaluation_llm.ipynb` |
-| 10 | Tuesday, November 10, 2026 | Retrieval Augmented Generation (RAG) | `lectures/session10_rag.ipynb` |
-| 11 | Tuesday, November 17, 2026 | Graphs in NLP | `lectures/session11_graphs.ipynb` |
+| 10 | Tuesday, November 10, 2026 | Graphs in NLP | `lectures/session10_graphs.ipynb` |
+| 11 | Tuesday, November 17, 2026 | Retrieval Augmented Generation (RAG) | `lectures/session11_rag.ipynb` |
 | 12 | Tuesday, November 24, 2026 | Frontier NLP: Agents, Multimodal and Beyond | `lectures/session12_frontier_nlp.ipynb` |
 | 13 | Tuesday, December 1, 2026 | Demo Day, Part 1 | No notebook. [project/guidelines.md](project/guidelines.md#demo-day-sessions-13-and-14) |
 | 14 | Tuesday, December 8, 2026 | Demo Day, Part 2 | No notebook. [project/guidelines.md](project/guidelines.md#demo-day-sessions-13-and-14) |
