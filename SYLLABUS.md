@@ -185,36 +185,36 @@ Fall Break runs Monday October 12 to Tuesday October 13.
 - **Project**: [`reports/session09.md`](project/guidelines.md#weekly-reports) due by 5:00pm
 - **Assignment**: Assignment 2 due by 5:00pm
 
-### Session 10 - Graphs in NLP (November 10)
+### Session 10 - Graphs in NLP (November 10 and 17)
 - **Asynchronous Videos**: V1 *Graphs in NLP*; V2 *NLP Applications*; V3 *NLP and the Use Case in Social Science*
 - **Readings**: SLP Ch 13, 14, 15
 - **Supplementary**:
   - Sanchez-Lengeling et al., [A Gentle Introduction to Graph Neural Networks](https://distill.pub/2021/gnn-intro/) (Distill.pub)
-- **Synchronous**: `lectures/session10_graphs.ipynb`
-- **Project**: [`reports/session10.md`](project/guidelines.md#weekly-reports) due by 5:00pm
+- **Synchronous**: `lectures/session10_graphs.ipynb`, taught over two weeks
+- **Project**: [`reports/session10.md`](project/guidelines.md#weekly-reports) due November 10 and [`reports/session11.md`](project/guidelines.md#weekly-reports) due November 17, both by 5:00pm
 - **Assignment**: Assignment 3 posted
 
-### Session 11 - Retrieval Augmented Generation (RAG) (November 17)
-- **Asynchronous Videos**: V1 *Retrieval Augmented Generation (RAG)*
-- **Readings**: SLP Ch 11
-- **Supplementary**:
-  - Lewis et al., [Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://arxiv.org/abs/2005.11401)
-  - NVIDIA, [What Is Retrieval-Augmented Generation?](https://blogs.nvidia.com/blog/what-is-retrieval-augmented-generation/)
-  - Pinecone, [Retrieval-Augmented Generation Guide](https://www.pinecone.io/learn/retrieval-augmented-generation/)
-- **Synchronous**: `lectures/session11_rag.ipynb`
-- **Project**: [`reports/session11.md`](project/guidelines.md#weekly-reports) due by 5:00pm
-
-### Session 12 - Frontier NLP: Agents, Multimodal and Beyond (November 24)
+### Session 11 - Frontier NLP: Agents, Multimodal and Beyond (November 24)
 - **Asynchronous Videos**: V1 *Social Biases in AI*; V2 *Ethical Considerations in NLP and AI*
 - **Readings**: Anthropic, [Building Effective Agents](https://www.anthropic.com/engineering/building-effective-agents); Yao et al., [ReAct](https://arxiv.org/abs/2210.03629); Wei et al., [Chain-of-Thought Prompting](https://arxiv.org/abs/2201.11903)
 - **Supplementary**:
   - Lilian Weng, [LLM Powered Autonomous Agents](https://lilianweng.github.io/posts/2023-06-23-agent/)
   - HuggingFace, [Vision Language Models Explained](https://huggingface.co/blog/vlms)
   - Anthropic, [Introducing the Model Context Protocol](https://www.anthropic.com/news/model-context-protocol)
-- **Synchronous**: `lectures/session12_frontier_nlp.ipynb`
-- **Project**: [`reports/session12.md`](project/guidelines.md#weekly-reports) due by 5:00pm. This is the final weekly report
+- **Synchronous**: `lectures/session11_frontier_nlp.ipynb`
+- **Project**: [`reports/session12.md`](project/guidelines.md#weekly-reports) due by 5:00pm. This is the final weekly report. The filename keeps the original numbering, see [Session 10](#session-10---graphs-in-nlp-november-10-and-17)
 - **Assignment**: Assignment 3 due by 5:00pm
 - **Note**: Thanksgiving Recess begins the following day, Wednesday November 25
+
+### Session 12 (Optional) - Retrieval Augmented Generation (RAG)
+- **Not covered in class this term.** The notebook and readings are here for anyone who wants them
+- **Asynchronous Videos**: V1 *Retrieval Augmented Generation (RAG)*
+- **Readings**: SLP Ch 11
+- **Supplementary**:
+  - Lewis et al., [Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://arxiv.org/abs/2005.11401)
+  - NVIDIA, [What Is Retrieval-Augmented Generation?](https://blogs.nvidia.com/blog/what-is-retrieval-augmented-generation/)
+  - Pinecone, [Retrieval-Augmented Generation Guide](https://www.pinecone.io/learn/retrieval-augmented-generation/)
+- **Notebook**: `lectures/session12_rag_optional.ipynb`
 
 ### Session 13 - Demo Day, Part 1 (December 1)
 - **Asynchronous Content**: None
