@@ -133,8 +133,8 @@ The same five moves every week.
 | 8 | Tue Oct 27 | `reports/session08.md` |
 | 9 | Tue Nov 3 | `reports/session09.md` |
 | 10 | Tue Nov 10 | `reports/session10.md` |
-| 11 | Tue Nov 17 | `reports/session11.md` · demo day slots assigned today |
-| 12 | Tue Nov 24 | `reports/session12.md`, your last weekly report |
+| 10 | Tue Nov 17 | `reports/session11.md` · demo day slots assigned today. Graphs ran two weeks, so the filename keeps its original number |
+| 11 | Tue Nov 24 | `reports/session12.md`, your last weekly report |
 | 13 | Tue Dec 1 | **Final project due 5:00pm, every team.** Demo day, part 1 |
 | 14 | Tue Dec 8 | Demo day, part 2 |
 
@@ -160,7 +160,8 @@ The mechanics are strict, so read this once carefully and you will not lose mark
 
 **Wrong, and will not be found**: `reports/session4.md`, `weekly_reports/session04.md`, `Weekly Reports/Session 04.md`, `reports/Session04.md`, `docs/reports/session04.md`, or a report left on a feature branch and never merged to `main`.
 
-**The number is the session number**, not a count of your own project weeks, so it always matches a date on the syllabus.
+**Use the filename in the table above**, not a count of your own project weeks.
+It is the session number, except for November 17 and 24 (Graphs ran two weeks).
 
 Eight reports: `session04`, `session05`, `session07`, `session08`, `session09`, `session10`, `session11`, `session12`.
 There is no `session06.md`, because the mid-semester presentation replaces it.
@@ -207,7 +208,7 @@ An honest "this did not work, and here is what we learned" scores better than a 
 
 **Tuesday December 1 and Tuesday December 8, 5:00pm to 7:00pm, Zoom.**
 Demo day runs across two sessions so every team gets a real slot.
-Your slot is assigned in Session 11, on November 17.
+Your slot is assigned on November 17.
 
 **The submission deadline is 5:00pm Tuesday December 1 for every team**, whichever day you present.
 Teams presenting on December 8 present the same submission.

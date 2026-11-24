@@ -1,6 +1,6 @@
-"""Draws the diagrams used in lectures/session12_frontier_nlp.ipynb.
+"""Draws the diagrams used in lectures/session11_frontier_nlp.ipynb.
 
-Run from anywhere:  python lectures/img/session12/make_figures.py
+Run from anywhere:  python lectures/img/session11/make_figures.py
 Each function writes one PNG next to this file.
 """
 from pathlib import Path
@@ -85,24 +85,6 @@ def rope():
     save(fig, "rope.png")
 
 
-def activations():
-    x = np.linspace(-5, 5, 400)
-    fig, ax = plt.subplots(figsize=(6.4, 3.0))
-    ax.plot(x, np.maximum(x, 0), color=GRAY, lw=2.5, label="ReLU: exactly 0 below zero")
-    ax.plot(x, x / (1 + np.exp(-x)), color=RED, lw=2.5, label="SiLU: smooth, dips slightly below zero")
-    ax.axhline(0, color=INK, lw=0.6)
-    ax.axvline(0, color=INK, lw=0.6)
-    ax.set_xlabel("input")
-    ax.set_ylabel("output")
-    ax.set_ylim(-1, 5)
-    ax.legend(frameon=False, loc="upper left")
-    ax.grid(True, alpha=0.25)
-    for side in ("top", "right"):
-        ax.spines[side].set_visible(False)
-    fig.tight_layout()
-    save(fig, "activations.png")
-
-
 def gqa():
     fig, ax = canvas(110, 44)
     panels = [("Multi-head (MHA)", 8, "8 K/V sets stored per token"),
@@ -174,39 +156,137 @@ def ssm():
 
 # ---------------------------------------------------------------- Part II
 
-def gpu_memory():
-    fig, ax = canvas(110, 36)
-    box(ax, 2, 20, 28, 11, "Arithmetic units\ndo the multiplying", fc=PALE_BLUE, ec=BLUE)
-    box(ax, 39, 20, 24, 11, "On-chip memory\ntiny, very fast", fc=PALE_GREEN, ec=GREEN)
-    box(ax, 75, 20, 33, 11, "Main GPU memory\nabout 80 GB, slow", fc=PALE_RED, ec=RED)
-    arrow(ax, 30, 25.5, 39, 25.5, color=GREEN, style="<|-|>")
-    arrow(ax, 63, 25.5, 75, 25.5, color=RED, lw=3, style="<|-|>")
-    label(ax, 34.5, 28.3, "fast", fs=11, color=GREEN)
-    label(ax, 69, 28.8, "slow", fs=12, color=RED, weight="bold")
-    label(ax, 16, 13.5, "the cook", fs=12, color=GRAY, style="italic")
-    label(ax, 51, 13.5, "the counter", fs=12, color=GRAY, style="italic")
-    label(ax, 91.5, 13.5, "the pantry down the hall", fs=12, color=GRAY, style="italic")
-    label(ax, 55, 5, "The model's weights live in main memory. Every fetch is a walk to the pantry.", fs=12)
-    save(fig, "gpu_memory.png")
+def gpu_hierarchy():
+    fig, ax = canvas(112, 58)
+    # HBM, off the chip
+    box(ax, 1, 1, 110, 7, "HBM (main memory): 80 GB, holds the model's weights. Big but slow", fc=PALE_RED, ec=RED, fs=12)
+    arrow(ax, 56, 8.2, 56, 11.3, color=RED, lw=2.2, style="<|-|>")
+    # the chip
+    ax.add_patch(FancyBboxPatch((1, 11.5), 110, 45.5, boxstyle="round,pad=0,rounding_size=0.9", fc="white", ec=INK, lw=1.6))
+    label(ax, 3, 54.5, "GPU chip (H100)", fs=12.5, ha="left", weight="bold")
+    box(ax, 3.5, 13.5, 105, 6, "L2 cache: 50 MB, shared by all SMs", fc=PALE_GOLD, ec=GOLD, fs=11.5)
+    # one SM, zoomed in
+    ax.add_patch(FancyBboxPatch((3.5, 22), 74, 30, boxstyle="round,pad=0,rounding_size=0.8", fc=PALE_BLUE, ec=BLUE, lw=1.5))
+    label(ax, 5.5, 49.8, "SM 1 (streaming multiprocessor): runs many warps", fs=11.5, ha="left", color=BLUE, weight="bold")
+    box(ax, 6, 24, 69, 5.5, "Shared memory / L1: 228 KB, shared by this SM's warps", fc=PALE_GREEN, ec=GREEN, fs=10.5)
+    for r, name in enumerate(["warp 1", "warp 2", "warp 3"]):
+        y = 42 - r * 5.5
+        label(ax, 6, y + 1.6, name, fs=10.5, ha="left")
+        for t in range(8):
+            ax.add_patch(Rectangle((15 + t * 3.1, y), 2.6, 3.2, fc="white", ec=BLUE, lw=1))
+        label(ax, 41, y + 1.6, "... 32 threads", fs=10.5, ha="left", color=GRAY)
+    box(ax, 57, 32, 18, 14, "Registers\neach thread's\nown tiny\nstorage", fc="white", ec=BLUE, fs=10)
+    # other SMs
+    for k, name in enumerate(["SM 2", "SM 3", "... SM 132"]):
+        box(ax, 81, 42 - k * 9.5, 27, 7.5, name, fc=PALE_BLUE, ec=BLUE, fs=11)
+    save(fig, "gpu_hierarchy.png")
 
 
 def busy_waiting():
-    fig, ax = plt.subplots(figsize=(8.2, 2.7))
-    names = ["Writing the answer, 1 user", "Writing the answer, 64 users at once", "Reading a 2,000-token prompt"]
-    vals = [1, 64, 2000]
-    cols = [RED, GOLD, GREEN]
-    ax.barh(names, [v - 0.5 for v in vals], left=0.5, color=cols, height=0.55)
+    # 8B model in 16-bit on one H100: 16 GB of weights, 3,350 GB/s, ~989 trillion 16-bit operations per second
+    read_ms = 16 / 3350 * 1000
+    math_ms = lambda users: 2 * 8e9 * users / 989e12 * 1000
+    rows = [("Read all weights from memory\n(same for any number of users)", read_ms, RED),
+            ("Math for 1 user", math_ms(1), GRAY),
+            ("Math for 64 users", math_ms(64), GOLD),
+            ("Math for 300 users", math_ms(300), GREEN)]
+    fig, ax = plt.subplots(figsize=(8.0, 3.0))
+    names = [r[0] for r in rows][::-1]
+    vals = [r[1] for r in rows][::-1]
+    cols = [r[2] for r in rows][::-1]
+    ax.barh(names, vals, color=cols, height=0.55)
     for i, v in enumerate(vals):
-        ax.text(v * 1.2, i, f"{v:,}", va="center", fontsize=12)
-    ax.set_xscale("log")
-    ax.set_xlim(0.5, 12000)
-    ax.set_xticks([1, 10, 100, 1000])
-    ax.set_xticklabels(["1", "10", "100", "1,000"])
-    ax.set_xlabel("Multiplications per weight fetched from memory (log scale)")
+        ax.text(v + 0.08, i, f"{v:.3f} ms" if v < 0.1 else f"{v:.1f} ms", va="center", fontsize=11.5)
+    ax.set_xlim(0, 6.2)
+    ax.set_xlabel("Time for one decode step, 8B model on one GPU (ms)")
     for side in ("top", "right"):
         ax.spines[side].set_visible(False)
     fig.tight_layout()
     save(fig, "busy_waiting.png")
+
+
+def kv_why():
+    fig, ax = canvas(112, 46)
+    words = ["The", "capital", "of", "France", "is", "Paris"]
+    w, gap, x0 = 12.5, 2, 18
+    xs = [x0 + i * (w + gap) for i in range(6)]
+    label(ax, 1, 34.75, "Query (Q)", fs=11.5, ha="left", color=RED)
+    label(ax, 1, 21.75, "Key (K)", fs=11.5, ha="left", color=BLUE)
+    label(ax, 1, 12.75, "Value (V)", fs=11.5, ha="left", color=GOLD)
+    for i, (x, t) in enumerate(zip(xs, words)):
+        new = i == 5
+        label(ax, x + w / 2, 43, t, fs=12, weight="bold" if new else "normal", color=GREEN if new else INK)
+        if new:
+            box(ax, x, 32, w, 5.5, "q", fc=PALE_RED, ec=RED, fs=12)
+        else:
+            ax.add_patch(FancyBboxPatch((x, 32), w, 5.5, boxstyle="round,pad=0,rounding_size=0.7",
+                                        fc="white", ec=LIGHT, lw=1.2, ls="--"))
+            label(ax, x + w / 2, 34.75, "dropped", fs=9.5, color=GRAY, style="italic")
+        box(ax, x, 19, w, 5.5, "k", fc=PALE_BLUE, ec=BLUE, fs=12)
+        box(ax, x, 10, w, 5.5, "v", fc=PALE_GOLD, ec=GOLD, fs=12)
+    qx = xs[5] + w / 2
+    for x in xs:
+        ax.plot([qx, x + w / 2], [32, 24.5], color=RED, lw=1, alpha=0.7)
+    ax.add_patch(FancyBboxPatch((x0 - 1, 8.8), xs[4] + w - x0 + 2, 17, boxstyle="round,pad=0,rounding_size=0.8",
+                                fc="none", ec=BLUE, lw=1.6, ls="--"))
+    label(ax, x0 - 1 + (xs[4] + w - x0 + 2) / 2, 5.5, "KV cache: kept from earlier steps", fs=11.5, color=BLUE)
+    label(ax, xs[5] + w / 2, 5.5, "new this step", fs=11.5, color=GREEN)
+    save(fig, "kv_why.png")
+
+
+def metr_curve():
+    hours = np.logspace(np.log10(1 / 60), np.log10(64), 200)
+    p = 1 / (1 + (hours / 4) ** 1.0)  # made-up agent: 50% at 4 hours
+    fig, ax = plt.subplots(figsize=(7.4, 3.2))
+    ax.plot(hours, p, color=BLUE, lw=2.5)
+    tasks = [(2 / 60, "fix a typo"), (0.25, "write a test"), (1, "add a feature"), (4, None), (16, "build a small app")]
+    for h, name in tasks:
+        y = 1 / (1 + (h / 4))
+        ax.scatter([h], [y], color=BLUE, s=36, zorder=3)
+        if name:
+            ax.annotate(name, (h, y), textcoords="offset points", xytext=(8, 6), fontsize=10)
+    ax.axhline(0.5, color=GRAY, ls="--", lw=1)
+    ax.axvline(4, color=RED, ls="--", lw=1.2)
+    ax.text(4.5, 0.6, "50% time horizon\n= 4 hours", color=RED, fontsize=11)
+    ax.set_xscale("log")
+    ax.set_xticks([1 / 60, 0.25, 1, 4, 16, 64])
+    ax.set_xticklabels(["1 min", "15 min", "1 hour", "4 hours", "16 hours", "64 hours"])
+    ax.minorticks_off()
+    ax.set_yticks([0, 0.25, 0.5, 0.75, 1])
+    ax.set_yticklabels(["0%", "25%", "50%", "75%", "100%"])
+    ax.set_xlabel("How long the task takes a skilled person")
+    ax.set_ylabel("Agent success rate")
+    for side in ("top", "right"):
+        ax.spines[side].set_visible(False)
+    fig.tight_layout()
+    save(fig, "metr_curve.png")
+
+
+def mcp_flow():
+    fig, ax = canvas(112, 54)
+    cols = {"You": 10, "Chat app\n(MCP client)": 40, "Model": 68, "Weather server\n(MCP server)": 98}
+    colors = {"You": LIGHT, "Model": PALE_BLUE, "Chat app\n(MCP client)": PALE_GREEN, "Weather server\n(MCP server)": PALE_GOLD}
+    edges = {"You": GRAY, "Model": BLUE, "Chat app\n(MCP client)": GREEN, "Weather server\n(MCP server)": GOLD}
+    for name, x in cols.items():
+        box(ax, x - 9, 46, 18, 7, name, fc=colors[name], ec=edges[name], fs=10.5)
+        ax.plot([x, x], [2, 46], color=LIGHT, lw=1.5, zorder=0)
+    X = list(cols.values())
+    steps = [
+        (X[1], X[3], "1. which tools do you have?"),
+        (X[3], X[1], 'get_forecast(city): "tomorrow\'s forecast"'),
+        (X[0], X[1], '2. "Umbrella in College Park tomorrow?"'),
+        (X[1], X[2], "3. question + tool list"),
+        (X[2], X[1], '4. call get_forecast("College Park")'),
+        (X[1], X[3], "5. run the tool"),
+        (X[3], X[1], '"Rain, 80% chance"'),
+        (X[1], X[2], "6. tool result"),
+        (X[2], X[0], '7. "Yes, take an umbrella."'),
+    ]
+    for k, (a, b, text) in enumerate(steps):
+        y = 42 - k * 4.6
+        arrow(ax, a, y, b, y, color=INK, lw=1.3)
+        label(ax, (a + b) / 2, y + 1.5, text, fs=9.5)
+    save(fig, "mcp_flow.png")
 
 
 def flash_attention():
@@ -221,7 +301,7 @@ def flash_attention():
         ax.add_patch(Rectangle((x0, 7), n * c, n * c, fc="none", ec=INK, lw=1.2))
     label(ax, 25, 41, "Standard attention", fs=13, weight="bold")
     label(ax, 85, 41, "Flash Attention", fs=13, weight="bold")
-    label(ax, 25, 3, "Whole N x N score matrix is written to\nmain memory, then read back", fs=11)
+    label(ax, 25, 3, "The whole score table is written to\nmain memory, then read back", fs=11)
     label(ax, 85, 3, "One small tile at a time, kept in\nfast on-chip memory", fs=11)
     arrow(ax, 45, 22, 65, 22, color=GRAY)
     label(ax, 55, 25, "same result", fs=11, color=GRAY)
@@ -419,7 +499,7 @@ def agent_loop():
 
 def mcp():
     fig, ax = canvas(110, 44)
-    models = ["Model A", "Model B", "Model C"]
+    models = ["App A", "App B", "App C"]
     tools = ["Files", "Database", "Calendar", "Search"]
     my = [29, 19, 9]
     ty = [32, 23, 14, 5]
@@ -488,6 +568,30 @@ def bias_asr():
         ax.spines[side].set_visible(False)
     fig.tight_layout()
     save(fig, "bias_asr.png")
+
+
+def kv_cache():
+    """KV cache for one request, 70B-scale model (80 layers, head size 128, BF16)."""
+    def gb(n_kv_heads, tokens):
+        return 2 * 80 * n_kv_heads * 128 * tokens * 2 / 1e9
+
+    lengths = [16, 32, 64, 96, 128]  # thousands of tokens
+    fig, ax = plt.subplots(figsize=(7.2, 3.3))
+    for name, heads, color in [("Every head keeps its own (MHA)", 64, RED),
+                               ("Groups share (GQA)", 8, BLUE),
+                               ("All share one (MQA)", 1, GREEN)]:
+        ax.plot(lengths, [gb(heads, k * 1024) for k in lengths], "o-", color=color, lw=2.2, ms=5, label=name)
+    ax.axhline(80, color=GRAY, ls="--", lw=1.2)
+    ax.text(74, 88, "all the memory of one GPU (80 GB)", color=GRAY, fontsize=10.5)
+    ax.set_xticks(lengths)
+    ax.set_xticklabels([f"{k}K" for k in lengths])
+    ax.set_xlabel("Length of the conversation (tokens)")
+    ax.set_ylabel("KV cache for one user (GB)")
+    ax.legend(frameon=False, loc="upper left", fontsize=10.5, bbox_to_anchor=(0, 0.92))
+    for side in ("top", "right"):
+        ax.spines[side].set_visible(False)
+    fig.tight_layout()
+    save(fig, "kv_cache.png")
 
 
 def diffusion():
@@ -603,8 +707,8 @@ def injection():
 
 
 if __name__ == "__main__":
-    for draw in (rope, activations, gqa, moe, ssm, gpu_memory, busy_waiting, flash_attention, multi_gpu,
-                 request_timeline, batching, paged, speculative, diffusion, agent_loop, context_window, mcp,
-                 metr_horizon, injection, vlm, bias_asr):
+    for draw in (rope, gqa, moe, ssm, gpu_hierarchy, busy_waiting, flash_attention, multi_gpu,
+                 request_timeline, kv_why, kv_cache, batching, paged, speculative, diffusion, agent_loop,
+                 context_window, mcp, mcp_flow, metr_curve, metr_horizon, injection, vlm, bias_asr):
         draw()
         print("wrote", draw.__name__)
