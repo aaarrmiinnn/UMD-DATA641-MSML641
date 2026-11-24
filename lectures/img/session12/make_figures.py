@@ -85,24 +85,6 @@ def rope():
     save(fig, "rope.png")
 
 
-def activations():
-    x = np.linspace(-5, 5, 400)
-    fig, ax = plt.subplots(figsize=(6.4, 3.0))
-    ax.plot(x, np.maximum(x, 0), color=GRAY, lw=2.5, label="ReLU: exactly 0 below zero")
-    ax.plot(x, x / (1 + np.exp(-x)), color=RED, lw=2.5, label="SiLU: smooth, dips slightly below zero")
-    ax.axhline(0, color=INK, lw=0.6)
-    ax.axvline(0, color=INK, lw=0.6)
-    ax.set_xlabel("input")
-    ax.set_ylabel("output")
-    ax.set_ylim(-1, 5)
-    ax.legend(frameon=False, loc="upper left")
-    ax.grid(True, alpha=0.25)
-    for side in ("top", "right"):
-        ax.spines[side].set_visible(False)
-    fig.tight_layout()
-    save(fig, "activations.png")
-
-
 def gqa():
     fig, ax = canvas(110, 44)
     panels = [("Multi-head (MHA)", 8, "8 K/V sets stored per token"),
@@ -221,7 +203,7 @@ def flash_attention():
         ax.add_patch(Rectangle((x0, 7), n * c, n * c, fc="none", ec=INK, lw=1.2))
     label(ax, 25, 41, "Standard attention", fs=13, weight="bold")
     label(ax, 85, 41, "Flash Attention", fs=13, weight="bold")
-    label(ax, 25, 3, "Whole N x N score matrix is written to\nmain memory, then read back", fs=11)
+    label(ax, 25, 3, "The whole score table is written to\nmain memory, then read back", fs=11)
     label(ax, 85, 3, "One small tile at a time, kept in\nfast on-chip memory", fs=11)
     arrow(ax, 45, 22, 65, 22, color=GRAY)
     label(ax, 55, 25, "same result", fs=11, color=GRAY)
@@ -490,6 +472,30 @@ def bias_asr():
     save(fig, "bias_asr.png")
 
 
+def kv_cache():
+    """KV cache for one request, 70B-scale model (80 layers, head size 128, BF16)."""
+    def gb(n_kv_heads, tokens):
+        return 2 * 80 * n_kv_heads * 128 * tokens * 2 / 1024**3
+
+    lengths = [16, 32, 64, 96, 128]  # thousands of tokens
+    fig, ax = plt.subplots(figsize=(7.2, 3.3))
+    for name, heads, color in [("Every head keeps its own (MHA)", 64, RED),
+                               ("Groups share (GQA)", 8, BLUE),
+                               ("All share one (MQA)", 1, GREEN)]:
+        ax.plot(lengths, [gb(heads, k * 1024) for k in lengths], "o-", color=color, lw=2.2, ms=5, label=name)
+    ax.axhline(80, color=GRAY, ls="--", lw=1.2)
+    ax.text(74, 88, "all the memory of one GPU (80 GB)", color=GRAY, fontsize=10.5)
+    ax.set_xticks(lengths)
+    ax.set_xticklabels([f"{k}K" for k in lengths])
+    ax.set_xlabel("Length of the conversation (tokens)")
+    ax.set_ylabel("KV cache for one user (GB)")
+    ax.legend(frameon=False, loc="upper left", fontsize=10.5, bbox_to_anchor=(0, 0.92))
+    for side in ("top", "right"):
+        ax.spines[side].set_visible(False)
+    fig.tight_layout()
+    save(fig, "kv_cache.png")
+
+
 def diffusion():
     fig, ax = canvas(116, 40)
     words = ["The", "cat", "sat", "on", "the", "mat"]
@@ -603,8 +609,8 @@ def injection():
 
 
 if __name__ == "__main__":
-    for draw in (rope, activations, gqa, moe, ssm, gpu_memory, busy_waiting, flash_attention, multi_gpu,
-                 request_timeline, batching, paged, speculative, diffusion, agent_loop, context_window, mcp,
+    for draw in (rope, gqa, moe, ssm, gpu_memory, busy_waiting, flash_attention, multi_gpu,
+                 request_timeline, kv_cache, batching, paged, speculative, diffusion, agent_loop, context_window, mcp,
                  metr_horizon, injection, vlm, bias_asr):
         draw()
         print("wrote", draw.__name__)
